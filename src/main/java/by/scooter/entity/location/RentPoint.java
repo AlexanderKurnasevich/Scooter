@@ -5,10 +5,7 @@ import by.scooter.entity.vehicle.Scooter;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.util.Set;
 
@@ -29,6 +26,6 @@ public class RentPoint extends AbstractEntity {
     @Column(nullable = false)
     private String address;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Scooter> scooters;
 }

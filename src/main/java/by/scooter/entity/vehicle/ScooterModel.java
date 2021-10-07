@@ -41,7 +41,7 @@ public class ScooterModel extends AbstractEntity {
     @Positive
     private Short maxSpeed; //in km/h
 
-    @Column(columnDefinition = "integer default 1")
+    @Column(nullable = false, columnDefinition = "integer default 1")
     @Positive
     private Integer passengerCapacity;
 

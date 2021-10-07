@@ -2,13 +2,15 @@ package by.scooter.entity.user;
 
 import by.scooter.entity.AbstractEntity;
 import by.scooter.entity.enumerator.RoleValue;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "roles")
 public class Role extends AbstractEntity implements GrantedAuthority {

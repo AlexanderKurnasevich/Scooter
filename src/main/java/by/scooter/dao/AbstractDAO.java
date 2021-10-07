@@ -5,6 +5,8 @@ import by.scooter.entity.AbstractEntity;
 import by.scooter.entity.AbstractEntity_;
 import by.scooter.exception.DAOException;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,7 +20,7 @@ import java.util.List;
 
 @Log4j2
 public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
-    @PersistenceContext(type = PersistenceContextType.TRANSACTION)
+    @PersistenceContext
     protected EntityManager entityManager;
 
     protected AbstractDAO() {
@@ -30,6 +32,7 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
     }
 
     @Override
+    @Transactional
     public T save(T entity) {
         try {
             entityManager.persist(entity);
@@ -41,6 +44,7 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaDelete<T> criteriaQuery = builder.createCriteriaDelete(getClazz());
@@ -55,6 +59,7 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
     }
 
     @Override
+    @Transactional
     public void update(T entity) {
         try {
             entityManager.merge(entity);
@@ -93,6 +98,7 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
     }
 
     @Override
+    @Transactional
     public void saveAll(List<T> list) {
         for (T entity : list) {
             save(entity);

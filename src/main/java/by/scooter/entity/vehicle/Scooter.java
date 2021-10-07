@@ -19,18 +19,18 @@ import java.util.Objects;
 @Table(name = "scooters")
 public class Scooter extends AbstractEntity {
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(nullable = false)
     private ScooterModel model;
 
     @ManyToOne
     private RentPoint homePoint;
 
-    @Column(columnDefinition = "integer default 0")
+    @Column(nullable = false, columnDefinition = "integer default 100")
     @Positive
     private Float chargePercent;
 
-    @Column(columnDefinition = "integer default 0")
+    @Column(nullable = false, columnDefinition = "integer default 0")
     @Positive
     private Integer odometer; //in meters
 
