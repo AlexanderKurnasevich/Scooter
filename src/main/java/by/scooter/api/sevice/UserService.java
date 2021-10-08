@@ -2,7 +2,6 @@ package by.scooter.api.sevice;
 
 import by.scooter.entity.dto.UserDTO;
 import by.scooter.entity.dto.UserInfoDTO;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 

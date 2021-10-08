@@ -1,6 +1,7 @@
 package by.scooter.controller;
 
 import by.scooter.api.sevice.RentPointService;
+import by.scooter.entity.dto.RentPointFilterDTO;
 import by.scooter.entity.location.RentPoint;
 import by.scooter.entity.vehicle.Scooter;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +22,10 @@ public class RentPointController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RentPoint>> getAll(@RequestParam(required = false) Integer page,
+    public ResponseEntity<List<RentPoint>> getAll(@RequestBody RentPointFilterDTO filter,
+                                                  @RequestParam(required = false) Integer page,
                                                   @RequestParam(required = false) Integer size) {
-        if (page != null && size != null) {
-            return ResponseEntity.ok(rentPointService.getAll(page, size));
-        }
-        return ResponseEntity.ok(rentPointService.getAll());
+        return ResponseEntity.ok(rentPointService.getAll(filter, page, size));
     }
 
     @GetMapping("/{id}/scooters")

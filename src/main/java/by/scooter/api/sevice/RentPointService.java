@@ -1,5 +1,6 @@
 package by.scooter.api.sevice;
 
+import by.scooter.entity.dto.RentPointFilterDTO;
 import by.scooter.entity.location.RentPoint;
 import by.scooter.entity.vehicle.Scooter;
 
@@ -14,9 +15,7 @@ public interface RentPointService {
 
     void updateRentPoint(Long updatedId, RentPoint update);
 
-    List<RentPoint> getAll();
-
-    List<RentPoint> getAll(Integer page, Integer size);
+    List<RentPoint> getAll(RentPointFilterDTO filter, Integer page, Integer size);
 
     List<Scooter> scootersInRentPoint(Long id, Integer page, Integer size);
 }

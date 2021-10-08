@@ -32,7 +32,7 @@ public class Client extends AbstractEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private User user;
 }

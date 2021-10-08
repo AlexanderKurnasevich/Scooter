@@ -3,6 +3,7 @@ package by.scooter.dao;
 import by.scooter.api.dao.OrderDAO;
 import by.scooter.entity.event.Order;
 import by.scooter.entity.event.Order_;
+import by.scooter.entity.user.Client_;
 import by.scooter.entity.vehicle.Scooter_;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +28,23 @@ public class OrderDAOImpl extends AbstractDAO<Order> implements OrderDAO {
 //        if (filter.getSortedColumn() != null) {
 //            criteriaQuery.orderBy(builder.asc(entityRoot.get(filter.getSortedColumn())));
 //        }
+
+        TypedQuery<Order> query = entityManager.createQuery(criteriaQuery);
+        if (page != null && size != null) {
+            query.setFirstResult((page - 1) * size);
+            query.setMaxResults(size);
+        }
+
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Order> getByClient(Long id, Integer page, Integer size) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Order> criteriaQuery = builder.createQuery(getClazz());
+        Root<Order> entityRoot = criteriaQuery.from(getClazz());
+
+        criteriaQuery.select(entityRoot).where(builder.equal(entityRoot.get(Order_.CLIENT).get(Client_.ID), id));
 
         TypedQuery<Order> query = entityManager.createQuery(criteriaQuery);
         if (page != null && size != null) {

@@ -28,7 +28,8 @@ public class User extends AbstractEntity implements UserDetails {
     @Min(value = 4)
     private String password;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false)
     private Set<Role> roles;
 
     @Override

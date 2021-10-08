@@ -13,5 +13,9 @@ public interface OrderService {
 
     void updateOrder(Long updatedId, Order update);
 
+    List<Order> getAll(Integer page, Integer size);
+
     List<Order> ordersByScooter(Long id);
+
+    List<Order> ordersByClient(Long id, Integer page, Integer size);
 }

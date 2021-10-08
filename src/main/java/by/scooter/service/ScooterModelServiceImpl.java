@@ -5,6 +5,7 @@ import by.scooter.api.sevice.ScooterModelService;
 import by.scooter.entity.vehicle.ScooterModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,11 +26,13 @@ public class ScooterModelServiceImpl implements ScooterModelService {
     }
 
     @Override
+    @Transactional
     public void removeScooterModel(Long id) {
         scooterModelDAO.delete(id);
     }
 
     @Override
+    @Transactional
     public void updateScooterModel(Long updatedId, ScooterModel update) {
         ScooterModel updated = scooterModelDAO.getById(updatedId);
         Optional.ofNullable(update.getModel()).ifPresent(updated::setModel);

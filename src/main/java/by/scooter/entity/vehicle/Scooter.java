@@ -19,7 +19,7 @@ import java.util.Objects;
 @Table(name = "scooters")
 public class Scooter extends AbstractEntity {
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(nullable = false)
     private ScooterModel model;
 

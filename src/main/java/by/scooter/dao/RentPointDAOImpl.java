@@ -1,6 +1,7 @@
 package by.scooter.dao;
 
 import by.scooter.api.dao.RentPointDAO;
+import by.scooter.entity.dto.RentPointFilterDTO;
 import by.scooter.entity.location.RentPoint;
 import by.scooter.entity.location.RentPoint_;
 import by.scooter.entity.vehicle.Scooter;
@@ -8,10 +9,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -33,6 +32,43 @@ public class RentPointDAOImpl extends AbstractDAO<RentPoint> implements RentPoin
         }
 
         return query.getResultList();
+    }
+
+    @Override
+    public List<RentPoint> getAll(RentPointFilterDTO filter, Integer page, Integer size) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<RentPoint> criteriaQuery = builder.createQuery(getClazz());
+        Root<RentPoint> entityRoot = criteriaQuery.from(getClazz());
+        criteriaQuery.select(entityRoot);
+
+        if (filter.getCountry() != null || filter.getCity() != null) {
+            Predicate predicate = makePredicate(builder, entityRoot, filter);
+            criteriaQuery.select(entityRoot).where(predicate);
+        } else {
+            criteriaQuery.select(entityRoot);
+        }
+
+        if (filter.getSortedColumn() != null) {
+            criteriaQuery.orderBy(builder.asc(entityRoot.get(filter.getSortedColumn())));
+        }
+
+        TypedQuery<RentPoint> query = entityManager.createQuery(criteriaQuery);
+        if (page != null && size != null) {
+            query.setFirstResult((page - 1) * size);
+            query.setMaxResults(size);
+        }
+        return query.getResultList();
+    }
+
+    private Predicate makePredicate(CriteriaBuilder builder, Root<RentPoint> entityRoot, RentPointFilterDTO filter) {
+        List<Predicate> predicates = new ArrayList<>();
+        if (filter.getCountry() != null) {
+            predicates.add(builder.equal(entityRoot.get(RentPoint_.COUNTRY), filter.getCountry()));
+        }
+        if (filter.getCity() != null) {
+            predicates.add(builder.equal(entityRoot.get(RentPoint_.CITY), filter.getCity()));
+        }
+        return builder.and(predicates.toArray(new Predicate[predicates.size()]));
     }
 
     @Override

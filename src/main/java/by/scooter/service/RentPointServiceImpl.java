@@ -2,6 +2,7 @@ package by.scooter.service;
 
 import by.scooter.api.dao.RentPointDAO;
 import by.scooter.api.sevice.RentPointService;
+import by.scooter.entity.dto.RentPointFilterDTO;
 import by.scooter.entity.location.RentPoint;
 import by.scooter.entity.vehicle.Scooter;
 import lombok.RequiredArgsConstructor;
@@ -41,13 +42,8 @@ public class RentPointServiceImpl implements RentPointService {
     }
 
     @Override
-    public List<RentPoint> getAll() {
-        return rentPointDAO.getAll();
-    }
-
-    @Override
-    public List<RentPoint> getAll(Integer page, Integer size) {
-        return rentPointDAO.getAll(page, size);
+    public List<RentPoint> getAll(RentPointFilterDTO filter, Integer page, Integer size) {
+        return rentPointDAO.getAll(filter, page, size);
     }
 
     @Override
