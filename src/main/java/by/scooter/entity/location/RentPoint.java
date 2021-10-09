@@ -15,16 +15,8 @@ import java.util.Set;
 @Table(name = "rent_points")
 public class RentPoint extends AbstractEntity {
 
-    @Column(nullable = false)
-    @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Только буквы")
-    private String country;
-
-    @Column(nullable = false)
-    @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Только буквы")
-    private String city;
-
-    @Column(nullable = false)
-    private String address;
+    @OneToOne(fetch = FetchType.EAGER)
+    private Address address;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Scooter> scooters;

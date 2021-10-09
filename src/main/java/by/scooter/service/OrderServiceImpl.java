@@ -4,8 +4,11 @@ import by.scooter.api.dao.ClientDAO;
 import by.scooter.api.dao.OrderDAO;
 import by.scooter.api.dao.ScooterDAO;
 import by.scooter.api.sevice.OrderService;
+import by.scooter.api.sevice.UtilService;
+import by.scooter.entity.dto.event.OrderDTO;
 import by.scooter.entity.event.Order;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,23 +20,17 @@ import java.util.Optional;
 public class OrderServiceImpl implements OrderService {
 
     private final OrderDAO orderDAO;
-
-    private final ClientDAO clientDAO;
-    private final ScooterDAO scooterDAO;
+    private final ModelMapper mapper;
+    private final UtilService utilService;
 
     @Override
-    public Order getById(Long id) {
-        return orderDAO.getById(id);
+    public OrderDTO getById(Long id) {
+        return mapper.map(orderDAO.getById(id), OrderDTO.class);
     }
 
     @Override
-    public Order addOrder(Order order) {
-        order.setClient(clientDAO.getById(1L));
-        order.setEventStart(LocalDateTime.now());
-        order.setEventEnd(LocalDateTime.now().plusDays(1));
-        order.setScooter(scooterDAO.getById(1L));
-        order.setMileage(0);
-        return orderDAO.save(order);
+    public OrderDTO addOrder(OrderDTO order) {
+        return mapper.map(orderDAO.save(mapper.map(order, Order.class)), OrderDTO.class);
     }
 
     @Override
@@ -42,24 +39,24 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void updateOrder(Long updatedId, Order update) {
+    public void updateOrder(Long updatedId, OrderDTO update) {
         Order updated = orderDAO.getById(updatedId);
         Optional.ofNullable(update.getMileage()).ifPresent(updated::setMileage);
         orderDAO.update(updated);
     }
 
     @Override
-    public List<Order> getAll(Integer page, Integer size) {
-        return orderDAO.getAll(page, size);
+    public List<OrderDTO> getAll(Integer page, Integer size) {
+        return utilService.convertList(orderDAO.getAll(page, size), OrderDTO.class);
     }
 
     @Override
-    public List<Order> ordersByScooter(Long id) {
-        return orderDAO.getOrdersByScooter(id, null, null);
+    public List<OrderDTO> ordersByScooter(Long id, Integer page, Integer size) {
+        return utilService.convertList(orderDAO.getOrdersByScooter(id, page, size), OrderDTO.class);
     }
 
     @Override
-    public List<Order> ordersByClient(Long id, Integer page, Integer size) {
-        return orderDAO.getByClient(id, page, size);
+    public List<OrderDTO> ordersByClient(Long id, Integer page, Integer size) {
+        return utilService.convertList(orderDAO.getByClient(id, page, size), OrderDTO.class);
     }
 }

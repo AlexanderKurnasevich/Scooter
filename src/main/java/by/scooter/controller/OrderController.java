@@ -1,8 +1,7 @@
 package by.scooter.controller;
 
 import by.scooter.api.sevice.OrderService;
-import by.scooter.entity.event.Order;
-import by.scooter.entity.vehicle.ScooterModel;
+import by.scooter.entity.dto.event.OrderDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,18 +15,18 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getById(@PathVariable Long id) {
+    public ResponseEntity<OrderDTO> getById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.getById(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<Order>> getAll(@RequestParam(required = false) Integer page,
-                                              @RequestParam(required = false) Integer size) {
+    public ResponseEntity<List<OrderDTO>> getAll(@RequestParam(required = false) Integer page,
+                                                 @RequestParam(required = false) Integer size) {
         return ResponseEntity.ok(orderService.getAll(page, size));
     }
 
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody Order order) {
+    public ResponseEntity<Void> add(@RequestBody OrderDTO order) {
         orderService.addOrder(order);
         return ResponseEntity.noContent().build();
     }
@@ -39,7 +38,7 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody Order order) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody OrderDTO order) {
         orderService.updateOrder(id, order);
         return ResponseEntity.noContent().build();
     }

@@ -1,12 +1,16 @@
 package by.scooter.api.sevice;
 
-import by.scooter.entity.dto.ClientUserDTO;
-import by.scooter.entity.user.Client;
+import by.scooter.entity.dto.user.ClientInfoDTO;
+import by.scooter.entity.dto.user.ClientUserDTO;
+
+import java.util.List;
 
 public interface ClientService {
-    ClientUserDTO getById(Long id);
+    ClientInfoDTO getById(Long id);
 
-    Client addClient(ClientUserDTO client);
+    ClientInfoDTO addClient(ClientUserDTO client);
+
+    List<ClientInfoDTO> getAll(Integer page, Integer size);
 
     void removeClient(Long id);
 

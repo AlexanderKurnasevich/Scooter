@@ -1,7 +1,7 @@
 package by.scooter.api.sevice;
 
-import by.scooter.entity.dto.UserDTO;
-import by.scooter.entity.dto.UserInfoDTO;
+import by.scooter.entity.dto.user.UserDTO;
+import by.scooter.entity.dto.user.UserInfoDTO;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -11,6 +11,8 @@ public interface UserService extends UserDetailsService {
     void save(UserDTO user);
 
     void update(UserDTO user);
+
+    void remove(Long id);
 
     UserInfoDTO getById(Long id);
 

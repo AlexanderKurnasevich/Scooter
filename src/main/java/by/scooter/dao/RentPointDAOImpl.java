@@ -1,12 +1,11 @@
 package by.scooter.dao;
 
 import by.scooter.api.dao.RentPointDAO;
-import by.scooter.entity.dto.RentPointFilterDTO;
+import by.scooter.entity.dto.location.RentPointFilterDTO;
 import by.scooter.entity.location.RentPoint;
 import by.scooter.entity.location.RentPoint_;
 import by.scooter.entity.vehicle.Scooter;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;

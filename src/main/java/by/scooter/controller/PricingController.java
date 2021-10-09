@@ -1,7 +1,7 @@
 package by.scooter.controller;
 
 import by.scooter.api.sevice.PricingService;
-import by.scooter.entity.pricing.RentPointPricing;
+import by.scooter.entity.dto.pricing.RentPointPricingDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +13,13 @@ public class PricingController {
     private final PricingService pricingService;
 
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody RentPointPricing pricing) {
+    public ResponseEntity<Void> add(@RequestBody RentPointPricingDTO pricing) {
         pricingService.addRentPointPricing(pricing);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody RentPointPricing pricing) {
+    public ResponseEntity<Void> update(@RequestBody RentPointPricingDTO pricing) {
         pricingService.updateRentPointPricing(pricing);
         return ResponseEntity.noContent().build();
     }

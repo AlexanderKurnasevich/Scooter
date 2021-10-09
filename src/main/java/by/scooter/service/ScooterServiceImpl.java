@@ -3,9 +3,11 @@ package by.scooter.service;
 import by.scooter.api.dao.ScooterDAO;
 import by.scooter.api.dao.ScooterModelDAO;
 import by.scooter.api.sevice.ScooterService;
+import by.scooter.api.sevice.UtilService;
+import by.scooter.entity.dto.vehicle.ScooterDTO;
 import by.scooter.entity.vehicle.Scooter;
-import by.scooter.entity.vehicle.ScooterModel;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,26 +20,28 @@ public class ScooterServiceImpl implements ScooterService {
 
     private final ScooterDAO scooterDAO;
     private final ScooterModelDAO scooterModelDAO;
+    private final ModelMapper mapper;
+    private final UtilService utilService;
 
     @Override
-    public Scooter getById(Long id) {
-        return scooterDAO.getById(id);
+    public ScooterDTO getById(Long id) {
+        return mapper.map(scooterDAO.getById(id), ScooterDTO.class);
     }
 
     @Override
-    public List<Scooter> getAll() {
-        return scooterDAO.getAll();
+    public List<ScooterDTO> getAll() {
+        return utilService.convertList(scooterDAO.getAll(), ScooterDTO.class);
     }
 
     @Override
-    public List<Scooter> getAll(Integer page, Integer size) {
-        return scooterDAO.getAll(page, size);
+    public List<ScooterDTO> getAll(Integer page, Integer size) {
+        return utilService.convertList(scooterDAO.getAll(page, size), ScooterDTO.class);
     }
 
     @Override
     @Transactional
-    public Scooter addScooter(Scooter scooter) {
-        return scooterDAO.save(scooter);
+    public ScooterDTO addScooter(ScooterDTO scooter) {
+        return mapper.map(scooterDAO.save(mapper.map(scooter, Scooter.class)), ScooterDTO.class);
     }
 
     @Override
@@ -48,14 +52,21 @@ public class ScooterServiceImpl implements ScooterService {
 
     @Override
     @Transactional
-    public void updateScooter(Long updatedId, Scooter update) {
+    public void updateScooter(Long updatedId, ScooterDTO update) {
         Scooter updated = scooterDAO.getById(updatedId);
-        Optional.ofNullable(update.getChargePercent()).ifPresent(updated::setChargePercent);
-        Optional.ofNullable(update.getHomePoint()).ifPresent(updated::setHomePoint);
-        Optional.ofNullable(update.getOdometer()).ifPresent(updated::setOdometer);
-        if(update.getModel() != null) {
-            updated.setModel(scooterModelDAO.getById(update.getModel().getId()));
+        Scooter src = mapper.map(update, Scooter.class);
+        Optional.ofNullable(src.getChargePercent()).ifPresent(updated::setChargePercent);
+        Optional.ofNullable(src.getHomePoint()).ifPresent(updated::setHomePoint);
+        Optional.ofNullable(src.getOdometer()).ifPresent(updated::setOdometer);
+        if(src.getModel() != null) {
+            updated.setModel(scooterModelDAO.getById(src.getModel().getId()));
         }
+//        Optional.ofNullable(update.getChargePercent()).ifPresent(updated::setChargePercent);
+//        Optional.ofNullable(update.getHomePoint()).ifPresent(updated::setHomePoint);
+//        Optional.ofNullable(update.getOdometer()).ifPresent(updated::setOdometer);
+//        if(update.getModel() != null) {
+//            updated.setModel(scooterModelDAO.getById(update.getModel().getId()));
+//        }
         scooterDAO.update(updated);
     }
 }

@@ -1,4 +1,4 @@
-package by.scooter.entity.dto;
+package by.scooter.entity.dto.location;
 
 import lombok.Data;
 

@@ -1,19 +1,19 @@
 package by.scooter.api.sevice;
 
-import by.scooter.entity.vehicle.ScooterModel;
+import by.scooter.entity.dto.vehicle.ScooterModelDTO;
 
 import java.util.List;
 
 public interface ScooterModelService {
-    ScooterModel getById(Long id);
+    ScooterModelDTO getById(Long id);
 
-    ScooterModel addScooterModel(ScooterModel scooterModel);
+    ScooterModelDTO addScooterModel(ScooterModelDTO scooterModel);
 
     void removeScooterModel(Long id);
 
-    void updateScooterModel(Long updatedId, ScooterModel update);
+    void updateScooterModel(Long updatedId, ScooterModelDTO update);
 
-    List<ScooterModel> getAll();
+    List<ScooterModelDTO> getAll();
 
-    List<ScooterModel> getAll(Integer page, Integer size);
+    List<ScooterModelDTO> getAll(Integer page, Integer size);
 }

@@ -4,8 +4,9 @@ import by.scooter.api.dao.RoleDAO;
 import by.scooter.api.dao.UserDAO;
 import by.scooter.api.sevice.UserService;
 import by.scooter.api.sevice.UtilService;
-import by.scooter.entity.dto.UserDTO;
-import by.scooter.entity.dto.UserInfoDTO;
+import by.scooter.entity.dto.user.RoleDTO;
+import by.scooter.entity.dto.user.UserDTO;
+import by.scooter.entity.dto.user.UserInfoDTO;
 import by.scooter.entity.user.Role;
 import by.scooter.entity.user.User;
 import by.scooter.exception.WrongPasswordException;
@@ -42,24 +43,30 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void save(UserDTO user) {
-        loadRoleIdAndEncodePassword(user);
-        userDAO.save(mapper.map(user, User.class));
+        userDAO.save(loadRoleIdAndEncodePassword(user));
     }
 
     @Override
     @Transactional
     public void update(UserDTO user) {
-        loadRoleIdAndEncodePassword(user);
-        userDAO.update(mapper.map(user, User.class));
+        userDAO.update(loadRoleIdAndEncodePassword(user));
     }
 
-    private void loadRoleIdAndEncodePassword(UserDTO user) {
+    @Override
+    @Transactional
+    public void remove(Long id) {
+        userDAO.delete(id);
+    }
+
+    private User loadRoleIdAndEncodePassword(UserDTO user) {
+        User target = mapper.map(user, User.class);
         Set<Role> roleSet = new HashSet<>();
-        for (Role role : user.getRoles()) {
+        for (RoleDTO role : user.getRoles()) {
             roleSet.add(roleDAO.getByRole(role.getValue()));
         }
-        user.setRoles(roleSet);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        target.setRoles(roleSet);
+        target.setPassword(passwordEncoder.encode(user.getPassword()));
+        return target;
     }
 
     @Override

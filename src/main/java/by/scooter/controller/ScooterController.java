@@ -1,7 +1,7 @@
 package by.scooter.controller;
 
 import by.scooter.api.sevice.ScooterService;
-import by.scooter.entity.vehicle.Scooter;
+import by.scooter.entity.dto.vehicle.ScooterDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,13 +16,13 @@ public class ScooterController {
     private final ScooterService scooterService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Scooter> getScooterById(@PathVariable Long id) {
+    public ResponseEntity<ScooterDTO> getScooterById(@PathVariable Long id) {
         return ResponseEntity.ok(scooterService.getById(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<Scooter>> getScooters(@RequestParam(required = false) Integer page,
-                                                     @RequestParam(required = false) Integer size) {
+    public ResponseEntity<List<ScooterDTO>> getScooters(@RequestParam(required = false) Integer page,
+                                                        @RequestParam(required = false) Integer size) {
         if (page != null && size != null) {
             return ResponseEntity.ok(scooterService.getAll(page, size));
         }
@@ -30,7 +30,7 @@ public class ScooterController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> addScooter(@RequestBody Scooter scooter) {
+    public ResponseEntity<Void> addScooter(@RequestBody ScooterDTO scooter) {
         scooterService.addScooter(scooter);
         return ResponseEntity.noContent().build();
     }
@@ -42,7 +42,7 @@ public class ScooterController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateScooter(@PathVariable Long id, @RequestBody Scooter scooter) {
+    public ResponseEntity<Void> updateScooter(@PathVariable Long id, @RequestBody ScooterDTO scooter) {
         scooterService.updateScooter(id, scooter);
         return ResponseEntity.noContent().build();
     }

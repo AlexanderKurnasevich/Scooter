@@ -1,4 +1,4 @@
-package by.scooter.entity.dto;
+package by.scooter.entity.dto.user;
 
 import lombok.Data;
 

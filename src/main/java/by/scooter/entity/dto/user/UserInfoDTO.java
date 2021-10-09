@@ -1,4 +1,4 @@
-package by.scooter.entity.dto;
+package by.scooter.entity.dto.user;
 
 import by.scooter.entity.user.Role;
 import lombok.*;
@@ -14,5 +14,5 @@ public class UserInfoDTO {
 
     private Long id;
     private String username;
-    private Set<Role> roles;
+    //private Set<Role> roles;
 }

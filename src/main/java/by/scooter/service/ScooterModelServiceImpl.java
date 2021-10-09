@@ -2,8 +2,11 @@ package by.scooter.service;
 
 import by.scooter.api.dao.ScooterModelDAO;
 import by.scooter.api.sevice.ScooterModelService;
+import by.scooter.api.sevice.UtilService;
+import by.scooter.entity.dto.vehicle.ScooterModelDTO;
 import by.scooter.entity.vehicle.ScooterModel;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,15 +17,17 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ScooterModelServiceImpl implements ScooterModelService {
     private final ScooterModelDAO scooterModelDAO;
+    private final ModelMapper mapper;
+    private final UtilService utilService;
 
     @Override
-    public ScooterModel getById(Long id) {
-        return scooterModelDAO.getById(id);
+    public ScooterModelDTO getById(Long id) {
+        return mapper.map(scooterModelDAO.getById(id), ScooterModelDTO.class);
     }
 
     @Override
-    public ScooterModel addScooterModel(ScooterModel scooterModel) {
-        return scooterModelDAO.save(scooterModel);
+    public ScooterModelDTO addScooterModel(ScooterModelDTO scooterModel) {
+        return mapper.map(scooterModelDAO.save(mapper.map(scooterModel, ScooterModel.class)), ScooterModelDTO.class);
     }
 
     @Override
@@ -33,26 +38,27 @@ public class ScooterModelServiceImpl implements ScooterModelService {
 
     @Override
     @Transactional
-    public void updateScooterModel(Long updatedId, ScooterModel update) {
+    public void updateScooterModel(Long updatedId, ScooterModelDTO update) {
         ScooterModel updated = scooterModelDAO.getById(updatedId);
-        Optional.ofNullable(update.getModel()).ifPresent(updated::setModel);
-        Optional.ofNullable(update.getMaker()).ifPresent(updated::setMaker);
-        Optional.ofNullable(update.getChargingTime()).ifPresent(updated::setChargingTime);
-        Optional.ofNullable(update.getMaxLoad()).ifPresent(updated::setMaxLoad);
-        Optional.ofNullable(update.getMaxRange()).ifPresent(updated::setMaxRange);
-        Optional.ofNullable(update.getMaxSpeed()).ifPresent(updated::setMaxSpeed);
-        Optional.ofNullable(update.getPassengerCapacity()).ifPresent(updated::setPassengerCapacity);
-        Optional.ofNullable(update.getVehicleType()).ifPresent(updated::setVehicleType);
+        ScooterModel scr = mapper.map(update, ScooterModel.class);
+        Optional.ofNullable(scr.getModel()).ifPresent(updated::setModel);
+        Optional.ofNullable(scr.getMaker()).ifPresent(updated::setMaker);
+        Optional.ofNullable(scr.getChargingTime()).ifPresent(updated::setChargingTime);
+        Optional.ofNullable(scr.getMaxLoad()).ifPresent(updated::setMaxLoad);
+        Optional.ofNullable(scr.getMaxRange()).ifPresent(updated::setMaxRange);
+        Optional.ofNullable(scr.getMaxSpeed()).ifPresent(updated::setMaxSpeed);
+        Optional.ofNullable(scr.getPassengerCapacity()).ifPresent(updated::setPassengerCapacity);
+        Optional.ofNullable(scr.getVehicleType()).ifPresent(updated::setVehicleType);
         scooterModelDAO.update(updated);
     }
 
     @Override
-    public List<ScooterModel> getAll() {
-        return scooterModelDAO.getAll();
+    public List<ScooterModelDTO> getAll() {
+        return utilService.convertList(scooterModelDAO.getAll(), ScooterModelDTO.class);
     }
 
     @Override
-    public List<ScooterModel> getAll(Integer page, Integer size) {
-        return scooterModelDAO.getAll(page, size);
+    public List<ScooterModelDTO> getAll(Integer page, Integer size) {
+        return utilService.convertList(scooterModelDAO.getAll(page, size), ScooterModelDTO.class);
     }
 }

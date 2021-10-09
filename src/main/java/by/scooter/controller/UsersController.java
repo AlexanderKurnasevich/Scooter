@@ -1,19 +1,15 @@
 package by.scooter.controller;
 
 import by.scooter.api.sevice.UserService;
-import by.scooter.entity.dto.UserDTO;
-import by.scooter.entity.dto.UserInfoDTO;
-import by.scooter.entity.enumerator.RoleValue;
-import by.scooter.entity.user.Role;
+import by.scooter.entity.dto.user.UserDTO;
+import by.scooter.entity.dto.user.UserInfoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -52,5 +48,11 @@ public class UsersController {
     public ResponseEntity<List<UserInfoDTO>> getUsers(@RequestParam(required = false) Integer page,
                                                       @RequestParam(required = false) Integer size) {
         return ResponseEntity.ok(userService.getAll(page, size));
+    }
+
+    @DeleteMapping("/users")
+    public ResponseEntity<Void> remove(@RequestParam Long id) {
+        userService.remove(id);
+        return ResponseEntity.noContent().build();
     }
 }

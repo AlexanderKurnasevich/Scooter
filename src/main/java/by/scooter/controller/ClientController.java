@@ -3,8 +3,9 @@ package by.scooter.controller;
 import by.scooter.api.sevice.ClientService;
 import by.scooter.api.sevice.OrderService;
 import by.scooter.api.sevice.UserService;
-import by.scooter.entity.dto.ClientUserDTO;
-import by.scooter.entity.event.Order;
+import by.scooter.entity.dto.event.OrderDTO;
+import by.scooter.entity.dto.user.ClientInfoDTO;
+import by.scooter.entity.dto.user.ClientUserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +23,20 @@ public class ClientController {
     private final OrderService orderService;
 
     @GetMapping("/clients/{id}")
-    public ResponseEntity<ClientUserDTO> show(@PathVariable Long id) {
+    public ResponseEntity<ClientInfoDTO> show(@PathVariable Long id) {
         return ResponseEntity.ok(clientService.getById(id));
     }
 
+    @GetMapping("/clients")
+    public ResponseEntity<List<ClientInfoDTO>> getAll(@RequestParam(required = false) Integer page,
+                                                      @RequestParam(required = false) Integer size){
+        return ResponseEntity.ok(clientService.getAll(page, size));
+    }
+
     @GetMapping("/clients/{id}/history")
-    public ResponseEntity<List<Order>> clientOrders(@PathVariable Long id,
-                                                    @RequestParam(required = false) Integer page,
-                                                    @RequestParam(required = false) Integer size){
+    public ResponseEntity<List<OrderDTO>> clientOrders(@PathVariable Long id,
+                                                       @RequestParam(required = false) Integer page,
+                                                       @RequestParam(required = false) Integer size){
         return ResponseEntity.ok(orderService.ordersByClient(id, page, size));
     }
 
@@ -41,9 +48,6 @@ public class ClientController {
 
     @PutMapping("/clients/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ClientUserDTO client) {
-        if (!Objects.equals(userService.getAuthorizedUser().getId(), clientService.getById(id).getUserId())) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
         client.setId(id);
         clientService.updateClient(id, client);
         return ResponseEntity.noContent().build();

@@ -1,21 +1,22 @@
 package by.scooter.api.sevice;
 
+import by.scooter.entity.dto.event.OrderDTO;
 import by.scooter.entity.event.Order;
 
 import java.util.List;
 
 public interface OrderService {
-    Order getById(Long id);
+    OrderDTO getById(Long id);
 
-    Order addOrder(Order order);
+    OrderDTO addOrder(OrderDTO order);
 
     void removeOrder(Long id);
 
-    void updateOrder(Long updatedId, Order update);
+    void updateOrder(Long updatedId, OrderDTO update);
 
-    List<Order> getAll(Integer page, Integer size);
+    List<OrderDTO> getAll(Integer page, Integer size);
 
-    List<Order> ordersByScooter(Long id);
+    List<OrderDTO> ordersByScooter(Long id, Integer page, Integer size);
 
-    List<Order> ordersByClient(Long id, Integer page, Integer size);
+    List<OrderDTO> ordersByClient(Long id, Integer page, Integer size);
 }

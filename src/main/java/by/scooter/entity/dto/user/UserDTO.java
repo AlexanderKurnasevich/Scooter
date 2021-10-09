@@ -1,6 +1,5 @@
-package by.scooter.entity.dto;
+package by.scooter.entity.dto.user;
 
-import by.scooter.entity.user.Role;
 import lombok.*;
 
 import java.util.Set;
@@ -16,5 +15,5 @@ public class UserDTO {
     private Long id;
     private String username;
     private String password;
-    private Set<Role> roles;
+    private Set<RoleDTO> roles;
 }

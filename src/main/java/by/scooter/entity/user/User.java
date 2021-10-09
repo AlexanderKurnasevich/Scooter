@@ -21,6 +21,7 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = true)
 public class User extends AbstractEntity implements UserDetails {
 
+    @Column(unique = true)
     @Pattern(regexp = "^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")
     @NotNull
     private String username;

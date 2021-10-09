@@ -1,25 +1,27 @@
 package by.scooter.api.sevice;
 
-import by.scooter.entity.pricing.RentPointPricing;
-import by.scooter.entity.pricing.ScooterModelPricing;
-import by.scooter.entity.pricing.SpecialModelPricing;
+import by.scooter.entity.dto.pricing.RentPointPricingDTO;
+import by.scooter.entity.dto.pricing.ScooterModelPricingDTO;
+import by.scooter.entity.dto.pricing.SpecialModelPricingDTO;
 
 public interface PricingService {
-    RentPointPricing addRentPointPricing(RentPointPricing pricing);
+    RentPointPricingDTO addRentPointPricing(RentPointPricingDTO pricing);
 
-    RentPointPricing getRentPointPricingByPointId(Long rentPointId);
+    RentPointPricingDTO getRentPointPricingByPointId(Long rentPointId);
 
-    void addSpecialPricing(Long rentPointId, SpecialModelPricing... pricingSet);
+    void updateRentPointPricing(RentPointPricingDTO update);
+
+    void updateRentPointPricing(Long updatedId, RentPointPricingDTO update);
+
+
+    void addSpecialPricing(Long rentPointId, SpecialModelPricingDTO... pricingArray);
 
     void removeRentPointPricing(Long id);
 
-    void updateRentPointPricing(RentPointPricing update);
 
-    void updateRentPointPricing(Long updatedId, RentPointPricing update);
-
-    ScooterModelPricing addScooterModelPricing(ScooterModelPricing pricing);
+    ScooterModelPricingDTO addScooterModelPricing(ScooterModelPricingDTO pricing);
 
     void removeScooterModelPricing(Long id);
 
-    void updateScooterModelPricing(Long updatedId, ScooterModelPricing update);
+    void updateScooterModelPricing(Long updatedId, ScooterModelPricingDTO update);
 }
