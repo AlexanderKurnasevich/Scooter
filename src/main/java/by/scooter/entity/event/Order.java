@@ -19,6 +19,10 @@ public class Order extends Event {
     @ManyToOne
     private Client client;
 
+    @Column(nullable = false, columnDefinition = "float default 0.0")
+    @Positive
+    private Float price;
+
     @Column(nullable = false)
     @Positive
     private Integer mileage; //in meters
