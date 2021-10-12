@@ -12,8 +12,6 @@ import by.scooter.entity.user.Client;
 import by.scooter.entity.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -61,13 +59,19 @@ public class ClientServiceImpl implements ClientService {
     @Override
     @Transactional
     public void updateClient(Long updatedId, ClientUserDTO update) {
-        Client updated = clientDAO.getById(updatedId);
-        if (!Objects.equals(userService.getAuthorizedUser().getId(), updated.getUser().getId())) {
-            throw new AccessDeniedException("Client isn't owner of user");
-        }
+        Client updated = checkOwner(updatedId);
         Optional.ofNullable(update.getEmail()).ifPresent(updated::setEmail);
         Optional.ofNullable(update.getFirstName()).ifPresent(updated::setFirstName);
         Optional.ofNullable(update.getLastName()).ifPresent(updated::setLastName);
         clientDAO.update(updated);
+    }
+
+    @Override
+    public Client checkOwner(Long id) throws AccessDeniedException{
+        Client checked = clientDAO.getById(id);
+        if (!Objects.equals(userService.getAuthorizedUser().getId(), checked.getUser().getId())) {
+            throw new AccessDeniedException("Client isn't owner of user");
+        }
+        return checked;
     }
 }

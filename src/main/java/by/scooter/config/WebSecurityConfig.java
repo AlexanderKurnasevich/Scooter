@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,11 +16,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled=true)
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String ADMIN = RoleValue.ROLE_ADMIN.getTitle();
-    private static final String USER = RoleValue.ROLE_USER.getTitle();
+    private static final String CLIENT = RoleValue.ROLE_CLIENT.getTitle();
     private UserService userService;
 
     @Autowired
@@ -37,9 +39,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                    .antMatchers("/login", "/signup", "/scooters").not().fullyAuthenticated()
-                    .antMatchers("/users/**", "/masters/**").permitAll()
-                    .antMatchers("/", "/orders/**", "/cars/**", "/spots/**").permitAll()
+                .antMatchers("/login", "/signup").not().fullyAuthenticated()
+                .antMatchers("/orders").hasAnyRole(ADMIN, CLIENT)
+                .antMatchers("/pricing","/scooter").hasRole(ADMIN)
+                .antMatchers("/", "/scooters/models").permitAll()
                 .and()
                 .logout().permitAll()
                 .logoutSuccessUrl("/")

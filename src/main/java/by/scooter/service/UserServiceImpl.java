@@ -7,6 +7,7 @@ import by.scooter.api.sevice.UtilService;
 import by.scooter.entity.dto.user.RoleDTO;
 import by.scooter.entity.dto.user.UserDTO;
 import by.scooter.entity.dto.user.UserInfoDTO;
+import by.scooter.entity.user.Client;
 import by.scooter.entity.user.Role;
 import by.scooter.entity.user.User;
 import by.scooter.exception.WrongPasswordException;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -109,5 +112,14 @@ public class UserServiceImpl implements UserService {
             username = principal.toString();
         }
         return mapper.map(loadUserByUsername(username), UserInfoDTO.class);
+    }
+
+    @Override
+    public User checkOwner(Long id) throws AccessDeniedException {
+        User checked = userDAO.getById(id);
+        if (!Objects.equals(getAuthorizedUser().getId(), id)) {
+            throw new AccessDeniedException("Current user isn't owner");
+        }
+        return checked;
     }
 }

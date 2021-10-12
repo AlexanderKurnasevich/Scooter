@@ -4,6 +4,7 @@ import by.scooter.api.sevice.OrderService;
 import by.scooter.entity.dto.event.OrderDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,11 +15,13 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<OrderDTO> getById(@PathVariable Long id) {
         return ResponseEntity.ok(orderService.getById(id));
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<List<OrderDTO>> getAll(@RequestParam(required = false) Integer page,
                                                  @RequestParam(required = false) Integer size) {
