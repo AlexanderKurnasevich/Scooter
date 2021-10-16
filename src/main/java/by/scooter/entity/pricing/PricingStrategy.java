@@ -20,10 +20,4 @@ public abstract class PricingStrategy extends AbstractEntity {
 
     @Column(nullable = false)
     protected Float dayPrice;
-
-    @Column(nullable = false)
-    protected Float weekPrice;
-
-    @Column(nullable = false)
-    protected Float monthPrice;
 }

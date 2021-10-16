@@ -10,8 +10,14 @@ public interface UtilService {
         return exploreDate.compareTo(dateFrom) * dateTo.compareTo(exploreDate) >= 0;
     }
 
+    static double roundUpToXDecimal(double n, int x) {
+        return Math.round(n * Math.pow(10, x)) / ((float) Math.pow(10, x));
+    }
+
     <T, E> List<T> convertArray(Object[] array, Class<T> type);
+
     <T, E> List<T> convertList(List<E> list, Class<T> type);
+
     <T, E> Set<T> convertSet(Set<E> set, Class<T> type);
 
 }

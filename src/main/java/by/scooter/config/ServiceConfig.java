@@ -5,6 +5,8 @@ import by.scooter.entity.dto.user.ClientInfoDTO;
 import by.scooter.entity.dto.user.ClientUserDTO;
 import by.scooter.entity.location.RentPoint;
 import by.scooter.entity.user.Client;
+import by.scooter.service.ScooterDTOSetConvertor;
+import by.scooter.service.ScooterSetConvertor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,13 +27,18 @@ public class ServiceConfig {
                 .addMappings(mapper -> mapper.map(src -> src.getUser().getId(), ClientInfoDTO::setUserId));
 
         modelMapper.typeMap(RentPoint.class, RentPointDTO.class)
-                .addMappings(mapper -> mapper.map(src -> src.getAddress().getCity().getCountry().getCountry(),
+                .addMappings(mapper -> mapper.map(src -> src.getAddress().getCity().getCountry().getCountryName(),
                         RentPointDTO::setCountry))
-                .addMappings(mapper -> mapper.map(src -> src.getAddress().getCity().getCity(), RentPointDTO::setCity))
-                .addMappings(mapper -> mapper.map(src -> src.getAddress().getPrefix(), RentPointDTO::setPrefix))
+                .addMappings(mapper -> mapper.map(src -> src.getAddress().getCity().getCityName(), RentPointDTO::setCity))
                 .addMappings(mapper -> mapper.map(src -> src.getAddress().getStreet(), RentPointDTO::setStreet))
+//                .addMappings(mapper -> mapper.using(new ScooterSetConvertor())
+//                        .map(RentPoint::getScooters, RentPointDTO::setScooters))
                 .addMappings(mapper -> mapper.map(src -> src.getAddress().getNumber(), RentPointDTO::setNumber))
                 .addMappings(mapper -> mapper.map(src -> src.getAddress().getPostfix(), RentPointDTO::setPostfix));
+
+//        modelMapper.typeMap(RentPointDTO.class, RentPoint.class)
+//                .addMappings(mapper -> mapper.using(new ScooterDTOSetConvertor())
+//                        .map(RentPointDTO::getScooters, RentPoint::setScooters));
 
         return modelMapper;
     }

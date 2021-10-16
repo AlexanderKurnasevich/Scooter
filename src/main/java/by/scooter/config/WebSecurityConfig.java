@@ -38,17 +38,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf()
                 .disable()
+                .httpBasic()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/login", "/signup").not().fullyAuthenticated()
-                .antMatchers("/orders").hasAnyRole(ADMIN, CLIENT)
-                .antMatchers("/pricing","/scooter").hasRole(ADMIN)
-                .antMatchers("/", "/scooters/models").permitAll()
                 .and()
                 .logout().permitAll()
                 .logoutSuccessUrl("/")
-                .and().httpBasic()
                 .and().sessionManagement().disable();
     }
+
+//                    .antMatchers("/orders").hasAnyRole(ADMIN, CLIENT)
+//                .antMatchers("/pricing","/scooter").hasRole(ADMIN)
+//                .antMatchers("/", "/scooters/models").permitAll()
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

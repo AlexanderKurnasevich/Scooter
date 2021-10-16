@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @Getter
@@ -18,6 +17,6 @@ public class RentPoint extends AbstractEntity {
     @OneToOne(fetch = FetchType.EAGER)
     private Address address;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "currentPoint")
     private Set<Scooter> scooters;
 }

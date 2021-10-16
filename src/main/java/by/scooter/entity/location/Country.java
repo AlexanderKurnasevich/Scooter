@@ -17,5 +17,5 @@ public class Country extends AbstractEntity {
 
     @Column(nullable = false, unique = true)
     @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Только буквы")
-    private String country;
+    private String countryName;
 }

@@ -12,7 +12,6 @@ public class RentPointDTO {
     private Long addressId;
     private String country;
     private String city;
-    private String prefix;
     private String street;
     private Short number;
     private String postfix;

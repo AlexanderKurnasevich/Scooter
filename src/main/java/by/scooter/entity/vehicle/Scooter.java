@@ -2,10 +2,7 @@ package by.scooter.entity.vehicle;
 
 import by.scooter.entity.AbstractEntity;
 import by.scooter.entity.location.RentPoint;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
@@ -23,12 +20,8 @@ public class Scooter extends AbstractEntity {
     @JoinColumn(nullable = false)
     private ScooterModel model;
 
-    @ManyToOne
-    private RentPoint homePoint;
-
-    @Column(nullable = false, columnDefinition = "integer default 100")
-    @Positive
-    private Float chargePercent;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private RentPoint currentPoint;
 
     @Column(nullable = false, columnDefinition = "integer default 0")
     @Positive
@@ -40,14 +33,11 @@ public class Scooter extends AbstractEntity {
         if (!(o instanceof Scooter)) return false;
         if (!super.equals(o)) return false;
         Scooter scooter = (Scooter) o;
-        return getModel().equals(scooter.getModel())
-                && getHomePoint().equals(scooter.getHomePoint())
-                && getChargePercent().equals(scooter.getChargePercent())
-                && getOdometer().equals(scooter.getOdometer());
+        return getModel().equals(scooter.getModel())  && getOdometer().equals(scooter.getOdometer());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getModel(), getHomePoint(), getChargePercent(), getOdometer());
+        return Objects.hash(super.hashCode(), getModel(), getOdometer());
     }
 }

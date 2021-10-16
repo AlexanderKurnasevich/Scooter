@@ -26,6 +26,7 @@ public class ScooterModelServiceImpl implements ScooterModelService {
     }
 
     @Override
+    @Transactional
     public ScooterModelDTO addScooterModel(ScooterModelDTO scooterModel) {
         return mapper.map(scooterModelDAO.save(mapper.map(scooterModel, ScooterModel.class)), ScooterModelDTO.class);
     }

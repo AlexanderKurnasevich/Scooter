@@ -35,6 +35,11 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public ClientInfoDTO getAuthorizedClient() {
+        return mapper.map(clientDAO.getByUsername(userService.getAuthorizedUser().getUsername()), ClientInfoDTO.class);
+    }
+
+    @Override
     public List<ClientInfoDTO> getAll(Integer page, Integer size) {
         return utilService.convertList(clientDAO.getAll(page, size), ClientInfoDTO.class);
     }

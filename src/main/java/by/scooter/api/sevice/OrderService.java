@@ -1,14 +1,14 @@
 package by.scooter.api.sevice;
 
+import by.scooter.entity.dto.event.OrderCreateDTO;
 import by.scooter.entity.dto.event.OrderDTO;
-import by.scooter.entity.event.Order;
 
 import java.util.List;
 
 public interface OrderService {
     OrderDTO getById(Long id);
 
-    OrderDTO addOrder(OrderDTO order);
+    OrderDTO addOrder(OrderCreateDTO order);
 
     void removeOrder(Long id);
 
@@ -19,4 +19,6 @@ public interface OrderService {
     List<OrderDTO> ordersByScooter(Long id, Integer page, Integer size);
 
     List<OrderDTO> ordersByClient(Long id, Integer page, Integer size);
+
+    void handleOrder(OrderDTO order, Long rentPointId);
 }

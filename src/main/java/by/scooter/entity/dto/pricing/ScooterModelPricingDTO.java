@@ -10,7 +10,5 @@ public class ScooterModelPricingDTO {
     private Float minutePrice;
     private Float hourPrice;
     private Float dayPrice;
-    private Float weekPrice;
-    private Float monthPrice;
 
 }

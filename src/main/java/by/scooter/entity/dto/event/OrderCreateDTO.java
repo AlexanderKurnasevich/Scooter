@@ -5,13 +5,13 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class OrderDTO {
+public class OrderCreateDTO {
 
-    private Long id;
     private LocalDateTime eventStart;
     private LocalDateTime eventEnd;
     private Float price;
     private Long scooterId;
+    private Long scooterModelId;
     private Long clientId;
-    private Integer mileage; //in meters
+    private Long rentPointId;
 }

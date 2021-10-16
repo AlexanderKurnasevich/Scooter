@@ -10,6 +10,8 @@ import java.util.List;
 public interface ClientService {
     ClientInfoDTO getById(Long id);
 
+    ClientInfoDTO getAuthorizedClient();
+
     ClientInfoDTO addClient(ClientUserDTO client);
 
     List<ClientInfoDTO> getAll(Integer page, Integer size);

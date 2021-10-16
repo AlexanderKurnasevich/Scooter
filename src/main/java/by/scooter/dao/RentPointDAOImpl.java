@@ -2,7 +2,10 @@ package by.scooter.dao;
 
 import by.scooter.api.dao.RentPointDAO;
 import by.scooter.entity.dto.location.RentPointFilterDTO;
-import by.scooter.entity.location.RentPoint;
+import by.scooter.entity.location.*;
+import by.scooter.entity.location.Address_;
+import by.scooter.entity.location.City_;
+import by.scooter.entity.location.Country_;
 import by.scooter.entity.location.RentPoint_;
 import by.scooter.entity.vehicle.Scooter;
 import org.springframework.stereotype.Repository;
@@ -62,10 +65,12 @@ public class RentPointDAOImpl extends AbstractDAO<RentPoint> implements RentPoin
     private Predicate makePredicate(CriteriaBuilder builder, Root<RentPoint> entityRoot, RentPointFilterDTO filter) {
         List<Predicate> predicates = new ArrayList<>();
         if (filter.getCountry() != null) {
-            predicates.add(builder.equal(entityRoot.get(RentPoint_.COUNTRY), filter.getCountry()));
+            predicates.add(builder.equal(entityRoot.get(RentPoint_.ADDRESS).get(Address_.CITY).get(City_.COUNTRY)
+                    .get(Country_.COUNTRY_NAME), filter.getCountry()));
         }
         if (filter.getCity() != null) {
-            predicates.add(builder.equal(entityRoot.get(RentPoint_.CITY), filter.getCity()));
+            predicates.add(builder.equal(entityRoot.get(RentPoint_.ADDRESS).get(Address_.CITY).get(City_.COUNTRY)
+                    .get(Country_.COUNTRY_NAME), filter.getCity()));
         }
         return builder.and(predicates.toArray(new Predicate[predicates.size()]));
     }

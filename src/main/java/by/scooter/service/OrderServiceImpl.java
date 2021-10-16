@@ -3,10 +3,13 @@ package by.scooter.service;
 import by.scooter.api.dao.ClientDAO;
 import by.scooter.api.dao.OrderDAO;
 import by.scooter.api.dao.ScooterDAO;
-import by.scooter.api.sevice.OrderService;
-import by.scooter.api.sevice.UtilService;
+import by.scooter.api.sevice.*;
+import by.scooter.entity.dto.event.OrderCreateDTO;
 import by.scooter.entity.dto.event.OrderDTO;
+import by.scooter.entity.dto.user.ClientInfoDTO;
 import by.scooter.entity.event.Order;
+import by.scooter.entity.user.Client;
+import by.scooter.entity.user.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,9 @@ public class OrderServiceImpl implements OrderService {
     private final OrderDAO orderDAO;
     private final ModelMapper mapper;
     private final UtilService utilService;
+    private final ScooterService scooterService;
+    private final ClientService clientService;
+    private final PricingService pricingService;
 
     @Override
     public OrderDTO getById(Long id) {
@@ -29,7 +35,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO addOrder(OrderDTO order) {
+    public OrderDTO addOrder(OrderCreateDTO order) {
+        Order newOrder;
+        order.setClientId(clientService.getAuthorizedClient().getId());
+        order.setPrice(pricingService.calculatePrice(order, null));
         return mapper.map(orderDAO.save(mapper.map(order, Order.class)), OrderDTO.class);
     }
 
@@ -58,5 +67,12 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDTO> ordersByClient(Long id, Integer page, Integer size) {
         return utilService.convertList(orderDAO.getByClient(id, page, size), OrderDTO.class);
+    }
+
+    @Override
+    public void handleOrder(OrderDTO order, Long rentPointId) {
+        updateOrder(order.getId(), order);
+        scooterService.addMileage(order.getScooterId(), order.getMileage());
+        scooterService.moveScooter(order.getScooterId(), rentPointId);
     }
 }

@@ -1,10 +1,13 @@
 package by.scooter.controller;
 
 import by.scooter.api.sevice.PricingService;
-import by.scooter.entity.dto.pricing.RentPointPricingDTO;
+import by.scooter.entity.dto.pricing.ScooterModelPricingDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/pricing")
@@ -12,15 +15,30 @@ import org.springframework.web.bind.annotation.*;
 public class PricingController {
     private final PricingService pricingService;
 
+    @GetMapping
+    public ResponseEntity<List<ScooterModelPricingDTO>> getAll(@RequestParam(required = false) Integer page,
+                                                               @RequestParam(required = false) Integer size) {
+        return ResponseEntity.ok(pricingService.getAll(page, size));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ScooterModelPricingDTO> getScooterById(@PathVariable Long id) {
+        return ResponseEntity.ok(pricingService.getByModelId(id));
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody RentPointPricingDTO pricing) {
-        pricingService.addRentPointPricing(pricing);
+    public ResponseEntity<Void> add(@RequestBody ScooterModelPricingDTO pricing) {
+        pricingService.addScooterModelPricing(pricing);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
-    public ResponseEntity<Void> update(@RequestBody RentPointPricingDTO pricing) {
-        pricingService.updateRentPointPricing(pricing);
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ScooterModelPricingDTO pricing) {
+        pricingService.updateScooterModelPricing(id, pricing);
         return ResponseEntity.noContent().build();
     }
+
+
 }

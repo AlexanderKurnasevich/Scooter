@@ -8,6 +8,8 @@ import by.scooter.entity.dto.user.ClientUserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,9 +21,13 @@ public class ClientController {
     private final ClientService clientService;
     private final OrderService orderService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
     @GetMapping("/clients/{id}")
     public ResponseEntity<ClientInfoDTO> show(@PathVariable Long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CLIENT"))) {
+            clientService.checkOwner(id);
+        }
         return ResponseEntity.ok(clientService.getById(id));
     }
 
@@ -52,6 +58,13 @@ public class ClientController {
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ClientUserDTO client) {
         client.setId(id);
         clientService.updateClient(id, client);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
+    @PutMapping("/orders/finish")
+    public ResponseEntity<Void> finishOrder(@RequestBody OrderDTO order, @RequestParam Long rentPointId) {
+        orderService.handleOrder(order, rentPointId);
         return ResponseEntity.noContent().build();
     }
 }

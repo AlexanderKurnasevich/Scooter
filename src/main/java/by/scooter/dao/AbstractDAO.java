@@ -31,7 +31,6 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
     }
 
     @Override
-    @Transactional
     public T save(T entity) {
         try {
             entityManager.persist(entity);

@@ -19,7 +19,7 @@ public class City extends AbstractEntity {
 
     @Column(nullable = false)
     @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Только буквы")
-    private String city;
+    private String cityName;
 
     @ManyToOne
     private Country country;

@@ -5,6 +5,7 @@ import by.scooter.api.dao.ScooterModelDAO;
 import by.scooter.api.sevice.ScooterService;
 import by.scooter.api.sevice.UtilService;
 import by.scooter.entity.dto.vehicle.ScooterDTO;
+import by.scooter.entity.dto.vehicle.ScooterFilterDTO;
 import by.scooter.entity.vehicle.Scooter;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -39,6 +40,11 @@ public class ScooterServiceImpl implements ScooterService {
     }
 
     @Override
+    public List<ScooterDTO> getAll(ScooterFilterDTO filterDTO, Integer page, Integer size) {
+        return scooterDAO.getAll(filterDTO, page, size);
+    }
+
+    @Override
     @Transactional
     public ScooterDTO addScooter(ScooterDTO scooter) {
         return mapper.map(scooterDAO.save(mapper.map(scooter, Scooter.class)), ScooterDTO.class);
@@ -55,18 +61,26 @@ public class ScooterServiceImpl implements ScooterService {
     public void updateScooter(Long updatedId, ScooterDTO update) {
         Scooter updated = scooterDAO.getById(updatedId);
         Scooter src = mapper.map(update, Scooter.class);
-        Optional.ofNullable(src.getChargePercent()).ifPresent(updated::setChargePercent);
-        Optional.ofNullable(src.getHomePoint()).ifPresent(updated::setHomePoint);
         Optional.ofNullable(src.getOdometer()).ifPresent(updated::setOdometer);
         if(src.getModel() != null) {
             updated.setModel(scooterModelDAO.getById(src.getModel().getId()));
         }
-//        Optional.ofNullable(update.getChargePercent()).ifPresent(updated::setChargePercent);
-//        Optional.ofNullable(update.getHomePoint()).ifPresent(updated::setHomePoint);
-//        Optional.ofNullable(update.getOdometer()).ifPresent(updated::setOdometer);
-//        if(update.getModel() != null) {
-//            updated.setModel(scooterModelDAO.getById(update.getModel().getId()));
-//        }
         scooterDAO.update(updated);
+    }
+
+    @Override
+    @Transactional
+    public void addMileage(Long scooterId, Integer mileage) {
+        Scooter updated = scooterDAO.getById(scooterId);
+        updated.setOdometer(updated.getOdometer() + mileage);
+        scooterDAO.update(updated);
+    }
+
+    @Override
+    @Transactional
+    public void moveScooter(Long scooterId, Long rentPointId) {
+        ScooterDTO scooterDTO = new ScooterDTO();
+        scooterDTO.setCurrentPointId(rentPointId);
+        updateScooter(scooterId, scooterDTO);
     }
 }

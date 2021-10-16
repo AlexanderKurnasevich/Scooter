@@ -12,14 +12,11 @@ import javax.persistence.*;
 @Table(
         name="addresses",
         uniqueConstraints=
-        @UniqueConstraint(columnNames={"prefix","street","number","postfix", "city_id"})
+        @UniqueConstraint(columnNames={"street","number","postfix", "city_id"})
 )
 public class Address extends AbstractEntity {
 
-    @Column(nullable = false)
-    private String prefix;
-
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String street;
 
     @Column
