@@ -1,61 +1,56 @@
 package by.scooter.dao;
 
 import by.scooter.api.dao.ScooterDAO;
-import by.scooter.entity.dto.vehicle.ScooterDTO;
 import by.scooter.entity.dto.vehicle.ScooterFilterDTO;
-import by.scooter.entity.location.RentPoint;
 import by.scooter.entity.vehicle.Scooter;
+import by.scooter.entity.vehicle.Scooter_;
+import by.scooter.exception.VacantScooterNotFound;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class ScooterDAOImpl extends AbstractDAO<Scooter> implements ScooterDAO {
+
+    private static final String VACANT_SCOOTERS = """
+            SELECT id, odometer, currentPoint_id, model_id
+            FROM scooters
+            	LEFT JOIN (SELECT scooter_id
+            			   FROM orders
+                           WHERE (:evStart BETWEEN eventStart AND eventEnd
+            				   OR :evEnd BETWEEN eventStart AND eventEnd
+            				   OR eventStart BETWEEN :evStart AND :evEnd
+            				   OR eventEnd BETWEEN :evStart AND :evEnd ))
+            			   AS busy_orders
+            	ON scooter_id = scooters.id
+            	WHERE scooter_id is null
+            	AND currentPoint_id = :point
+                AND model_id = :model
+                ORDER BY :sort""";
+
     @Override
-    public List<ScooterDTO> getAll(ScooterFilterDTO filter, Integer page, Integer size) {
-        /*CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Scooter> criteriaQuery = builder.createQuery(getClazz());
-        Root<Scooter> entityRoot = criteriaQuery.from(getClazz());
-
-        if (filter.getModelId() != null || filter.getRentPoint() != null) {
-            Predicate predicate = makePredicate(builder, entityRoot, filter);
-            criteriaQuery.select(entityRoot).where(predicate);
-        } else {
-            criteriaQuery.select(entityRoot);
+    public List<Scooter> getVacant(ScooterFilterDTO filter, Integer page, Integer size) {
+        if (filter.getSortedColumn() == null) {
+            filter.setSortedColumn(Scooter_.ODOMETER);
         }
+        var query = entityManager.createNativeQuery(VACANT_SCOOTERS, Scooter.class)
+                .setParameter("evStart", filter.getEventStart())
+                .setParameter("evEnd", filter.getEventEnd())
+                .setParameter("point", filter.getRentPointId())
+                .setParameter("model", filter.getScooterModelId())
+                .setParameter("sort", filter.getSortedColumn());
 
-        if (filter.getSortedColumn() != null) {
-            criteriaQuery.orderBy(builder.asc(entityRoot.get(filter.getSortedColumn())));
-        }
-
-        TypedQuery<Order> query = entityManager.createQuery(criteriaQuery);
         if (page != null && size != null) {
             query.setFirstResult((page - 1) * size);
             query.setMaxResults(size);
         }
 
-        return query.getResultList();
-    }
-
-    private Predicate makePredicate(CriteriaBuilder builder, Root<Order> entityRoot, OrderFilterDTO filter) {
-        List<Predicate> predicates = new ArrayList<>();
-        if (filter.getStatus() != null) {
-            predicates.add(builder.equal(entityRoot.get(Order_.STATUS), filter.getStatus()));
+        var res = query.getResultList();
+        if (res.isEmpty()) {
+            throw new VacantScooterNotFound("No available scooters id: " + filter.getScooterModelId() +
+                    " model in rent point {} " + filter.getRentPointId());
         }
-        if (filter.getDateFrom() != null) {
-            predicates.add(builder.greaterThanOrEqualTo(entityRoot.get(filter.getDateColumn()), filter.getDateFrom()));
-        }
-        if (filter.getDateTo() != null) {
-            predicates.add(builder.lessThanOrEqualTo(entityRoot.get(filter.getDateColumn()), filter.getDateTo()));
-        }
-        return builder.and(predicates.toArray(new Predicate[predicates.size()]));*/
-        return null;
+        return (List<Scooter>) res;
     }
 
     @Override

@@ -7,12 +7,14 @@ import by.scooter.api.sevice.*;
 import by.scooter.entity.dto.event.OrderCreateDTO;
 import by.scooter.entity.dto.event.OrderDTO;
 import by.scooter.entity.dto.user.ClientInfoDTO;
+import by.scooter.entity.dto.vehicle.ScooterFilterDTO;
 import by.scooter.entity.event.Order;
 import by.scooter.entity.user.Client;
 import by.scooter.entity.user.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,10 +37,12 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public OrderDTO addOrder(OrderCreateDTO order) {
-        Order newOrder;
         order.setClientId(clientService.getAuthorizedClient().getId());
         order.setPrice(pricingService.calculatePrice(order, null));
+        order.setScooterId(scooterService.getVacantScooters(mapper
+                .map(order, ScooterFilterDTO.class),1, 1).get(0).getId());
         return mapper.map(orderDAO.save(mapper.map(order, Order.class)), OrderDTO.class);
     }
 
@@ -48,6 +52,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public void updateOrder(Long updatedId, OrderDTO update) {
         Order updated = orderDAO.getById(updatedId);
         Optional.ofNullable(update.getMileage()).ifPresent(updated::setMileage);
@@ -70,6 +75,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public void handleOrder(OrderDTO order, Long rentPointId) {
         updateOrder(order.getId(), order);
         scooterService.addMileage(order.getScooterId(), order.getMileage());

@@ -13,7 +13,7 @@ import javax.validation.constraints.Pattern;
 @Table(
         name="cities",
         uniqueConstraints=
-        @UniqueConstraint(columnNames={"city", "country_id"})
+        @UniqueConstraint(columnNames={"cityName", "country_id"})
 )
 public class City extends AbstractEntity {
 

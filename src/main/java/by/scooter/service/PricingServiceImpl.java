@@ -62,7 +62,7 @@ public class PricingServiceImpl implements PricingService {
 
     @Override
     public Float calculatePrice(OrderCreateDTO order, Discount discount) {
-        long minutes = ChronoUnit.MINUTES.between(order.getEventEnd(), order.getEventStart());
+        long minutes = ChronoUnit.MINUTES.between(order.getEventStart(), order.getEventEnd());
         float res = minutes * getByModelId(order.getScooterModelId()).getMinutePrice();
         if (discount != null) {
             res *= discount.getDiscountFactor();

@@ -40,8 +40,8 @@ public class ScooterServiceImpl implements ScooterService {
     }
 
     @Override
-    public List<ScooterDTO> getAll(ScooterFilterDTO filterDTO, Integer page, Integer size) {
-        return scooterDAO.getAll(filterDTO, page, size);
+    public List<ScooterDTO> getVacantScooters(ScooterFilterDTO filterDTO, Integer page, Integer size) {
+        return utilService.convertList(scooterDAO.getVacant(filterDTO, page, size), ScooterDTO.class);
     }
 
     @Override

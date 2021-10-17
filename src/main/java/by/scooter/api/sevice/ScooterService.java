@@ -12,7 +12,7 @@ public interface ScooterService {
 
     List<ScooterDTO> getAll(Integer page, Integer size);
 
-    List<ScooterDTO> getAll(ScooterFilterDTO filterDTO, Integer page, Integer size);
+    List<ScooterDTO> getVacantScooters(ScooterFilterDTO filterDTO, Integer page, Integer size);
 
     ScooterDTO addScooter(ScooterDTO scooter);
 

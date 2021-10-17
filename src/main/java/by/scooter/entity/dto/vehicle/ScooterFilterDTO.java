@@ -2,10 +2,14 @@ package by.scooter.entity.dto.vehicle;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class ScooterFilterDTO {
 
-    private Long modelId;
-    private Long rentPoint;
+    private LocalDateTime eventStart;
+    private LocalDateTime eventEnd;
+    private Long scooterModelId;
+    private Long rentPointId;
     private String sortedColumn;
 }
