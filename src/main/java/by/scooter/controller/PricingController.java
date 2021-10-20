@@ -42,8 +42,9 @@ public class PricingController {
     }
 
     @GetMapping("/calculate")
-    public ResponseEntity<OrderCreateDTO> calculatePrice(@RequestBody OrderCreateDTO order) {
-        order.setPrice(pricingService.calculatePrice(order, null));
+    public ResponseEntity<OrderCreateDTO> calculatePrice(@RequestBody OrderCreateDTO order,
+                                                         @RequestParam(required = false) String promoCode) {
+        order.setPrice(pricingService.calculatePrice(order, promoCode));
         return ResponseEntity.ok(order);
     }
 

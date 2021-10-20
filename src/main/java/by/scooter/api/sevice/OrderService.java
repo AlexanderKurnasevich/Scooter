@@ -8,7 +8,7 @@ import java.util.List;
 public interface OrderService {
     OrderDTO getById(Long id);
 
-    OrderDTO addOrder(OrderCreateDTO order);
+    OrderDTO addOrder(OrderCreateDTO order, String promoCode);
 
     void removeOrder(Long id);
 

@@ -3,11 +3,13 @@ package by.scooter.dao;
 import by.scooter.api.dao.DiscountDAO;
 import by.scooter.entity.pricing.Discount;
 import by.scooter.entity.pricing.Discount_;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+@Repository
 public class DiscountDAOImpl extends AbstractDAO<Discount> implements DiscountDAO {
 
     @Override

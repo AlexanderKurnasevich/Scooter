@@ -42,15 +42,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/login", "/signup").not().fullyAuthenticated()
+                .antMatchers("/discounts").hasRole(ADMIN)
+                .antMatchers("/").permitAll()
                 .and()
                 .logout().permitAll()
                 .logoutSuccessUrl("/")
                 .and().sessionManagement().disable();
     }
-
-//                    .antMatchers("/orders").hasAnyRole(ADMIN, CLIENT)
-//                .antMatchers("/pricing","/scooter").hasRole(ADMIN)
-//                .antMatchers("/", "/scooters/models").permitAll()
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

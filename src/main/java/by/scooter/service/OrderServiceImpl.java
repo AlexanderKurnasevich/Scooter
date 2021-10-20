@@ -32,9 +32,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderDTO addOrder(OrderCreateDTO order) {
+    public OrderDTO addOrder(OrderCreateDTO order, String promoCode) {
         order.setClientId(clientService.getAuthorizedClient().getId());
-        order.setPrice(pricingService.calculatePrice(order, null));
+        order.setPrice(pricingService.calculatePrice(order, promoCode));
         order.setScooterId(scooterService.getVacantScooters(mapper
                 .map(order, ScooterFilterDTO.class), 1, 1).get(0).getId());
         return mapper.map(orderDAO.save(mapper.map(order, Order.class)), OrderDTO.class);

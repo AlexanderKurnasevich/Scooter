@@ -38,8 +38,9 @@ public class OrderController {
 
     @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody OrderCreateDTO order) {
-        orderService.addOrder(order);
+    public ResponseEntity<Void> add(@RequestBody OrderCreateDTO order,
+                                    @RequestParam(required = false) String promoCode) {
+        orderService.addOrder(order, promoCode);
         return ResponseEntity.noContent().build();
     }
 
