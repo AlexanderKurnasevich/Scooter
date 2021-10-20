@@ -1,22 +1,16 @@
 package by.scooter.service;
 
-import by.scooter.api.dao.ClientDAO;
 import by.scooter.api.dao.OrderDAO;
-import by.scooter.api.dao.ScooterDAO;
 import by.scooter.api.sevice.*;
 import by.scooter.entity.dto.event.OrderCreateDTO;
 import by.scooter.entity.dto.event.OrderDTO;
-import by.scooter.entity.dto.user.ClientInfoDTO;
 import by.scooter.entity.dto.vehicle.ScooterFilterDTO;
 import by.scooter.entity.event.Order;
-import by.scooter.entity.user.Client;
-import by.scooter.entity.user.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
         order.setClientId(clientService.getAuthorizedClient().getId());
         order.setPrice(pricingService.calculatePrice(order, null));
         order.setScooterId(scooterService.getVacantScooters(mapper
-                .map(order, ScooterFilterDTO.class),1, 1).get(0).getId());
+                .map(order, ScooterFilterDTO.class), 1, 1).get(0).getId());
         return mapper.map(orderDAO.save(mapper.map(order, Order.class)), OrderDTO.class);
     }
 

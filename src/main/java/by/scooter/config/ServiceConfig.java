@@ -1,14 +1,10 @@
 package by.scooter.config;
 
-import by.scooter.entity.dto.event.OrderCreateDTO;
 import by.scooter.entity.dto.location.RentPointDTO;
 import by.scooter.entity.dto.user.ClientInfoDTO;
 import by.scooter.entity.dto.user.ClientUserDTO;
-import by.scooter.entity.event.Order;
 import by.scooter.entity.location.RentPoint;
 import by.scooter.entity.user.Client;
-import by.scooter.service.ScooterDTOSetConvertor;
-import by.scooter.service.ScooterSetConvertor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

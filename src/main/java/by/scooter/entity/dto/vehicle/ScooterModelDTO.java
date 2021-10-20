@@ -10,9 +10,9 @@ public class ScooterModelDTO {
     private VehicleType vehicleType;
     private String maker;
     private String model;
-    private Float chargingTime; //in hours
-    private Short maxRange; //in km
-    private Short maxSpeed; //in km/h
+    private Float chargingTime;         //in hours
+    private Short maxRange;             //in km
+    private Short maxSpeed;             //in km/h
     private Integer passengerCapacity;
-    private Integer maxLoad; //in kg
+    private Integer maxLoad;            //in kg
 }

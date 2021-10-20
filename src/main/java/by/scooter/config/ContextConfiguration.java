@@ -6,6 +6,4 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan("by.scooter")
 @EnableTransactionManagement
 public class ContextConfiguration {
-
-
 }

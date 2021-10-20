@@ -1,9 +1,8 @@
 package by.scooter.dao;
 
 import by.scooter.api.dao.ClientDAO;
-import by.scooter.entity.user.*;
+import by.scooter.entity.user.Client;
 import by.scooter.entity.user.Client_;
-import by.scooter.entity.user.Role_;
 import by.scooter.entity.user.User_;
 import org.springframework.stereotype.Repository;
 

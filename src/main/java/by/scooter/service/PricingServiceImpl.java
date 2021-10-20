@@ -1,18 +1,18 @@
 package by.scooter.service;
 
+import by.scooter.api.dao.DiscountDAO;
 import by.scooter.api.dao.ScooterModelPricingDAO;
 import by.scooter.api.sevice.PricingService;
 import by.scooter.api.sevice.UtilService;
 import by.scooter.entity.dto.event.OrderCreateDTO;
-import by.scooter.entity.dto.event.OrderDTO;
 import by.scooter.entity.dto.pricing.ScooterModelPricingDTO;
-import by.scooter.entity.pricing.Discount;
 import by.scooter.entity.pricing.ScooterModelPricing;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +20,9 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class PricingServiceImpl implements PricingService {
+
     private final ScooterModelPricingDAO modelPricingDAO;
+    private final DiscountDAO discountDAO;
     private final ModelMapper mapper;
     private final UtilService utilService;
 
@@ -61,11 +63,14 @@ public class PricingServiceImpl implements PricingService {
     }
 
     @Override
-    public Float calculatePrice(OrderCreateDTO order, Discount discount) {
+    public Float calculatePrice(OrderCreateDTO order, String promoCode) {
         long minutes = ChronoUnit.MINUTES.between(order.getEventStart(), order.getEventEnd());
         float res = minutes * getByModelId(order.getScooterModelId()).getMinutePrice();
-        if (discount != null) {
-            res *= discount.getDiscountFactor();
+        if (promoCode != null) {
+            var discount = discountDAO.getByPromoCode(promoCode);
+            if (discount.getExpireDate().isAfter(LocalDate.now())) {
+                res *= discount.getDiscountFactor();
+            }
         }
         return (float) UtilService.roundUpToXDecimal(res, 3);
     }

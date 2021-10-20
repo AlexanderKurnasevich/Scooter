@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -24,10 +23,6 @@ public class OrderDAOImpl extends AbstractDAO<Order> implements OrderDAO {
         Root<Order> entityRoot = criteriaQuery.from(getClazz());
 
         criteriaQuery.select(entityRoot).where(builder.equal(entityRoot.get(Order_.SCOOTER).get(Scooter_.ID), id));
-
-//        if (filter.getSortedColumn() != null) {
-//            criteriaQuery.orderBy(builder.asc(entityRoot.get(filter.getSortedColumn())));
-//        }
 
         TypedQuery<Order> query = entityManager.createQuery(criteriaQuery);
         if (page != null && size != null) {

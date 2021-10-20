@@ -62,7 +62,7 @@ public class ScooterServiceImpl implements ScooterService {
         Scooter updated = scooterDAO.getById(updatedId);
         Scooter src = mapper.map(update, Scooter.class);
         Optional.ofNullable(src.getOdometer()).ifPresent(updated::setOdometer);
-        if(src.getModel() != null) {
+        if (src.getModel() != null) {
             updated.setModel(scooterModelDAO.getById(src.getModel().getId()));
         }
         scooterDAO.update(updated);

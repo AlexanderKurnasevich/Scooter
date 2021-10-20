@@ -5,10 +5,12 @@ import by.scooter.entity.dto.vehicle.ScooterFilterDTO;
 import by.scooter.entity.vehicle.Scooter;
 import by.scooter.entity.vehicle.Scooter_;
 import by.scooter.exception.VacantScooterNotFound;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Log4j2
 @Repository
 public class ScooterDAOImpl extends AbstractDAO<Scooter> implements ScooterDAO {
 
@@ -21,7 +23,7 @@ public class ScooterDAOImpl extends AbstractDAO<Scooter> implements ScooterDAO {
             				   OR :evEnd BETWEEN eventStart AND eventEnd
             				   OR eventStart BETWEEN :evStart AND :evEnd
             				   OR eventEnd BETWEEN :evStart AND :evEnd ))
-            			   AS busy_orders
+            			   AS intersecting_orders
             	ON scooter_id = scooters.id
             	WHERE scooter_id is null
             	AND currentPoint_id = :point
@@ -33,6 +35,7 @@ public class ScooterDAOImpl extends AbstractDAO<Scooter> implements ScooterDAO {
         if (filter.getSortedColumn() == null) {
             filter.setSortedColumn(Scooter_.ODOMETER);
         }
+
         var query = entityManager.createNativeQuery(VACANT_SCOOTERS, Scooter.class)
                 .setParameter("evStart", filter.getEventStart())
                 .setParameter("evEnd", filter.getEventEnd())
@@ -47,8 +50,9 @@ public class ScooterDAOImpl extends AbstractDAO<Scooter> implements ScooterDAO {
 
         var res = query.getResultList();
         if (res.isEmpty()) {
-            throw new VacantScooterNotFound("No available scooters id: " + filter.getScooterModelId() +
-                    " model in rent point {} " + filter.getRentPointId());
+            log.info("No available scooters id: {} model in rent point {}",
+                    filter.getScooterModelId(), filter.getRentPointId());
+            throw new VacantScooterNotFound("No available scooters");
         }
         return (List<Scooter>) res;
     }

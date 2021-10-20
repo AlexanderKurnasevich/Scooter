@@ -7,7 +7,6 @@ import by.scooter.api.sevice.UtilService;
 import by.scooter.entity.dto.user.RoleDTO;
 import by.scooter.entity.dto.user.UserDTO;
 import by.scooter.entity.dto.user.UserInfoDTO;
-import by.scooter.entity.user.Client;
 import by.scooter.entity.user.Role;
 import by.scooter.entity.user.User;
 import by.scooter.exception.WrongPasswordException;
@@ -32,6 +31,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @Log4j2
 public class UserServiceImpl implements UserService {
+
     private final UserDAO userDAO;
     private final RoleDAO roleDAO;
     private final ModelMapper mapper;

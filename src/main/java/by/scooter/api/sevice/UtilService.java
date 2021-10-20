@@ -2,7 +2,6 @@ package by.scooter.api.sevice;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 public interface UtilService {
 
@@ -14,11 +13,6 @@ public interface UtilService {
         return Math.round(n * Math.pow(10, x)) / ((float) Math.pow(10, x));
     }
 
-    <T, E> List<T> convertArray(Object[] array, Class<T> type);
-
     <T, E> List<T> convertList(List<E> list, Class<T> type);
-
-    <T, E> Set<T> convertSet(Set<E> set, Class<T> type);
-
 }
 

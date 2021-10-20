@@ -46,7 +46,7 @@ public class JPAConfiguration {
 
     @Bean
     public DataSource dataSource() {
-        var datasource =  new DriverManagerDataSource(url, user, password);
+        var datasource = new DriverManagerDataSource(url, user, password);
         datasource.setDriverClassName(driver);
         return datasource;
     }

@@ -1,6 +1,7 @@
 package by.scooter.controller;
 
 import by.scooter.api.sevice.PricingService;
+import by.scooter.entity.dto.event.OrderCreateDTO;
 import by.scooter.entity.dto.pricing.ScooterModelPricingDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -40,5 +41,10 @@ public class PricingController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/calculate")
+    public ResponseEntity<OrderCreateDTO> calculatePrice(@RequestBody OrderCreateDTO order) {
+        order.setPrice(pricingService.calculatePrice(order, null));
+        return ResponseEntity.ok(order);
+    }
 
 }

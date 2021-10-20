@@ -18,6 +18,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class RentPointServiceImpl implements RentPointService {
+
     private final RentPointDAO rentPointDAO;
     private final ModelMapper mapper;
     private final UtilService utilService;

@@ -2,7 +2,10 @@ package by.scooter.entity.vehicle;
 
 import by.scooter.entity.AbstractEntity;
 import by.scooter.entity.location.RentPoint;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
@@ -33,7 +36,7 @@ public class Scooter extends AbstractEntity {
         if (!(o instanceof Scooter)) return false;
         if (!super.equals(o)) return false;
         Scooter scooter = (Scooter) o;
-        return getModel().equals(scooter.getModel())  && getOdometer().equals(scooter.getOdometer());
+        return getModel().equals(scooter.getModel()) && getOdometer().equals(scooter.getOdometer());
     }
 
     @Override

@@ -3,10 +3,6 @@ package by.scooter.dao;
 import by.scooter.api.dao.RentPointDAO;
 import by.scooter.entity.dto.location.RentPointFilterDTO;
 import by.scooter.entity.location.*;
-import by.scooter.entity.location.Address_;
-import by.scooter.entity.location.City_;
-import by.scooter.entity.location.Country_;
-import by.scooter.entity.location.RentPoint_;
 import by.scooter.entity.vehicle.Scooter;
 import org.springframework.stereotype.Repository;
 

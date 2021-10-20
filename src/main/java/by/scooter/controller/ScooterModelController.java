@@ -24,7 +24,7 @@ public class ScooterModelController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
     @GetMapping
     public ResponseEntity<List<ScooterModelDTO>> getAll(@RequestParam(required = false) Integer page,
-                                                     @RequestParam(required = false) Integer size) {
+                                                        @RequestParam(required = false) Integer size) {
         if (page != null && size != null) {
             return ResponseEntity.ok(scooterModelService.getAll(page, size));
         }

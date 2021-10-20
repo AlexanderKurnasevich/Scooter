@@ -16,6 +16,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ScooterModelServiceImpl implements ScooterModelService {
+
     private final ScooterModelDAO scooterModelDAO;
     private final ModelMapper mapper;
     private final UtilService utilService;

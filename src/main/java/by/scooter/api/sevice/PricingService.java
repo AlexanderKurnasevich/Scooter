@@ -1,9 +1,7 @@
 package by.scooter.api.sevice;
 
 import by.scooter.entity.dto.event.OrderCreateDTO;
-import by.scooter.entity.dto.event.OrderDTO;
 import by.scooter.entity.dto.pricing.ScooterModelPricingDTO;
-import by.scooter.entity.pricing.Discount;
 
 import java.util.List;
 
@@ -15,7 +13,7 @@ public interface PricingService {
 
     ScooterModelPricingDTO getById(Long id);
 
-    Float calculatePrice(OrderCreateDTO order, Discount discount);
+    Float calculatePrice(OrderCreateDTO order, String promoCode);
 
     void removeScooterModelPricing(Long id);
 

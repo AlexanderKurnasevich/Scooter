@@ -36,6 +36,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.ordersByScooter(id, page, size));
     }
 
+    @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody OrderCreateDTO order) {
         orderService.addOrder(order);

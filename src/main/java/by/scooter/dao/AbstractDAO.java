@@ -5,7 +5,6 @@ import by.scooter.entity.AbstractEntity;
 import by.scooter.entity.AbstractEntity_;
 import by.scooter.exception.DAOException;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

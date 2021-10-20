@@ -12,6 +12,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
+
     private final RoleDAO roleDAO;
 
     @Override

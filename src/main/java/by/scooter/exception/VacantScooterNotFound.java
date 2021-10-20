@@ -1,6 +1,8 @@
 package by.scooter.exception;
 
-public class VacantScooterNotFound extends RuntimeException {
+public class VacantScooterNotFound extends DAOException {
+
     public VacantScooterNotFound(String cause) {
+        super(cause);
     }
 }

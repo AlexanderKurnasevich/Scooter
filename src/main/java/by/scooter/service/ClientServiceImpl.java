@@ -22,6 +22,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
+
     private final ClientDAO clientDAO;
     private final RoleDAO roleDAO;
     private final ModelMapper mapper;
@@ -72,7 +73,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client checkOwner(Long id) throws AccessDeniedException{
+    public Client checkOwner(Long id) throws AccessDeniedException {
         Client checked = clientDAO.getById(id);
         if (!Objects.equals(userService.getAuthorizedUser().getId(), checked.getUser().getId())) {
             throw new AccessDeniedException("Client isn't owner of user");
