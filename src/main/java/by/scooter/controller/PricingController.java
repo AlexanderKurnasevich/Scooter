@@ -3,16 +3,21 @@ package by.scooter.controller;
 import by.scooter.api.sevice.PricingService;
 import by.scooter.entity.dto.event.OrderCreateDTO;
 import by.scooter.entity.dto.pricing.ScooterModelPricingDTO;
+import by.scooter.exception.ValidationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/pricing")
 @RequiredArgsConstructor
+@Validated
 public class PricingController {
     private final PricingService pricingService;
 
@@ -29,21 +34,25 @@ public class PricingController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody ScooterModelPricingDTO pricing) {
+    public ResponseEntity<Void> add(@RequestBody @Valid ScooterModelPricingDTO pricing) {
         pricingService.addScooterModelPricing(pricing);
         return ResponseEntity.noContent().build();
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ScooterModelPricingDTO pricing) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid ScooterModelPricingDTO pricing) {
         pricingService.updateScooterModelPricing(id, pricing);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/calculate")
-    public ResponseEntity<OrderCreateDTO> calculatePrice(@RequestBody OrderCreateDTO order,
+    public ResponseEntity<OrderCreateDTO> calculatePrice(@RequestBody @Valid OrderCreateDTO order, BindingResult result,
                                                          @RequestParam(required = false) String promoCode) {
+        if (result.hasErrors()) {
+            throw new ValidationError(result, order);
+        }
+
         order.setPrice(pricingService.calculatePrice(order, promoCode));
         return ResponseEntity.ok(order);
     }

@@ -2,11 +2,14 @@ package by.scooter.controller;
 
 import by.scooter.api.sevice.ScooterModelService;
 import by.scooter.entity.dto.vehicle.ScooterModelDTO;
+import by.scooter.exception.ValidationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -33,7 +36,11 @@ public class ScooterModelController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody ScooterModelDTO model) {
+    public ResponseEntity<Void> add(@RequestBody @Valid ScooterModelDTO model, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ValidationError(result, model);
+        }
+
         scooterModelService.addScooterModel(model);
         return ResponseEntity.noContent().build();
     }
@@ -47,7 +54,12 @@ public class ScooterModelController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ScooterModelDTO model) {
+    public ResponseEntity<Void> update(@PathVariable Long id,
+                                       @RequestBody @Valid ScooterModelDTO model, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ValidationError(result, model);
+        }
+
         scooterModelService.updateScooterModel(id, model);
         return ResponseEntity.noContent().build();
     }

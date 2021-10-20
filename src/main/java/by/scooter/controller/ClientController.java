@@ -5,13 +5,16 @@ import by.scooter.api.sevice.OrderService;
 import by.scooter.entity.dto.event.OrderDTO;
 import by.scooter.entity.dto.user.ClientInfoDTO;
 import by.scooter.entity.dto.user.ClientUserDTO;
+import by.scooter.exception.ValidationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -48,14 +51,23 @@ public class ClientController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Void> add(@RequestBody ClientUserDTO client) {
+    public ResponseEntity<Void> add(@RequestBody @Valid ClientUserDTO client, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ValidationError(result, client);
+        }
+
         clientService.addClient(client);
         return ResponseEntity.noContent().build();
     }
 
     @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PutMapping("/clients/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ClientUserDTO client) {
+    public ResponseEntity<Void> update(@PathVariable Long id,
+                                       @RequestBody @Valid ClientUserDTO client, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ValidationError(result, client);
+        }
+
         client.setId(id);
         clientService.updateClient(id, client);
         return ResponseEntity.noContent().build();
@@ -63,7 +75,12 @@ public class ClientController {
 
     @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PutMapping("/orders/finish")
-    public ResponseEntity<Void> finishOrder(@RequestBody OrderDTO order, @RequestParam Long rentPointId) {
+    public ResponseEntity<Void> finishOrder(@RequestBody @Valid OrderDTO order, BindingResult result,
+                                            @RequestParam Long rentPointId) {
+        if (result.hasErrors()) {
+            throw new ValidationError(result, order);
+        }
+
         orderService.handleOrder(order, rentPointId);
         return ResponseEntity.noContent().build();
     }

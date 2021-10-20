@@ -3,12 +3,15 @@ package by.scooter.controller;
 import by.scooter.api.sevice.UserService;
 import by.scooter.entity.dto.user.UserDTO;
 import by.scooter.entity.dto.user.UserInfoDTO;
+import by.scooter.exception.ValidationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,7 +29,11 @@ public class UsersController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/adduser")
-    public ResponseEntity<Void> addUser(@RequestBody UserDTO user) {
+    public ResponseEntity<Void> addUser(@RequestBody @Valid UserDTO user, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ValidationError(result, user);
+        }
+
         userService.save(user);
         return ResponseEntity.noContent().build();
     }
@@ -40,10 +47,16 @@ public class UsersController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_CLIENT')")
     @PutMapping("/users/{id}")
-    public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody UserDTO user) {
+    public ResponseEntity<Void> updateUser(@PathVariable Long id,
+                                           @RequestBody @Valid UserDTO user, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ValidationError(result, user);
+        }
+
         if (!Objects.equals(userService.getAuthorizedUser().getId(), id)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+
         user.setId(id);
         userService.update(user);
         return ResponseEntity.noContent().build();

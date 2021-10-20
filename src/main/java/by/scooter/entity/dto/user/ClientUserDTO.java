@@ -18,17 +18,17 @@ public class ClientUserDTO {
     @Min(value = 4)
     private String password;
 
-    @Size(min = 1, max = 30, message = "Имя не короче 2 и не длинее 30 символов")
-    @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Только буквы")
+    @Size(min = 1, max = 30, message = "Name must be no shorter than 2 and no longer than 30 characters")
+    @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Letters only")
     @NotNull
     private String firstName;
 
-    @Size(min = 1, max = 40, message = "Фамилия не короче 2 и не длинее 40 символов")
-    @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Только буквы")
+    @Size(min = 1, max = 40, message = "Surname must be no shorter than 2 and no longer than 40 characters")
+    @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Letters only")
     @NotNull
     private String lastName;
 
-    @Email(message = "Адрес введён неверно")
+    @Email(message = "Wrong email")
     @NotNull
     private String email;
 }

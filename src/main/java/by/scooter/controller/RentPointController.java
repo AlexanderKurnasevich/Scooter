@@ -4,11 +4,14 @@ import by.scooter.api.sevice.RentPointService;
 import by.scooter.entity.dto.location.RentPointDTO;
 import by.scooter.entity.dto.location.RentPointFilterDTO;
 import by.scooter.entity.dto.vehicle.ScooterDTO;
+import by.scooter.exception.ValidationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -41,7 +44,11 @@ public class RentPointController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody RentPointDTO rentPoint) {
+    public ResponseEntity<Void> add(@RequestBody @Valid RentPointDTO rentPoint, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ValidationError(result, rentPoint);
+        }
+
         rentPointService.addRentPoint(rentPoint);
         return ResponseEntity.noContent().build();
     }
@@ -55,7 +62,12 @@ public class RentPointController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody RentPointDTO rentPoint) {
+    public ResponseEntity<Void> update(@PathVariable Long id,
+                                       @RequestBody @Valid RentPointDTO rentPoint, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ValidationError(result, rentPoint);
+        }
+
         rentPointService.updateRentPoint(id, rentPoint);
         return ResponseEntity.noContent().build();
     }

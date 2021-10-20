@@ -1,15 +1,14 @@
 package by.scooter.controller;
 
 import by.scooter.api.sevice.DiscountService;
-import by.scooter.entity.dto.event.OrderCreateDTO;
 import by.scooter.entity.dto.pricing.DiscountDTO;
-import by.scooter.entity.dto.pricing.ScooterModelPricingDTO;
-import by.scooter.entity.pricing.Discount;
+import by.scooter.exception.ValidationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,13 +29,22 @@ public class DiscountController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody DiscountDTO discount) {
+    public ResponseEntity<Void> add(@RequestBody @Valid DiscountDTO discount, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ValidationError(result, discount);
+        }
+
         discountService.add(discount);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody DiscountDTO discount) {
+    public ResponseEntity<Void> update(@PathVariable Long id,
+                                       @RequestBody @Valid DiscountDTO discount, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ValidationError(result, discount);
+        }
+
         discountService.update(id, discount);
         return ResponseEntity.noContent().build();
     }
