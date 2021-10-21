@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -19,4 +20,18 @@ public class RentPoint extends AbstractEntity {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "currentPoint")
     private Set<Scooter> scooters;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RentPoint)) return false;
+        if (!super.equals(o)) return false;
+        RentPoint rentPoint = (RentPoint) o;
+        return getAddress().equals(rentPoint.getAddress()) && getScooters().equals(rentPoint.getScooters());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getAddress(), getScooters());
+    }
 }

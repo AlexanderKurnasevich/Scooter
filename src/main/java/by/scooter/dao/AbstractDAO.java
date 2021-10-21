@@ -25,8 +25,7 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
 
     @Override
     public T getById(Long id) {
-        var res = entityManager.find(getClazz(), id);
-        return res;
+        return entityManager.find(getClazz(), id);
     }
 
     @Override

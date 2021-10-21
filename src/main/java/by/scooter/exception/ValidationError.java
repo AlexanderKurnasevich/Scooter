@@ -8,7 +8,7 @@ import java.util.Map;
 public class ValidationError extends RuntimeException {
 
     private final Map<String, String> fieldMessageMap;
-    private final transient Object failedObject;
+    private final Object failedObject;
 
     public ValidationError(BindingResult bindingResult, Object failedObject) {
         this.failedObject = failedObject;

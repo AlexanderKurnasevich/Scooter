@@ -68,7 +68,7 @@ public class RentPointDAOImpl extends AbstractDAO<RentPoint> implements RentPoin
             predicates.add(builder.equal(entityRoot.get(RentPoint_.ADDRESS).get(Address_.CITY).get(City_.COUNTRY)
                     .get(Country_.COUNTRY_NAME), filter.getCity()));
         }
-        return builder.and(predicates.toArray(new Predicate[predicates.size()]));
+        return builder.and(predicates.toArray(new Predicate[0]));
     }
 
     @Override

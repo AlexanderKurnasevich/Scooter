@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoDTO getAuthorizedUser() throws UsernameNotFoundException {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = "";
+        String username;
         if (principal instanceof UserDetails) {
             username = ((UserDetails) principal).getUsername();
         } else {

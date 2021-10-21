@@ -24,6 +24,7 @@ public class OrderServiceImpl implements OrderService {
     private final ScooterService scooterService;
     private final ClientService clientService;
     private final PricingService pricingService;
+    private final SubscriptionService subscriptionService;
 
     @Override
     public OrderDTO getById(Long id) {
@@ -34,7 +35,13 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public OrderDTO addOrder(OrderCreateDTO order, String promoCode) {
         order.setClientId(clientService.getAuthorizedClient().getId());
-        order.setPrice(pricingService.calculatePrice(order, promoCode));
+
+        if(order.getSubscriptionId() != null) {
+            subscriptionService.handleOrder(order);
+        } else {
+            order.setPrice(pricingService.calculatePrice(order, promoCode));
+        }
+
         order.setScooterId(scooterService.getVacantScooters(mapper
                 .map(order, ScooterFilterDTO.class), 1, 1).get(0).getId());
         return mapper.map(orderDAO.save(mapper.map(order, Order.class)), OrderDTO.class);

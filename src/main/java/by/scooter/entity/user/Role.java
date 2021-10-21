@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -31,5 +32,19 @@ public class Role extends AbstractEntity implements GrantedAuthority {
     @Override
     public String getAuthority() {
         return value.name();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Role)) return false;
+        if (!super.equals(o)) return false;
+        Role role = (Role) o;
+        return getValue() == role.getValue() && getUsers().equals(role.getUsers());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getValue(), getUsers());
     }
 }

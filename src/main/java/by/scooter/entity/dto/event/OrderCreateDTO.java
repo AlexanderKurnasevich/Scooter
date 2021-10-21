@@ -27,4 +27,6 @@ public class OrderCreateDTO {
     private Long scooterId;
     private Long clientId;
     private Integer mileage = 0;
+
+    private Long subscriptionId;
 }

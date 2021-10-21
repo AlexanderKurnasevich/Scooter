@@ -8,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -15,7 +16,6 @@ import javax.validation.constraints.Size;
 @Table(name = "clients")
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 public class Client extends AbstractEntity {
 
     @Size(min = 1, max = 30, message = "Имя не короче 2 и не длинее 30 символов")
@@ -35,4 +35,18 @@ public class Client extends AbstractEntity {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
     private User user;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Client)) return false;
+        if (!super.equals(o)) return false;
+        Client client = (Client) o;
+        return getFirstName().equals(client.getFirstName()) && getLastName().equals(client.getLastName()) && getEmail().equals(client.getEmail()) && getUser().equals(client.getUser());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getFirstName(), getLastName(), getEmail(), getUser());
+    }
 }
