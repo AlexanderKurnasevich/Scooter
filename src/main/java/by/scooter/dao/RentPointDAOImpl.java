@@ -1,6 +1,7 @@
 package by.scooter.dao;
 
 import by.scooter.api.dao.RentPointDAO;
+import by.scooter.entity.AbstractEntity_;
 import by.scooter.entity.dto.location.RentPointFilterDTO;
 import by.scooter.entity.location.*;
 import by.scooter.entity.vehicle.Scooter;
@@ -21,7 +22,7 @@ public class RentPointDAOImpl extends AbstractDAO<RentPoint> implements RentPoin
 
         Root<RentPoint> pointRoot = criteriaQuery.from(RentPoint.class);
         Join<RentPoint, Scooter> scooterJoin = pointRoot.join(RentPoint_.SCOOTERS);
-        criteriaQuery.where(cb.equal(pointRoot.get(RentPoint_.id), pointId));
+        criteriaQuery.where(cb.equal(pointRoot.get(AbstractEntity_.ID), pointId));
         TypedQuery<Scooter> query = entityManager.createQuery(criteriaQuery.select(scooterJoin));
 
         if (page != null && size != null) {

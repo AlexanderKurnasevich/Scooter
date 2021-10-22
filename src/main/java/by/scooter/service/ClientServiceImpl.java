@@ -76,7 +76,7 @@ public class ClientServiceImpl implements ClientService {
     public Client checkOwner(Long id) throws AccessDeniedException {
         Client checked = clientDAO.getById(id);
         if (!Objects.equals(userService.getAuthorizedUser().getId(), checked.getUser().getId())) {
-            throw new AccessDeniedException("Client isn't owner of user");
+            throw new AccessDeniedException("Client isn't an owner");
         }
         return checked;
     }

@@ -1,9 +1,9 @@
 package by.scooter.dao;
 
 import by.scooter.api.dao.ScooterModelPricingDAO;
+import by.scooter.entity.AbstractEntity_;
 import by.scooter.entity.pricing.ScooterModelPricing;
 import by.scooter.entity.pricing.ScooterModelPricing_;
-import by.scooter.entity.vehicle.ScooterModel_;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -19,7 +19,7 @@ public class ScooterModelPricingDAOImpl extends AbstractDAO<ScooterModelPricing>
         CriteriaQuery<ScooterModelPricing> criteriaQuery = builder.createQuery(getClazz());
         Root<ScooterModelPricing> entityRoot = criteriaQuery.from(getClazz());
         criteriaQuery.select(entityRoot)
-                .where(builder.equal(entityRoot.get(ScooterModelPricing_.SCOOTER_MODEL).get(ScooterModel_.ID),
+                .where(builder.equal(entityRoot.get(ScooterModelPricing_.SCOOTER_MODEL).get(AbstractEntity_.ID),
                         scooterModelId));
         return entityManager.createQuery(criteriaQuery).getSingleResult();
     }

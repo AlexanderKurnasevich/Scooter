@@ -27,9 +27,9 @@ public class PricingController {
         return ResponseEntity.ok(pricingService.getAll(page, size));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ScooterModelPricingDTO> getScooterById(@PathVariable Long id) {
-        return ResponseEntity.ok(pricingService.getByModelId(id));
+    @GetMapping("/{model_id}")
+    public ResponseEntity<ScooterModelPricingDTO> getByModelId(@PathVariable(name = "model_id") Long modelId) {
+        return ResponseEntity.ok(pricingService.getByModelId(modelId));
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -46,7 +46,15 @@ public class PricingController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/calculate")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping
+    public ResponseEntity<Void> delete(@RequestParam Long id) {
+        pricingService.removeScooterModelPricing(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @PostMapping("/calculate")
     public ResponseEntity<OrderCreateDTO> calculatePrice(@RequestBody @Valid OrderCreateDTO order, BindingResult result,
                                                          @RequestParam(required = false) String promoCode) {
         if (result.hasErrors()) {

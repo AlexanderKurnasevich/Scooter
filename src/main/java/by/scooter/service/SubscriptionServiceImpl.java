@@ -17,19 +17,53 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class SubscriptionServiceImpl implements SubscriptionService {
+
     private final SubscriptionDAO subscriptionDAO;
     private final SubscriptionPricingService pricingService;
     private final ModelMapper mapper;
+    private final UtilService utilService;
 
     @Override
     @Transactional
-    public SubscriptionDTO add(SubscriptionDTO dto) {
+    public SubscriptionDTO addSubscription(SubscriptionDTO dto) {
         dto.setPrice(pricingService.calculatePrice(dto));
         return mapper.map(subscriptionDAO.save(mapper.map(dto, Subscription.class)), SubscriptionDTO.class);
+    }
+
+    @Override
+    public SubscriptionDTO getById(Long id) {
+        return mapper.map(subscriptionDAO.getById(id), SubscriptionDTO.class);
+    }
+
+    @Override
+    public List<SubscriptionDTO> getAllByClientId(Long clientId, Integer page, Integer size) {
+        return utilService.convertList(subscriptionDAO.getAllByClientId(clientId, page, size), SubscriptionDTO.class);
+    }
+
+    @Override
+    public void removeSubscription(Long id) {
+        subscriptionDAO.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public void renewSubscription(Long id, SubscriptionDTO subscription) {
+        Subscription updated = subscriptionDAO.getById(id);
+
+        if (subscription.getUnit().equals(updated.getUnit())) {
+            subscription.setPrice(pricingService.calculatePrice(subscription));
+            updated.setPrice((float)
+                    UtilService.roundUpToXDecimal((updated.getPrice() + subscription.getPrice()), 3));
+            updated.setQuantity(updated.getQuantity() + subscription.getQuantity());
+            updated.setExpiryDay(subscription.getExpiryDay());
+        }
+
+        subscriptionDAO.update(updated);
     }
 
     @Override

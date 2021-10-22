@@ -27,7 +27,7 @@ public class RentPointController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
-    @GetMapping
+    @PostMapping
     public ResponseEntity<List<RentPointDTO>> getAll(@RequestBody(required = false) RentPointFilterDTO filter,
                                                      @RequestParam(required = false) Integer page,
                                                      @RequestParam(required = false) Integer size) {
@@ -43,7 +43,7 @@ public class RentPointController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<Void> add(@RequestBody @Valid RentPointDTO rentPoint, BindingResult result) {
         if (result.hasErrors()) {
             throw new ValidationError(result, rentPoint);
