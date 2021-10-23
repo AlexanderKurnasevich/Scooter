@@ -3,6 +3,7 @@ package by.scooter.controller;
 import by.scooter.api.sevice.UserService;
 import by.scooter.entity.dto.user.UserDTO;
 import by.scooter.entity.dto.user.UserInfoDTO;
+import by.scooter.entity.user.ResetPasswordDTO;
 import by.scooter.exception.ValidationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -59,6 +60,21 @@ public class UsersController {
 
         user.setId(id);
         userService.update(user);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/password_reset")
+    public ResponseEntity<Void> resetPassword(@RequestBody @Valid ResetPasswordDTO body, BindingResult result) {
+//        if (result.hasErrors()) {
+//            throw new ValidationError(result, body);
+//        }
+//
+//        if (!Objects.equals(userService.getAuthorizedUser().getId(), id)) {
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+//        }
+//
+//        user.setId(id);
+//        userService.update(user);
         return ResponseEntity.noContent().build();
     }
 

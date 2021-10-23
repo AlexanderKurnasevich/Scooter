@@ -8,6 +8,9 @@ import by.scooter.entity.user.Client;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 @Configuration
 public class ServiceConfig {
@@ -33,5 +36,10 @@ public class ServiceConfig {
                 .addMappings(mapper -> mapper.map(src -> src.getAddress().getPostfix(), RentPointDTO::setPostfix));
 
         return modelMapper;
+    }
+
+    @Bean
+    public SpringTemplateEngine getSpringTemplateEngine() {
+        return new SpringTemplateEngine();
     }
 }

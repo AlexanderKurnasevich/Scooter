@@ -28,9 +28,9 @@ public class Client extends AbstractEntity {
     @NotNull
     private String lastName;
 
-    @Email(message = "Адрес введён неверно")
-    @Column(nullable = false, unique = true)
-    private String email;
+//    @Email(message = "Адрес введён неверно")
+//    @Column(nullable = false, unique = true)
+//    private String email;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
@@ -42,11 +42,11 @@ public class Client extends AbstractEntity {
         if (!(o instanceof Client)) return false;
         if (!super.equals(o)) return false;
         Client client = (Client) o;
-        return getFirstName().equals(client.getFirstName()) && getLastName().equals(client.getLastName()) && getEmail().equals(client.getEmail()) && getUser().equals(client.getUser());
+        return getFirstName().equals(client.getFirstName()) && getLastName().equals(client.getLastName()) &&  getUser().equals(client.getUser());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getFirstName(), getLastName(), getEmail(), getUser());
+        return Objects.hash(super.hashCode(), getFirstName(), getLastName(),  getUser());
     }
 }

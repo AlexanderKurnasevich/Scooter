@@ -2,6 +2,7 @@ package by.scooter.api.sevice;
 
 import by.scooter.entity.dto.user.UserDTO;
 import by.scooter.entity.dto.user.UserInfoDTO;
+import by.scooter.entity.user.ResetPasswordDTO;
 import by.scooter.entity.user.User;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,4 +28,6 @@ public interface UserService extends UserDetailsService {
     List<UserInfoDTO> getAll(Integer page, Integer size);
 
     User checkOwner(Long id) throws AccessDeniedException;
+
+    void setNewPassword(ResetPasswordDTO dto);
 }

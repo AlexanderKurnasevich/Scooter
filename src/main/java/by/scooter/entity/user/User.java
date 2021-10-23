@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -28,6 +29,10 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Min(value = 4)
     private String password;
+
+    @Email(message = "Адрес введён неверно")
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)

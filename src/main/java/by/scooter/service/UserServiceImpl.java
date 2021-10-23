@@ -1,5 +1,6 @@
 package by.scooter.service;
 
+import by.scooter.api.dao.PasswordResetTokenDAO;
 import by.scooter.api.dao.RoleDAO;
 import by.scooter.api.dao.UserDAO;
 import by.scooter.api.sevice.UserService;
@@ -7,6 +8,8 @@ import by.scooter.api.sevice.UtilService;
 import by.scooter.entity.dto.user.RoleDTO;
 import by.scooter.entity.dto.user.UserDTO;
 import by.scooter.entity.dto.user.UserInfoDTO;
+import by.scooter.entity.user.PasswordResetToken;
+import by.scooter.entity.user.ResetPasswordDTO;
 import by.scooter.entity.user.Role;
 import by.scooter.entity.user.User;
 import by.scooter.exception.WrongPasswordException;
@@ -22,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +41,7 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper mapper;
     private final UtilService utilService;
     private PasswordEncoder passwordEncoder;
+    private PasswordResetTokenDAO resetTokenDAO;
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -55,12 +60,6 @@ public class UserServiceImpl implements UserService {
         userDAO.update(loadRoleIdAndEncodePassword(user));
     }
 
-    @Override
-    @Transactional
-    public void remove(Long id) {
-        userDAO.delete(id);
-    }
-
     private User loadRoleIdAndEncodePassword(UserDTO user) {
         User target = mapper.map(user, User.class);
         Set<Role> roleSet = new HashSet<>();
@@ -70,6 +69,12 @@ public class UserServiceImpl implements UserService {
         target.setRoles(roleSet);
         target.setPassword(passwordEncoder.encode(user.getPassword()));
         return target;
+    }
+
+    @Override
+    @Transactional
+    public void remove(Long id) {
+        userDAO.delete(id);
     }
 
     @Override
@@ -121,5 +126,15 @@ public class UserServiceImpl implements UserService {
             throw new AccessDeniedException("Current user isn't owner");
         }
         return checked;
+    }
+
+    @Override
+    public void setNewPassword(ResetPasswordDTO dto) {
+        PasswordResetToken token = resetTokenDAO.getByUser(userDAO.findByEmail(dto.getEmail()));
+        if (dto.getToken().equals(token.getToken()) && LocalDateTime.now().isBefore(token.getExpiryDate())) {
+            User user = userDAO.findByEmail(dto.getEmail());
+            user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+            userDAO.update(user);
+        }
     }
 }

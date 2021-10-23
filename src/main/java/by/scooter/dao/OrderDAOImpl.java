@@ -5,7 +5,6 @@ import by.scooter.entity.AbstractEntity_;
 import by.scooter.entity.event.Event_;
 import by.scooter.entity.event.Order;
 import by.scooter.entity.event.Order_;
-import by.scooter.entity.user.Client_;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
@@ -41,7 +40,7 @@ public class OrderDAOImpl extends AbstractDAO<Order> implements OrderDAO {
         CriteriaQuery<Order> criteriaQuery = builder.createQuery(getClazz());
         Root<Order> entityRoot = criteriaQuery.from(getClazz());
 
-        criteriaQuery.select(entityRoot).where(builder.equal(entityRoot.get(Order_.CLIENT).get(Client_.ID), id));
+        criteriaQuery.select(entityRoot).where(builder.equal(entityRoot.get(Order_.CLIENT).get(AbstractEntity_.ID), id));
 
         TypedQuery<Order> query = entityManager.createQuery(criteriaQuery);
         if (page != null && size != null) {

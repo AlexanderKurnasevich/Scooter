@@ -10,6 +10,7 @@ import by.scooter.entity.dto.user.ClientUserDTO;
 import by.scooter.entity.enumerator.RoleValue;
 import by.scooter.entity.user.Client;
 import by.scooter.entity.user.Role;
+import by.scooter.entity.user.User;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.AccessDeniedException;
@@ -66,7 +67,8 @@ public class ClientServiceImpl implements ClientService {
     @Transactional
     public void updateClient(Long updatedId, ClientUserDTO update) {
         Client updated = checkOwner(updatedId);
-        Optional.ofNullable(update.getEmail()).ifPresent(updated::setEmail);
+        User user = updated.getUser();
+        Optional.ofNullable(update.getEmail()).ifPresent(user::setEmail);
         Optional.ofNullable(update.getFirstName()).ifPresent(updated::setFirstName);
         Optional.ofNullable(update.getLastName()).ifPresent(updated::setLastName);
         clientDAO.update(updated);
