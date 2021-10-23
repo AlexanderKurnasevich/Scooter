@@ -7,6 +7,8 @@ import lombok.Setter;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -17,6 +19,7 @@ import java.util.Objects;
 public class Discount extends AbstractEntity {
 
     @Column(nullable = false, columnDefinition = "float default 1.0")
+    @Positive
     private Float discountFactor;
 
     @Column(nullable = false, unique = true)

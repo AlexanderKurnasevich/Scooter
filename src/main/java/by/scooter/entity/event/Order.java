@@ -8,7 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Objects;
 
 @Getter
@@ -21,11 +21,11 @@ public class Order extends Event {
     private Client client;
 
     @Column(nullable = false, columnDefinition = "float default 0.0")
-    @Positive
+    @PositiveOrZero
     private Float price;
 
     @Column(nullable = false)
-    @Positive
+    @PositiveOrZero
     private Integer mileage; //in meters
 
     @Override

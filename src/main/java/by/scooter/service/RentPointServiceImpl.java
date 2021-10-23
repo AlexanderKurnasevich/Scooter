@@ -1,6 +1,7 @@
 package by.scooter.service;
 
 import by.scooter.api.dao.RentPointDAO;
+import by.scooter.api.sevice.AddressService;
 import by.scooter.api.sevice.RentPointService;
 import by.scooter.api.sevice.UtilService;
 import by.scooter.entity.dto.location.RentPointDTO;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class RentPointServiceImpl implements RentPointService {
 
     private final RentPointDAO rentPointDAO;
+    private final AddressService addressService;
     private final ModelMapper mapper;
     private final UtilService utilService;
 
@@ -31,6 +33,9 @@ public class RentPointServiceImpl implements RentPointService {
     @Override
     @Transactional
     public RentPointDTO addRentPoint(RentPointDTO rentPoint) {
+        if (rentPoint.getAddressId() == null) {
+            rentPoint.setAddressId(addressService.saveRentPointAddress(rentPoint).getId());
+        }
         return mapper.map(rentPointDAO.save(mapper.map(rentPoint, RentPoint.class)), RentPointDTO.class);
     }
 
