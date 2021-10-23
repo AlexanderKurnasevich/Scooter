@@ -1,5 +1,6 @@
 package by.scooter.controller;
 
+import by.scooter.api.sevice.PasswordResetService;
 import by.scooter.api.sevice.UserService;
 import by.scooter.entity.dto.user.UserDTO;
 import by.scooter.entity.dto.user.UserInfoDTO;
@@ -21,6 +22,7 @@ import java.util.Objects;
 public class UsersController {
 
     private final UserService userService;
+    private final PasswordResetService resetService;
 
     @GetMapping("/login")
     public ResponseEntity<UserInfoDTO> logIn(@RequestParam String login,
@@ -63,18 +65,23 @@ public class UsersController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/password_reset")
+    public ResponseEntity<Void> resetPasswordInit(@RequestBody @Valid ResetPasswordDTO body, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new ValidationError(result, body);
+        }
+
+        resetService.generateResetToken(body.getEmail());
+        return ResponseEntity.noContent().build();
+    }
+
     @PutMapping("/password_reset")
     public ResponseEntity<Void> resetPassword(@RequestBody @Valid ResetPasswordDTO body, BindingResult result) {
-//        if (result.hasErrors()) {
-//            throw new ValidationError(result, body);
-//        }
-//
-//        if (!Objects.equals(userService.getAuthorizedUser().getId(), id)) {
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-//        }
-//
-//        user.setId(id);
-//        userService.update(user);
+        if (result.hasErrors()) {
+            throw new ValidationError(result, body);
+        }
+
+        userService.setNewPassword(body);
         return ResponseEntity.noContent().build();
     }
 

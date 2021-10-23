@@ -1,6 +1,6 @@
 package by.scooter.config;
 
-import lombok.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -26,7 +26,7 @@ public class MailConfiguration {
     @Value("${mail.smtp.starttls.enable}")
     private boolean starttls;
     @Value("${mail.smtp.starttls.required}")
-    private boolean startlls_required;
+    private boolean startllsRequired;
     @Value("${mail.smtp.debug}")
     private boolean debug;
     @Value("${mail.smtp.socketFactory.fallback}")
@@ -47,7 +47,7 @@ public class MailConfiguration {
         Properties mailProperties = new Properties();
         mailProperties.put("mail.smtp.auth", auth);
         mailProperties.put("mail.smtp.starttls.enable", starttls);
-        mailProperties.put("mail.smtp.starttls.required", startlls_required);
+        mailProperties.put("mail.smtp.starttls.required", startllsRequired);
         mailProperties.put("mail.smtp.socketFactory.port", socketPort);
         mailProperties.put("mail.smtp.debug", debug);
         mailProperties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");

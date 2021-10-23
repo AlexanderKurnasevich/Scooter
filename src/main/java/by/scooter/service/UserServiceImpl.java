@@ -40,8 +40,8 @@ public class UserServiceImpl implements UserService {
     private final RoleDAO roleDAO;
     private final ModelMapper mapper;
     private final UtilService utilService;
+    private final PasswordResetTokenDAO resetTokenDAO;
     private PasswordEncoder passwordEncoder;
-    private PasswordResetTokenDAO resetTokenDAO;
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -110,7 +110,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoDTO getAuthorizedUser() throws UsernameNotFoundException {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = "";
+        String username;
         if (principal instanceof UserDetails) {
             username = ((UserDetails) principal).getUsername();
         } else {

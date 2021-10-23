@@ -4,7 +4,6 @@ import by.scooter.entity.AbstractEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -27,10 +26,6 @@ public class Client extends AbstractEntity {
     @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Только буквы")
     @NotNull
     private String lastName;
-
-//    @Email(message = "Адрес введён неверно")
-//    @Column(nullable = false, unique = true)
-//    private String email;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false)
