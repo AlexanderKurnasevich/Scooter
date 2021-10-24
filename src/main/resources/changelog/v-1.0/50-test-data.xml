@@ -5,20 +5,20 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="6" author="admin">
+    <changeSet id="50" author="admin">
         <sqlFile dbms="mysql"
                  encoding="utf8"
                  relativeToChangelogFile="true"
                  splitStatements="true"
                  stripComments="true"
-                 path="06-create-maintenances-table.sql"/>
+                 path="50-insert-test-data.sql"/>
         <rollback>
             <sqlFile dbms="mysql"
                      encoding="utf8"
                      relativeToChangelogFile="true"
                      splitStatements="true"
                      stripComments="true"
-                     path="06-drop-maintenances-table.sql"/>
+                     path="50-delete-test-data.sql"/>
         </rollback>
     </changeSet>
 

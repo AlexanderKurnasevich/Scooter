@@ -17,10 +17,10 @@ import java.util.Objects;
 )
 public class Address extends AbstractEntity {
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String street;
 
-    @Column
+    @Column(nullable = false)
     private Short number;
 
     @Column

@@ -23,5 +23,6 @@
     <include file="16-changeset-users-table.xml" relativeToChangelogFile="true"/>
     <include file="17-changeset-users_roles-table.xml" relativeToChangelogFile="true"/>
     <include file="40-changeset-tables.xml" relativeToChangelogFile="true"/>
+    <include file="50-test-data.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

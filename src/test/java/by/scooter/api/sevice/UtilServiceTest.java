@@ -11,12 +11,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class UtilServiceTest {
 
     @Test
-    void isDateBetweenInclusive() {
-    }
-
-
-
-    @Test
     void roundUpTo3Decimal() {
         float f = 111.1109F;
         assertEquals(111.111F, UtilService.roundUpToXDecimal(f, 3));

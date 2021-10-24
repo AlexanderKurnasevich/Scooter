@@ -1,8 +1,12 @@
 package by.scooter.dto.location;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
+@EqualsAndHashCode
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class AddressDTO {
 
     private Long id;

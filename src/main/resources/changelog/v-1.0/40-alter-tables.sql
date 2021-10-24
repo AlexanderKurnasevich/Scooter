@@ -1,65 +1,32 @@
-# alter table addresses
-#     drop index addrss_unq;
-
 alter table addresses
     add constraint addrss_unq unique (street, number, postfix, city_id);
 
 # alter table addresses
-#     drop index str_unq ;
-
-alter table addresses
-    add constraint str_unq unique (street) ;
-
-# alter table cities
-#     drop index cty_unq ;
+#     add constraint str_unq unique (street) ;
 
 alter table cities
     add constraint cty_unq unique (cityName, country_id) ;
 
-# alter table countries
-#     drop index cntry_unq ;
-
 alter table countries
     add constraint cntry_unq unique (countryName) ;
-
-# alter table discounts
-#     drop index dscnt_unq ;
 
 alter table discounts
     add constraint dscnt_unq unique (promoCode) ;
 
-# alter table password_reset_tokens
-#     drop index token_user_id ;
-
 alter table password_reset_tokens
     add constraint token_user_id unique (user_id) ;
-
-# alter table roles
-#     drop index role_value ;
 
 alter table roles
     add constraint role_value unique (value) ;
 
-# alter table scooter_models
-#     drop index maker_model_unq ;
-
 alter table scooter_models
     add constraint maker_model_unq unique (maker, model) ;
-
-# alter table subscription_pricing
-#     drop index unit_unq ;
 
 alter table subscription_pricing
     add constraint unit_unq unique (unit) ;
 
-# alter table users
-#     drop index email_unq ;
-
 alter table users
     add constraint email_unq unique (email) ;
-
-# alter table users
-#     drop index username_unq
 
 alter table users
     add constraint username_unq unique (username) ;

@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -19,10 +19,10 @@ import java.nio.charset.StandardCharsets;
 public class MailServiceImpl implements MailService {
 
     @Value("spring.mail.username")
-    private static final String FROM = "navsiak@yandex.ru";
+    private static String from;
 
     private final JavaMailSender emailSender;
-    private final SpringTemplateEngine templateEngine;
+    private final ITemplateEngine templateEngine;
 
     @Override
     public void send(AbstractEmailContext email) throws MessagingException {
@@ -37,7 +37,7 @@ public class MailServiceImpl implements MailService {
 
         mimeMessageHelper.setTo(email.getTo());
         mimeMessageHelper.setSubject(email.getSubject());
-        mimeMessageHelper.setFrom(FROM);
+        mimeMessageHelper.setFrom(from);
         mimeMessageHelper.setText(emailContent, true);
         emailSender.send(message);
     }

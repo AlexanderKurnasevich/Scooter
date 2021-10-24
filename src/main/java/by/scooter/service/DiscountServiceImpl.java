@@ -16,6 +16,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class DiscountServiceImpl implements DiscountService {
+
     private final DiscountDAO discountDAO;
     private final ModelMapper mapper;
     private final UtilService utilService;
