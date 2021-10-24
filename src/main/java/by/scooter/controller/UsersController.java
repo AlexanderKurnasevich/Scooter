@@ -4,7 +4,7 @@ import by.scooter.api.sevice.PasswordResetService;
 import by.scooter.api.sevice.UserService;
 import by.scooter.entity.dto.user.UserDTO;
 import by.scooter.entity.dto.user.UserInfoDTO;
-import by.scooter.entity.user.ResetPasswordDTO;
+import by.scooter.entity.dto.user.ResetPasswordDTO;
 import by.scooter.exception.ValidationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -66,12 +66,8 @@ public class UsersController {
     }
 
     @PostMapping("/password_reset")
-    public ResponseEntity<Void> resetPasswordInit(@RequestBody @Valid ResetPasswordDTO body, BindingResult result) {
-        if (result.hasErrors()) {
-            throw new ValidationError(result, body);
-        }
-
-        resetService.generateResetToken(body.getEmail());
+    public ResponseEntity<Void> resetPasswordInit(@RequestParam String email) {
+        resetService.generateResetToken(email);
         return ResponseEntity.noContent().build();
     }
 

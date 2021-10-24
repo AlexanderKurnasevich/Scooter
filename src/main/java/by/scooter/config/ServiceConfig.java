@@ -5,15 +5,19 @@ import by.scooter.entity.dto.user.ClientInfoDTO;
 import by.scooter.entity.dto.user.ClientUserDTO;
 import by.scooter.entity.location.RentPoint;
 import by.scooter.entity.user.Client;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 
 @Configuration
+@RequiredArgsConstructor
 public class ServiceConfig {
+
+    private final ApplicationContext applicationContext;
 
     @Bean
     public ModelMapper getModelMapper() {
@@ -39,7 +43,19 @@ public class ServiceConfig {
     }
 
     @Bean
-    public SpringTemplateEngine getSpringTemplateEngine() {
-        return new SpringTemplateEngine();
+    public SpringResourceTemplateResolver templateResolver() {
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+        templateResolver.setApplicationContext(applicationContext);
+        templateResolver.setPrefix("classpath:/templates/"); //FIXME remove classpath
+        templateResolver.setSuffix(".html");
+        return templateResolver;
+    }
+
+    @Bean
+    public SpringTemplateEngine templateEngine() {
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        templateEngine.setTemplateResolver(templateResolver());
+        templateEngine.setEnableSpringELCompiler(true);
+        return templateEngine;
     }
 }

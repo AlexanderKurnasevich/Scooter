@@ -9,7 +9,7 @@ import by.scooter.entity.dto.user.RoleDTO;
 import by.scooter.entity.dto.user.UserDTO;
 import by.scooter.entity.dto.user.UserInfoDTO;
 import by.scooter.entity.user.PasswordResetToken;
-import by.scooter.entity.user.ResetPasswordDTO;
+import by.scooter.entity.dto.user.ResetPasswordDTO;
 import by.scooter.entity.user.Role;
 import by.scooter.entity.user.User;
 import by.scooter.exception.WrongPasswordException;
@@ -129,6 +129,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void setNewPassword(ResetPasswordDTO dto) {
         PasswordResetToken token = resetTokenDAO.getByUser(userDAO.findByEmail(dto.getEmail()));
         if (dto.getToken().equals(token.getToken()) && LocalDateTime.now().isBefore(token.getExpiryDate())) {

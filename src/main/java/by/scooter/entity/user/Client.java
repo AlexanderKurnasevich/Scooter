@@ -17,13 +17,13 @@ import java.util.Objects;
 @AllArgsConstructor
 public class Client extends AbstractEntity {
 
-    @Size(min = 1, max = 30, message = "Имя не короче 2 и не длинее 30 символов")
-    @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Только буквы")
+    @Size(min = 1, max = 30, message = "Name must be at least 2 and no longer than 30 characters")
+    @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Letters only")
     @NotNull
     private String firstName;
 
-    @Size(min = 1, max = 40, message = "Фамилия не короче 2 и не длинее 40 символов")
-    @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Только буквы")
+    @Size(min = 1, max = 40, message = "Surname must be at least 2 and no longer than 30 characters")
+    @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Letters only")
     @NotNull
     private String lastName;
 

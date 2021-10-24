@@ -27,5 +27,5 @@ public abstract class AbstractEmailContext {
         return key == null ? null : this.context.put(key.intern(), value);
     }
 
-    protected abstract  <T> void init(T context);
+    public abstract  <T> void init(T context);
 }

@@ -1,15 +1,15 @@
 package by.scooter.entity.user;
 
 import by.scooter.entity.AbstractEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
@@ -23,14 +23,20 @@ import java.util.Set;
 public class User extends AbstractEntity implements UserDetails {
 
     @Column(unique = true)
-    @Pattern(regexp = "^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")
+    @Pattern(regexp = "^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){2,18}[a-zA-Z0-9]$",
+            message = """
+                    Username consists of alphanumeric characters (a-zA-Z0-9), lowercase, or uppercase.
+                    Username allowed of the dot (.), underscore (_), and hyphen (-).
+                    The dot (.), underscore (_), or hyphen (-) must not be the first or last character.
+                    The dot (.), underscore (_), or hyphen (-) does not appear consecutively, e.g., user..name
+                    The number of characters must be between 4 to 20.""")
     @NotNull
     private String username;
 
-    @Min(value = 4)
+    @Size(min = 4, message = "Password must be at least 4 characters")
     private String password;
 
-    @Email(message = "Адрес введён неверно")
+    @Email
     @Column(nullable = false, unique = true)
     private String email;
 
