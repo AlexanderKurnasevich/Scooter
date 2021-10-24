@@ -1,7 +1,7 @@
 package by.scooter.controller;
 
 import by.scooter.api.sevice.ScooterService;
-import by.scooter.entity.dto.vehicle.ScooterDTO;
+import by.scooter.dto.vehicle.ScooterDTO;
 import by.scooter.exception.ValidationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

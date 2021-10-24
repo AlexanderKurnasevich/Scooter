@@ -1,6 +1,6 @@
 package by.scooter.api.dao;
 
-import by.scooter.entity.dto.location.RentPointFilterDTO;
+import by.scooter.dto.location.RentPointFilterDTO;
 import by.scooter.entity.location.RentPoint;
 import by.scooter.entity.vehicle.Scooter;
 

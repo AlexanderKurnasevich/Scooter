@@ -1,7 +1,7 @@
 package by.scooter.api.sevice;
 
-import by.scooter.entity.dto.pricing.SubscriptionDTO;
-import by.scooter.entity.dto.pricing.SubscriptionPricingDTO;
+import by.scooter.dto.pricing.SubscriptionDTO;
+import by.scooter.dto.pricing.SubscriptionPricingDTO;
 
 import java.util.List;
 

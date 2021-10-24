@@ -4,7 +4,7 @@ import by.scooter.api.dao.PasswordResetTokenDAO;
 import by.scooter.api.dao.UserDAO;
 import by.scooter.api.sevice.MailService;
 import by.scooter.api.sevice.PasswordResetService;
-import by.scooter.entity.dto.AbstractEmailContext;
+import by.scooter.dto.mail.AbstractEmailContext;
 import by.scooter.entity.user.PasswordResetToken;
 import by.scooter.entity.user.User;
 import lombok.RequiredArgsConstructor;

@@ -3,7 +3,7 @@ package by.scooter.service;
 import by.scooter.api.dao.ScooterModelDAO;
 import by.scooter.api.sevice.ScooterModelService;
 import by.scooter.api.sevice.UtilService;
-import by.scooter.entity.dto.vehicle.ScooterModelDTO;
+import by.scooter.dto.vehicle.ScooterModelDTO;
 import by.scooter.entity.vehicle.ScooterModel;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

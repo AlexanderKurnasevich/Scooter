@@ -1,0 +1,1 @@
+drop table scooter_model_pricing

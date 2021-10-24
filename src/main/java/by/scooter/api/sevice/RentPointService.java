@@ -1,8 +1,8 @@
 package by.scooter.api.sevice;
 
-import by.scooter.entity.dto.location.RentPointDTO;
-import by.scooter.entity.dto.location.RentPointFilterDTO;
-import by.scooter.entity.dto.vehicle.ScooterDTO;
+import by.scooter.dto.location.RentPointDTO;
+import by.scooter.dto.location.RentPointFilterDTO;
+import by.scooter.dto.vehicle.ScooterDTO;
 
 import java.util.List;
 

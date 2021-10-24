@@ -1,8 +1,8 @@
 package by.scooter.api.sevice;
 
-import by.scooter.entity.dto.user.UserDTO;
-import by.scooter.entity.dto.user.UserInfoDTO;
-import by.scooter.entity.dto.user.ResetPasswordDTO;
+import by.scooter.dto.user.UserDTO;
+import by.scooter.dto.user.UserInfoDTO;
+import by.scooter.dto.user.ResetPasswordDTO;
 import by.scooter.entity.user.User;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UserDetailsService;

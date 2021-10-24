@@ -2,9 +2,9 @@ package by.scooter.controller;
 
 import by.scooter.api.sevice.ClientService;
 import by.scooter.api.sevice.OrderService;
-import by.scooter.entity.dto.event.OrderDTO;
-import by.scooter.entity.dto.user.ClientInfoDTO;
-import by.scooter.entity.dto.user.ClientUserDTO;
+import by.scooter.dto.event.OrderDTO;
+import by.scooter.dto.user.ClientInfoDTO;
+import by.scooter.dto.user.ClientUserDTO;
 import by.scooter.exception.ValidationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

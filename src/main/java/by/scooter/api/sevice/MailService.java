@@ -1,6 +1,6 @@
 package by.scooter.api.sevice;
 
-import by.scooter.entity.dto.AbstractEmailContext;
+import by.scooter.dto.mail.AbstractEmailContext;
 
 import javax.mail.MessagingException;
 

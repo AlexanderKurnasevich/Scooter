@@ -1,8 +1,8 @@
 package by.scooter.controller;
 
 import by.scooter.api.sevice.PricingService;
-import by.scooter.entity.dto.event.OrderCreateDTO;
-import by.scooter.entity.dto.pricing.ScooterModelPricingDTO;
+import by.scooter.dto.event.OrderCreateDTO;
+import by.scooter.dto.pricing.ScooterModelPricingDTO;
 import by.scooter.exception.ValidationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

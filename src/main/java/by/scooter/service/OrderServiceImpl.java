@@ -2,9 +2,9 @@ package by.scooter.service;
 
 import by.scooter.api.dao.OrderDAO;
 import by.scooter.api.sevice.*;
-import by.scooter.entity.dto.event.OrderCreateDTO;
-import by.scooter.entity.dto.event.OrderDTO;
-import by.scooter.entity.dto.vehicle.ScooterFilterDTO;
+import by.scooter.dto.event.OrderCreateDTO;
+import by.scooter.dto.event.OrderDTO;
+import by.scooter.dto.vehicle.ScooterFilterDTO;
 import by.scooter.entity.event.Order;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

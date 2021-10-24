@@ -1,7 +1,7 @@
 package by.scooter.api.sevice;
 
-import by.scooter.entity.dto.vehicle.ScooterDTO;
-import by.scooter.entity.dto.vehicle.ScooterFilterDTO;
+import by.scooter.dto.vehicle.ScooterDTO;
+import by.scooter.dto.vehicle.ScooterFilterDTO;
 
 import java.util.List;
 

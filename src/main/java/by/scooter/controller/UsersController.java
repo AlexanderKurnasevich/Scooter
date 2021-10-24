@@ -2,9 +2,9 @@ package by.scooter.controller;
 
 import by.scooter.api.sevice.PasswordResetService;
 import by.scooter.api.sevice.UserService;
-import by.scooter.entity.dto.user.UserDTO;
-import by.scooter.entity.dto.user.UserInfoDTO;
-import by.scooter.entity.dto.user.ResetPasswordDTO;
+import by.scooter.dto.user.UserDTO;
+import by.scooter.dto.user.UserInfoDTO;
+import by.scooter.dto.user.ResetPasswordDTO;
 import by.scooter.exception.ValidationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

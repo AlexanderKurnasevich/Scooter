@@ -1,7 +1,7 @@
 package by.scooter.dao;
 
 import by.scooter.api.dao.ScooterDAO;
-import by.scooter.entity.dto.vehicle.ScooterFilterDTO;
+import by.scooter.dto.vehicle.ScooterFilterDTO;
 import by.scooter.entity.vehicle.Scooter;
 import by.scooter.entity.vehicle.Scooter_;
 import by.scooter.exception.VacantScooterNotFound;

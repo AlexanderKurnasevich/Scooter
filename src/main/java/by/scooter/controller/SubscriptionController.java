@@ -2,7 +2,7 @@ package by.scooter.controller;
 
 import by.scooter.api.sevice.ClientService;
 import by.scooter.api.sevice.SubscriptionService;
-import by.scooter.entity.dto.pricing.SubscriptionDTO;
+import by.scooter.dto.pricing.SubscriptionDTO;
 import by.scooter.exception.ValidationError;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

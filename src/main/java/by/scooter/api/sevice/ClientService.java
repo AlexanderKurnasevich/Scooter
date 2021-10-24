@@ -1,7 +1,7 @@
 package by.scooter.api.sevice;
 
-import by.scooter.entity.dto.user.ClientInfoDTO;
-import by.scooter.entity.dto.user.ClientUserDTO;
+import by.scooter.dto.user.ClientInfoDTO;
+import by.scooter.dto.user.ClientUserDTO;
 import by.scooter.entity.user.Client;
 import org.springframework.security.access.AccessDeniedException;
 

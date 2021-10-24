@@ -1,7 +1,7 @@
 package by.scooter.service;
 
 import by.scooter.api.sevice.MailService;
-import by.scooter.entity.dto.AbstractEmailContext;
+import by.scooter.dto.mail.AbstractEmailContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;

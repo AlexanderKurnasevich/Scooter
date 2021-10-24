@@ -1,6 +1,6 @@
 package by.scooter.api.sevice;
 
-import by.scooter.entity.dto.pricing.DiscountDTO;
+import by.scooter.dto.pricing.DiscountDTO;
 
 import java.util.List;
 

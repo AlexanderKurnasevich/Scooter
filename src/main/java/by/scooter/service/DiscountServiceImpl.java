@@ -3,7 +3,7 @@ package by.scooter.service;
 import by.scooter.api.dao.DiscountDAO;
 import by.scooter.api.sevice.DiscountService;
 import by.scooter.api.sevice.UtilService;
-import by.scooter.entity.dto.pricing.DiscountDTO;
+import by.scooter.dto.pricing.DiscountDTO;
 import by.scooter.entity.pricing.Discount;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

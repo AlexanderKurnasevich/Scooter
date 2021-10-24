@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <include file="01-changeset-address-table.xml" relativeToChangelogFile="true"/>
+    <include file="02-changeset-cities-table.xml" relativeToChangelogFile="true"/>
+    <include file="03-changeset-clients-table.xml" relativeToChangelogFile="true"/>
+    <include file="04-changeset-countries-table.xml" relativeToChangelogFile="true"/>
+    <include file="05-changeset-discounts-table.xml" relativeToChangelogFile="true"/>
+    <include file="06-changeset-maintenaces-table.xml" relativeToChangelogFile="true"/>
+    <include file="07-changeset-orders-table.xml" relativeToChangelogFile="true"/>
+    <include file="08-changeset-password_reset_tokens-table.xml" relativeToChangelogFile="true"/>
+    <include file="09-changeset-rent_points-table.xml" relativeToChangelogFile="true"/>
+    <include file="10-changeset-roles-table.xml" relativeToChangelogFile="true"/>
+    <include file="11-changeset-scooter_model_pricing-table.xml" relativeToChangelogFile="true"/>
+    <include file="12-changeset-scooter_models-table.xml" relativeToChangelogFile="true"/>
+    <include file="13-changeset-scooters-table.xml" relativeToChangelogFile="true"/>
+    <include file="14-changeset-subscription_pricing-table.xml" relativeToChangelogFile="true"/>
+    <include file="15-changeset-subscriptions-table.xml" relativeToChangelogFile="true"/>
+    <include file="16-changeset-users-table.xml" relativeToChangelogFile="true"/>
+    <include file="17-changeset-users_roles-table.xml" relativeToChangelogFile="true"/>
+    <include file="40-changeset-tables.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>
