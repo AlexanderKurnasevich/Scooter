@@ -1,6 +1,7 @@
 package by.scooter.service;
 
 import by.scooter.api.dao.OrderDAO;
+import by.scooter.api.dao.RentPointDAO;
 import by.scooter.api.sevice.*;
 import by.scooter.dto.event.OrderCreateDTO;
 import by.scooter.dto.event.OrderDTO;
@@ -22,6 +23,7 @@ public class OrderServiceImpl implements OrderService {
     private final ModelMapper mapper;
     private final UtilService utilService;
     private final ScooterService scooterService;
+    private final RentPointDAO rentPointDAO;
     private final ClientService clientService;
     private final PricingService pricingService;
     private final SubscriptionService subscriptionService;
@@ -36,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderDTO addOrder(OrderCreateDTO order) {
         order.setClientId(clientService.getAuthorizedClient().getId());
 
-        if(order.getSubscriptionId() != null) {
+        if (order.getSubscriptionId() != null) {
             subscriptionService.handleOrder(order);
         } else {
             order.setPrice(pricingService.calculatePrice(order));
@@ -48,6 +50,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public void removeOrder(Long id) {
         orderDAO.delete(id);
     }
@@ -56,6 +59,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public void updateOrder(Long updatedId, OrderDTO update) {
         Order updated = orderDAO.getById(updatedId);
+        update.setScooterId(updated.getScooter().getId());
         Optional.ofNullable(update.getMileage()).ifPresent(updated::setMileage);
         orderDAO.update(updated);
     }

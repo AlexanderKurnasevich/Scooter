@@ -7,6 +7,7 @@ import by.scooter.api.sevice.PasswordResetService;
 import by.scooter.dto.mail.AbstractEmailContext;
 import by.scooter.entity.user.PasswordResetToken;
 import by.scooter.entity.user.User;
+import by.scooter.exception.TokenNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,12 @@ public class PasswordResetServiceImpl implements PasswordResetService {
         User user = userDAO.findByEmail(email);
         token.setUser(user);
         token.setToken(UUID.randomUUID().toString());
-        tokenDAO.save(token);
+        try {
+            tokenDAO.delete(tokenDAO.getByUser(user).getId());
+            tokenDAO.save(token);
+        } catch (TokenNotFoundException exception) {
+            tokenDAO.save(token);
+        }
         sendResetMail(user, token);
     }
 
@@ -43,6 +49,7 @@ public class PasswordResetServiceImpl implements PasswordResetService {
                 setSubject("Password reset");
                 setTo(cntxt.getEmail());
                 put("username", cntxt.getUsername());
+                put("email", cntxt.getEmail());
             }
         };
 

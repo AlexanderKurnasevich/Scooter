@@ -3,11 +3,13 @@ package by.scooter.controller;
 import by.scooter.api.sevice.OrderService;
 import by.scooter.dto.event.OrderCreateDTO;
 import by.scooter.dto.event.OrderDTO;
+import by.scooter.entity.OnUpdate;
 import by.scooter.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -61,7 +63,7 @@ public class OrderController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id,
-                                       @RequestBody @Valid OrderDTO order, BindingResult result) {
+                                       @RequestBody @Validated({OnUpdate.class}) OrderDTO order, BindingResult result) {
         if (result.hasErrors()) {
             throw new ValidationException(result);
         }

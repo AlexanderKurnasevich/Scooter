@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Objects;
 
 @Getter
@@ -19,15 +20,15 @@ import java.util.Objects;
 @Table(name = "scooters")
 public class Scooter extends AbstractEntity {
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(nullable = false)
     private ScooterModel model;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private RentPoint currentPoint;
 
     @Column(nullable = false, columnDefinition = "integer default 0")
-    @Positive
+    @PositiveOrZero
     private Integer odometer; //in meters
 
     @Override

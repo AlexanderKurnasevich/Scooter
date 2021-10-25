@@ -46,6 +46,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
+    @Transactional
     public void removeSubscription(Long id) {
         subscriptionDAO.delete(id);
     }

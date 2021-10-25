@@ -5,6 +5,7 @@ import by.scooter.exception.DataConsistencyException;
 import by.scooter.exception.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -32,6 +33,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleEntityNotFoundException(EntityNotFoundException ex) {
         return new ResponseEntity<>(ex.getLocalizedMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<String> handleEntityNotFoundException(AccessDeniedException ex) {
+        return new ResponseEntity<>(ex.getLocalizedMessage(), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(DataConsistencyException.class)

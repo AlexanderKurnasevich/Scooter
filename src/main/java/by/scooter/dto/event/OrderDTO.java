@@ -1,5 +1,6 @@
 package by.scooter.dto.event;
 
+import by.scooter.entity.OnUpdate;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 public class OrderDTO {
 
-    @NotNull
+    @NotNull(groups = {OnUpdate.class})
     private Long id;
 
     private LocalDateTime eventStart;
@@ -21,6 +22,6 @@ public class OrderDTO {
     @NotNull
     private Long clientId;
 
-    @NotNull
+    @NotNull(groups = {OnUpdate.class})
     private Integer mileage; //in meters
 }

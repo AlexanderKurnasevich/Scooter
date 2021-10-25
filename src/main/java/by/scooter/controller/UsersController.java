@@ -2,20 +2,20 @@ package by.scooter.controller;
 
 import by.scooter.api.sevice.PasswordResetService;
 import by.scooter.api.sevice.UserService;
+import by.scooter.dto.user.ResetPasswordDTO;
 import by.scooter.dto.user.UserDTO;
 import by.scooter.dto.user.UserInfoDTO;
-import by.scooter.dto.user.ResetPasswordDTO;
 import by.scooter.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -48,7 +48,7 @@ public class UsersController {
         return ResponseEntity.ok(userService.getById(id));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER', 'ROLE_CLIENT')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
     @PutMapping("/users/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable Long id,
                                            @RequestBody @Valid UserDTO user, BindingResult result) {
@@ -56,8 +56,9 @@ public class UsersController {
             throw new ValidationException(result);
         }
 
-        if (!Objects.equals(userService.getAuthorizedUser().getId(), id)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_CLIENT"))) {
+            userService.checkOwner(id);
         }
 
         user.setId(id);

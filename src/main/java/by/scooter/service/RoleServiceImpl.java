@@ -6,6 +6,7 @@ import by.scooter.entity.enumerator.RoleValue;
 import by.scooter.entity.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -26,16 +27,19 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
+    @Transactional
     public Role addRole(Role role) {
         return roleDAO.save(role);
     }
 
     @Override
+    @Transactional
     public void removeRole(Long id) {
         roleDAO.delete(id);
     }
 
     @Override
+    @Transactional
     public void updateRole(Long updatedId, Role update) {
         Role updated = roleDAO.getById(updatedId);
         Optional.ofNullable(update.getValue()).ifPresent(updated::setValue);

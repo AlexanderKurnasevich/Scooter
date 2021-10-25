@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.Objects;
 
 @Getter
@@ -38,7 +39,7 @@ public class ScooterModel extends AbstractEntity {
     private Float chargingTime; //in hours
 
     @Column(nullable = false)
-    @Positive
+    @PositiveOrZero
     private Short maxRange; //in km
 
     @Column(nullable = false)

@@ -56,6 +56,7 @@ public class SubscriptionPricingServiceImpl implements SubscriptionPricingServic
     }
 
     @Override
+    @Transactional
     public void removeSubscriptionPricing(Long id) {
         pricingDAO.delete(id);
     }

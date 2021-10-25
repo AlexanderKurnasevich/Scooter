@@ -38,6 +38,7 @@ public class DiscountServiceImpl implements DiscountService {
     }
 
     @Override
+    @Transactional
     public void remove(Long id) {
         discountDAO.delete(id);
     }

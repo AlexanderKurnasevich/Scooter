@@ -50,6 +50,7 @@ public class PricingServiceImpl implements PricingService {
     }
 
     @Override
+    @Transactional
     public void removeScooterModelPricing(Long id) {
         modelPricingDAO.delete(id);
     }

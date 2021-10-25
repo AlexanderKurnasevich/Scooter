@@ -65,7 +65,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     @Transactional
-    public void updateClient(Long updatedId, ClientUserDTO update) {
+    public void updateClient(Long updatedId, ClientInfoDTO update) {
         Client updated = checkOwner(updatedId);
         User user = updated.getUser();
         Optional.ofNullable(update.getEmail()).ifPresent(user::setEmail);

@@ -5,6 +5,7 @@ import by.scooter.api.sevice.OrderService;
 import by.scooter.dto.event.OrderDTO;
 import by.scooter.dto.user.ClientInfoDTO;
 import by.scooter.dto.user.ClientUserDTO;
+import by.scooter.entity.OnUpdate;
 import by.scooter.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,7 +21,6 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping
 public class ClientController {
     private final ClientService clientService;
     private final OrderService orderService;
@@ -63,7 +64,7 @@ public class ClientController {
     @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PutMapping("/clients/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id,
-                                       @RequestBody @Valid ClientUserDTO client, BindingResult result) {
+                                       @RequestBody @Valid ClientInfoDTO client, BindingResult result) {
         if (result.hasErrors()) {
             throw new ValidationException(result);
         }
@@ -75,7 +76,8 @@ public class ClientController {
 
     @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PutMapping("/orders/finish")
-    public ResponseEntity<Void> finishOrder(@RequestBody @Valid OrderDTO order, BindingResult result,
+    public ResponseEntity<Void> finishOrder(@RequestBody @Validated({OnUpdate.class}) OrderDTO order,
+                                            BindingResult result,
                                             @RequestParam Long rentPointId) {
         if (result.hasErrors()) {
             throw new ValidationException(result);

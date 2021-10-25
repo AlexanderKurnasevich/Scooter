@@ -2,10 +2,12 @@ package by.scooter.controller;
 
 import by.scooter.api.sevice.DiscountService;
 import by.scooter.dto.pricing.DiscountDTO;
+import by.scooter.entity.OnUpdate;
 import by.scooter.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -40,12 +42,19 @@ public class DiscountController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id,
-                                       @RequestBody @Valid DiscountDTO discount, BindingResult result) {
+                                       @RequestBody @Validated({OnUpdate.class}) DiscountDTO discount,
+                                       BindingResult result) {
         if (result.hasErrors()) {
             throw new ValidationException(result);
         }
 
         discountService.update(id, discount);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> remove(@RequestParam Long id) {
+        discountService.remove(id);
         return ResponseEntity.noContent().build();
     }
 }

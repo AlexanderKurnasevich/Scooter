@@ -1,6 +1,8 @@
 package by.scooter.service;
 
 import by.scooter.api.dao.OrderDAO;
+import by.scooter.api.dao.RentPointDAO;
+import by.scooter.api.dao.ScooterDAO;
 import by.scooter.api.sevice.*;
 import by.scooter.dto.event.OrderCreateDTO;
 import by.scooter.dto.event.OrderDTO;
@@ -27,6 +29,7 @@ class OrderServiceImplTest {
     private ModelMapper mapper;
     private UtilService utilService;
     private ScooterService scooterService;
+    private RentPointDAO rentPointDAO;
     private ClientService clientService;
     private PricingService pricingService;
     private SubscriptionService subscriptionService;
@@ -37,11 +40,13 @@ class OrderServiceImplTest {
         mapper = Mockito.mock(ModelMapper.class);
         utilService = Mockito.mock(UtilService.class);
         scooterService = Mockito.mock(ScooterService.class);
+        rentPointDAO = Mockito.mock(RentPointDAO.class);
         clientService = Mockito.mock(ClientService.class);
         pricingService = Mockito.mock(PricingService.class);
         subscriptionService = Mockito.mock(SubscriptionService.class);
-        orderService = new OrderServiceImpl(orderDAO, mapper, utilService,
-                scooterService, clientService, pricingService, subscriptionService);
+        orderService =
+                new OrderServiceImpl(orderDAO, mapper, utilService,
+                scooterService, rentPointDAO, clientService, pricingService, subscriptionService);
     }
 
     @Test

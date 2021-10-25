@@ -1,6 +1,7 @@
 package by.scooter.service;
 
-import by.scooter.api.dao.*;
+import by.scooter.api.dao.ClientDAO;
+import by.scooter.api.dao.RoleDAO;
 import by.scooter.api.sevice.ClientService;
 import by.scooter.api.sevice.UserService;
 import by.scooter.api.sevice.UtilService;
@@ -74,7 +75,7 @@ class ClientServiceImplTest {
         List<Client> list = new ArrayList<>();
 
         when(clientDAO.getAll(1, 1)).thenReturn(list);
-        clientService.getAll(1,1);
+        clientService.getAll(1, 1);
         verify(clientDAO, times(1)).getAll(1, 1);
         verify(utilService, times(1)).convertList(list, ClientInfoDTO.class);
     }
@@ -121,7 +122,7 @@ class ClientServiceImplTest {
         when(clientDAO.getById(1L)).thenReturn(expected);
         when(userService.getAuthorizedUser()).thenReturn(user);
 
-        clientService.updateClient(1L, new ClientUserDTO());
+        clientService.updateClient(1L, new ClientInfoDTO());
         verify(clientDAO, times(1)).update(any(Client.class));
     }
 

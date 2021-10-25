@@ -48,10 +48,12 @@ public class RentPointServiceImpl implements RentPointService {
     @Override
     @Transactional
     public void updateRentPoint(Long updatedId, RentPointDTO update) {
+        if (update.getAddressId() == null) {
+            update.setAddressId(addressService.saveRentPointAddress(update).getId());
+        }
         RentPoint updated = rentPointDAO.getById(updatedId);
         RentPoint src = mapper.map(update, RentPoint.class);
         Optional.ofNullable(src.getAddress()).ifPresent(updated::setAddress);
-        Optional.ofNullable(src.getScooters()).ifPresent(updated::setScooters);
         rentPointDAO.update(updated);
     }
 
