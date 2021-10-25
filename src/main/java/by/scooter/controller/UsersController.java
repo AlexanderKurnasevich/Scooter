@@ -5,7 +5,7 @@ import by.scooter.api.sevice.UserService;
 import by.scooter.dto.user.UserDTO;
 import by.scooter.dto.user.UserInfoDTO;
 import by.scooter.dto.user.ResetPasswordDTO;
-import by.scooter.exception.ValidationError;
+import by.scooter.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class UsersController {
     @PostMapping("/adduser")
     public ResponseEntity<Void> addUser(@RequestBody @Valid UserDTO user, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, user);
+            throw new ValidationException(result);
         }
 
         userService.save(user);
@@ -53,7 +53,7 @@ public class UsersController {
     public ResponseEntity<Void> updateUser(@PathVariable Long id,
                                            @RequestBody @Valid UserDTO user, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, user);
+            throw new ValidationException(result);
         }
 
         if (!Objects.equals(userService.getAuthorizedUser().getId(), id)) {
@@ -65,7 +65,7 @@ public class UsersController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/password_reset")
+    @PostMapping("/reset_request")
     public ResponseEntity<Void> resetPasswordInit(@RequestParam String email) {
         resetService.generateResetToken(email);
         return ResponseEntity.noContent().build();
@@ -74,7 +74,7 @@ public class UsersController {
     @PutMapping("/password_reset")
     public ResponseEntity<Void> resetPassword(@RequestBody @Valid ResetPasswordDTO body, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, body);
+            throw new ValidationException(result);
         }
 
         userService.setNewPassword(body);

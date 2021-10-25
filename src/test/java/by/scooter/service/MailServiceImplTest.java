@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.context.IContext;
@@ -31,6 +32,7 @@ class MailServiceImplTest {
 
     @Test
     void send() throws MessagingException {
+        ReflectionTestUtils.setField(mailService, "from", "any@from.com");
         AbstractEmailContext email = new AbstractEmailContext() {
             @Override
             public <T> void init(T context) {

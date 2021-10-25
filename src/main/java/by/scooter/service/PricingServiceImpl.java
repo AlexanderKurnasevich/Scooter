@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -57,21 +58,36 @@ public class PricingServiceImpl implements PricingService {
     @Transactional
     public void updateScooterModelPricing(Long updatedId, ScooterModelPricingDTO update) {
         ScooterModelPricing updated = modelPricingDAO.getById(updatedId);
-        Optional.of(update.getMinutePrice()).ifPresent(updated::setMinutePrice);
-        Optional.of(update.getHourPrice()).ifPresent(updated::setHourPrice);
-        Optional.of(update.getDayPrice()).ifPresent(updated::setDayPrice);
+        Optional.ofNullable(update.getMinutePrice()).ifPresent(updated::setMinutePrice);
+        Optional.ofNullable(update.getHourPrice()).ifPresent(updated::setHourPrice);
+        Optional.ofNullable(update.getDayPrice()).ifPresent(updated::setDayPrice);
+        modelPricingDAO.update(updated);
     }
 
     @Override
-    public Float calculatePrice(OrderCreateDTO order, String promoCode) {
-        long minutes = ChronoUnit.MINUTES.between(order.getEventStart(), order.getEventEnd());
-        float res = minutes * getByModelId(order.getScooterModelId()).getMinutePrice();
-        if (promoCode != null) {
-            var discount = discountDAO.getByPromoCode(promoCode);
+    public Float calculatePrice(OrderCreateDTO order) {
+        LocalDateTime eventStart = order.getEventStart();
+        LocalDateTime eventEnd = order.getEventEnd();
+        ScooterModelPricing pricing = modelPricingDAO.getByModelId(order.getScooterModelId());
+        long fullDays = UtilService.getFullDays(eventStart, eventEnd);
+
+        float res = fullDays * pricing.getDayPrice();
+        eventStart = eventStart.plusDays(fullDays);
+
+        long fullHours = UtilService.getFullHours(eventStart, eventEnd);
+        res += fullHours * pricing.getHourPrice();
+        eventStart = eventStart.plusHours(fullHours);
+
+        long minutes = ChronoUnit.MINUTES.between(eventStart, eventEnd);
+        res += minutes * pricing.getMinutePrice();
+
+        if (order.getPromoCode() != null) {
+            var discount = discountDAO.getByPromoCode(order.getPromoCode());
             if (discount.getExpireDate().isAfter(LocalDate.now())) {
                 res *= discount.getDiscountFactor();
             }
         }
+
         return (float) UtilService.roundUpToXDecimal(res, 3);
     }
 }

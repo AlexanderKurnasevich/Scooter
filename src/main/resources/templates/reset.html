@@ -1,0 +1,43 @@
+<html>
+<head>
+  <title>test</title>
+</head>
+
+<body>
+<form id="formElem">
+  <input type="password" name="newPassword" value="Enter new password">
+  <input type="text" name="email" value="Your email">
+  <input type="submit">
+</form>
+</body>
+<script>
+
+  function get(name){
+    if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
+      return decodeURIComponent(name[1]);
+  }
+
+  formElem.onsubmit = async (e) => {
+    e.preventDefault();
+    var form = document.querySelector("#formElem");
+    // var form = document.forms[0];
+
+    data = {
+      newPassword : form.querySelector('input[name="newPassword"]').value,
+      email : form.querySelector('input[name="email"]').value,
+      token : get('token')
+    }
+
+    let response = await fetch('http://localhost:8080/Scooter_war_exploded/password_reset', {
+      method: 'PUT', // or 'POST'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+
+    let text = await response.text(); // read response body as text
+    document.querySelector("#decoded").innerHTML = text;
+  };
+</script>
+</html>

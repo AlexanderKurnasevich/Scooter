@@ -2,7 +2,7 @@ package by.scooter.controller;
 
 import by.scooter.api.sevice.DiscountService;
 import by.scooter.dto.pricing.DiscountDTO;
-import by.scooter.exception.ValidationError;
+import by.scooter.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -31,7 +31,7 @@ public class DiscountController {
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody @Valid DiscountDTO discount, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, discount);
+            throw new ValidationException(result);
         }
 
         discountService.add(discount);
@@ -42,7 +42,7 @@ public class DiscountController {
     public ResponseEntity<Void> update(@PathVariable Long id,
                                        @RequestBody @Valid DiscountDTO discount, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, discount);
+            throw new ValidationException(result);
         }
 
         discountService.update(id, discount);

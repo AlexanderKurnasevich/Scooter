@@ -2,7 +2,7 @@ package by.scooter.controller;
 
 import by.scooter.api.sevice.ScooterModelService;
 import by.scooter.dto.vehicle.ScooterModelDTO;
-import by.scooter.exception.ValidationError;
+import by.scooter.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,7 +38,7 @@ public class ScooterModelController {
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody @Valid ScooterModelDTO model, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, model);
+            throw new ValidationException(result);
         }
 
         scooterModelService.addScooterModel(model);
@@ -57,7 +57,7 @@ public class ScooterModelController {
     public ResponseEntity<Void> update(@PathVariable Long id,
                                        @RequestBody @Valid ScooterModelDTO model, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, model);
+            throw new ValidationException(result);
         }
 
         scooterModelService.updateScooterModel(id, model);

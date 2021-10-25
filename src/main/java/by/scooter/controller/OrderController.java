@@ -3,7 +3,7 @@ package by.scooter.controller;
 import by.scooter.api.sevice.OrderService;
 import by.scooter.dto.event.OrderCreateDTO;
 import by.scooter.dto.event.OrderDTO;
-import by.scooter.exception.ValidationError;
+import by.scooter.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,13 +42,12 @@ public class OrderController {
 
     @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody @Valid OrderCreateDTO order, BindingResult result,
-                                    @RequestParam(required = false) String promoCode) {
+    public ResponseEntity<Void> add(@RequestBody @Valid OrderCreateDTO order, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, order);
+            throw new ValidationException(result);
         }
 
-        orderService.addOrder(order, promoCode);
+        orderService.addOrder(order);
         return ResponseEntity.noContent().build();
     }
 
@@ -64,7 +63,7 @@ public class OrderController {
     public ResponseEntity<Void> update(@PathVariable Long id,
                                        @RequestBody @Valid OrderDTO order, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, order);
+            throw new ValidationException(result);
         }
 
         orderService.updateOrder(id, order);

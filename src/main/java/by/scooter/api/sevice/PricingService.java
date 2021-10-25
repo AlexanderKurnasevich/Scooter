@@ -13,7 +13,7 @@ public interface PricingService {
 
     ScooterModelPricingDTO getById(Long id);
 
-    Float calculatePrice(OrderCreateDTO order, String promoCode);
+    Float calculatePrice(OrderCreateDTO order);
 
     void removeScooterModelPricing(Long id);
 

@@ -29,4 +29,5 @@ public class OrderCreateDTO {
     private Integer mileage = 0;
 
     private Long subscriptionId;
+    private String promoCode;
 }

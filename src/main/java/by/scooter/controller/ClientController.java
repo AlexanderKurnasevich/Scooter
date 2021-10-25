@@ -5,7 +5,7 @@ import by.scooter.api.sevice.OrderService;
 import by.scooter.dto.event.OrderDTO;
 import by.scooter.dto.user.ClientInfoDTO;
 import by.scooter.dto.user.ClientUserDTO;
-import by.scooter.exception.ValidationError;
+import by.scooter.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -53,7 +53,7 @@ public class ClientController {
     @PostMapping("/signup")
     public ResponseEntity<Void> add(@RequestBody @Valid ClientUserDTO client, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, client);
+            throw new ValidationException(result);
         }
 
         clientService.addClient(client);
@@ -65,7 +65,7 @@ public class ClientController {
     public ResponseEntity<Void> update(@PathVariable Long id,
                                        @RequestBody @Valid ClientUserDTO client, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, client);
+            throw new ValidationException(result);
         }
 
         client.setId(id);
@@ -78,7 +78,7 @@ public class ClientController {
     public ResponseEntity<Void> finishOrder(@RequestBody @Valid OrderDTO order, BindingResult result,
                                             @RequestParam Long rentPointId) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, order);
+            throw new ValidationException(result);
         }
 
         orderService.handleOrder(order, rentPointId);

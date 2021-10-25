@@ -33,13 +33,13 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderDTO addOrder(OrderCreateDTO order, String promoCode) {
+    public OrderDTO addOrder(OrderCreateDTO order) {
         order.setClientId(clientService.getAuthorizedClient().getId());
 
         if(order.getSubscriptionId() != null) {
             subscriptionService.handleOrder(order);
         } else {
-            order.setPrice(pricingService.calculatePrice(order, promoCode));
+            order.setPrice(pricingService.calculatePrice(order));
         }
 
         order.setScooterId(scooterService.getVacantScooters(mapper

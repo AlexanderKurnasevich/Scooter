@@ -2,7 +2,7 @@ package by.scooter.controller;
 
 import by.scooter.api.sevice.SubscriptionPricingService;
 import by.scooter.dto.pricing.SubscriptionPricingDTO;
-import by.scooter.exception.ValidationError;
+import by.scooter.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -32,7 +32,7 @@ public class SubscriptionPricingController {
     @PostMapping
     public ResponseEntity<Void> add(@RequestBody @Valid SubscriptionPricingDTO pricing, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, pricing);
+            throw new ValidationException(result);
         }
 
         service.addSubscriptionPricing(pricing);
@@ -43,7 +43,7 @@ public class SubscriptionPricingController {
     public ResponseEntity<Void> update(@PathVariable Long id,
                                        @RequestBody @Valid SubscriptionPricingDTO pricing, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, pricing);
+            throw new ValidationException(result);
         }
 
         service.updateSubscriptionPricing(id, pricing);

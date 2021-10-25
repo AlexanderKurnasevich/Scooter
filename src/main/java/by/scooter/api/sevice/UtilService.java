@@ -10,26 +10,34 @@ public interface UtilService {
         return Math.round(n * Math.pow(10, x)) / ((float) Math.pow(10, x));
     }
 
-    static long getRoundedDays(LocalDateTime dateFrom, LocalDateTime dateTo){
+    static long getFullDays(LocalDateTime dateFrom, LocalDateTime dateTo) {
+        return ChronoUnit.DAYS.between(dateFrom, dateTo);
+    }
+
+    static long getRoundedDays(LocalDateTime dateFrom, LocalDateTime dateTo) {
         long res = ChronoUnit.DAYS.between(dateFrom, dateTo);
         dateFrom = dateFrom.plusDays(res);
 
-        if(ChronoUnit.HOURS.between(dateFrom, dateTo) > 0) {
+        if (ChronoUnit.HOURS.between(dateFrom, dateTo) > 0) {
             return ++res;
         }
 
-        if(ChronoUnit.MINUTES.between(dateFrom, dateTo) > 0) {
+        if (ChronoUnit.MINUTES.between(dateFrom, dateTo) > 0) {
             return ++res;
         }
 
         return res;
     }
 
-    static long getRoundedHours(LocalDateTime dateFrom, LocalDateTime dateTo){
+    static long getFullHours(LocalDateTime dateFrom, LocalDateTime dateTo) {
+        return ChronoUnit.HOURS.between(dateFrom, dateTo);
+    }
+
+    static long getRoundedHours(LocalDateTime dateFrom, LocalDateTime dateTo) {
         long res = ChronoUnit.HOURS.between(dateFrom, dateTo);
         dateFrom = dateFrom.plusHours(res);
 
-        if(ChronoUnit.MINUTES.between(dateFrom, dateTo) > 0) {
+        if (ChronoUnit.MINUTES.between(dateFrom, dateTo) > 0) {
             return ++res;
         }
 

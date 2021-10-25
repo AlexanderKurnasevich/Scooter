@@ -3,7 +3,7 @@ package by.scooter.controller;
 import by.scooter.api.sevice.ClientService;
 import by.scooter.api.sevice.SubscriptionService;
 import by.scooter.dto.pricing.SubscriptionDTO;
-import by.scooter.exception.ValidationError;
+import by.scooter.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,7 +46,7 @@ public class SubscriptionController {
     @PostMapping("/subscription")
     public ResponseEntity<Void> add(@RequestBody @Valid SubscriptionDTO subscription, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, subscription);
+            throw new ValidationException(result);
         }
 
         subscriptionService.addSubscription(subscription);
@@ -66,7 +66,7 @@ public class SubscriptionController {
                                                   @RequestBody @Valid SubscriptionDTO subscription,
                                                   BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, subscription);
+            throw new ValidationException(result);
         }
 
         subscriptionService.renewSubscription(id, subscription);

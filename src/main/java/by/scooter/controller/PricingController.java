@@ -3,7 +3,7 @@ package by.scooter.controller;
 import by.scooter.api.sevice.PricingService;
 import by.scooter.dto.event.OrderCreateDTO;
 import by.scooter.dto.pricing.ScooterModelPricingDTO;
-import by.scooter.exception.ValidationError;
+import by.scooter.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -55,13 +55,12 @@ public class PricingController {
 
 
     @PostMapping("/calculate")
-    public ResponseEntity<OrderCreateDTO> calculatePrice(@RequestBody @Valid OrderCreateDTO order, BindingResult result,
-                                                         @RequestParam(required = false) String promoCode) {
+    public ResponseEntity<OrderCreateDTO> calculatePrice(@RequestBody @Valid OrderCreateDTO order, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, order);
+            throw new ValidationException(result);
         }
 
-        order.setPrice(pricingService.calculatePrice(order, promoCode));
+        order.setPrice(pricingService.calculatePrice(order));
         return ResponseEntity.ok(order);
     }
 

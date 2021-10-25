@@ -4,7 +4,7 @@ import by.scooter.api.sevice.RentPointService;
 import by.scooter.dto.location.RentPointDTO;
 import by.scooter.dto.location.RentPointFilterDTO;
 import by.scooter.dto.vehicle.ScooterDTO;
-import by.scooter.exception.ValidationError;
+import by.scooter.exception.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -46,7 +46,7 @@ public class RentPointController {
     @PostMapping("/add")
     public ResponseEntity<Void> add(@RequestBody @Valid RentPointDTO rentPoint, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, rentPoint);
+            throw new ValidationException(result);
         }
 
         rentPointService.addRentPoint(rentPoint);
@@ -65,7 +65,7 @@ public class RentPointController {
     public ResponseEntity<Void> update(@PathVariable Long id,
                                        @RequestBody @Valid RentPointDTO rentPoint, BindingResult result) {
         if (result.hasErrors()) {
-            throw new ValidationError(result, rentPoint);
+            throw new ValidationException(result);
         }
 
         rentPointService.updateRentPoint(id, rentPoint);
