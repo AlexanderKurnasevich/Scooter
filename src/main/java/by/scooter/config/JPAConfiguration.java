@@ -49,7 +49,7 @@ public class JPAConfiguration {
     }
 
     @Bean
-//    @DependsOn("liquibase") FIXME
+    @DependsOn("liquibase")
     public LocalContainerEntityManagerFactoryBean entityManager() {
         LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
         entityManager.setDataSource(dataSource());

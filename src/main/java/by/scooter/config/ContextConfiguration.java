@@ -15,11 +15,11 @@ public class ContextConfiguration {
 
     private final DataSource dataSource;
 
-//    @Bean
-//    public SpringLiquibase liquibase() { //FIXME
-//        SpringLiquibase liquibase = new SpringLiquibase();
-//        liquibase.setChangeLog("/changelog/db.changelog-master.xml");
-//        liquibase.setDataSource(dataSource);
-//        return liquibase;
-//    }
+    @Bean
+    public SpringLiquibase liquibase() {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setChangeLog("/changelog/db.changelog-master.xml");
+        liquibase.setDataSource(dataSource);
+        return liquibase;
+    }
 }
