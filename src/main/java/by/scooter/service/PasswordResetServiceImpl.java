@@ -7,16 +7,19 @@ import by.scooter.api.sevice.PasswordResetService;
 import by.scooter.dto.mail.AbstractEmailContext;
 import by.scooter.entity.user.PasswordResetToken;
 import by.scooter.entity.user.User;
+import by.scooter.exception.ServiceException;
 import by.scooter.exception.TokenNotFoundException;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class PasswordResetServiceImpl implements PasswordResetService {
 
     private final PasswordResetTokenDAO tokenDAO;
@@ -33,13 +36,13 @@ public class PasswordResetServiceImpl implements PasswordResetService {
         try {
             tokenDAO.delete(tokenDAO.getByUser(user).getId());
             tokenDAO.save(token);
-        } catch (TokenNotFoundException exception) {
+        } catch (TokenNotFoundException ignore) {
             tokenDAO.save(token);
         }
         sendResetMail(user, token);
     }
 
-    @SneakyThrows
+
     private void sendResetMail(User user, PasswordResetToken token) {
         AbstractEmailContext emailContext = new AbstractEmailContext() {
             @Override
@@ -56,6 +59,11 @@ public class PasswordResetServiceImpl implements PasswordResetService {
         emailContext.put("token", token.getToken());
         emailContext.init(user);
 
-        mailService.send(emailContext);
+        try {
+            mailService.send(emailContext);
+        } catch (MessagingException ex) {
+            log.warn("Mail sending failed", ex);
+            throw new ServiceException("Unable to send a mail");
+        }
     }
 }

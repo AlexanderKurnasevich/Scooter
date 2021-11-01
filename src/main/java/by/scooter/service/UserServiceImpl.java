@@ -122,7 +122,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User checkOwner(Long id) throws AccessDeniedException {
         User checked = userDAO.getById(id);
-        if (!Objects.equals(getAuthorizedUser().getId(), id)) {
+        UserInfoDTO auth = getAuthorizedUser();
+        if (!Objects.equals(auth.getId(), id)) {
+            log.info("Unauthorized access attempt to user id={} by id={}", id, auth.getId());
             throw new AccessDeniedException("Current user isn't owner");
         }
         return checked;

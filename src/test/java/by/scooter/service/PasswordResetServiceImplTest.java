@@ -1,26 +1,20 @@
 package by.scooter.service;
 
-import by.scooter.api.dao.ClientDAO;
 import by.scooter.api.dao.PasswordResetTokenDAO;
-import by.scooter.api.dao.RoleDAO;
 import by.scooter.api.dao.UserDAO;
 import by.scooter.api.sevice.MailService;
 import by.scooter.api.sevice.PasswordResetService;
-import by.scooter.api.sevice.UserService;
-import by.scooter.api.sevice.UtilService;
 import by.scooter.dto.mail.AbstractEmailContext;
 import by.scooter.entity.user.PasswordResetToken;
 import by.scooter.entity.user.User;
+import by.scooter.exception.TokenNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.modelmapper.ModelMapper;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.mail.MessagingException;
-import java.util.UUID;
+import javax.persistence.NoResultException;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -43,15 +37,41 @@ class PasswordResetServiceImplTest {
     @Test
     void generateResetToken() throws MessagingException {
         PasswordResetToken token = new PasswordResetToken();
+        token.setId(1L);
         User user = new User();
 
         when(userDAO.findByEmail("email")).thenReturn(user);
+        when(tokenDAO.getByUser(any(User.class))).thenReturn(token);
+        doNothing().when(tokenDAO).delete(anyLong());
         when(tokenDAO.save(any(PasswordResetToken.class))).thenReturn(token);
         doNothing().when(mailService).send(any(AbstractEmailContext.class));
 
         service.generateResetToken("email");
         verify(userDAO, times(1)).findByEmail("email");
         verify(tokenDAO, times(1)).save(any(PasswordResetToken.class));
+        verify(tokenDAO, times(1)).getByUser(any(User.class));
+        verify(tokenDAO, times(1)).delete(anyLong());
+        verify(mailService, times(1)).send(any(AbstractEmailContext.class));
+    }
+
+    @Test
+    void generateResetToken_CatchTokenNotFoundException() throws MessagingException {
+        PasswordResetToken token = new PasswordResetToken();
+        token.setId(1L);
+        User user = new User();
+
+        when(userDAO.findByEmail("email")).thenReturn(user);
+        when(tokenDAO.getByUser(any(User.class)))
+                .thenThrow(new TokenNotFoundException("message", new NoResultException()));
+        doNothing().when(tokenDAO).delete(anyLong());
+        when(tokenDAO.save(any(PasswordResetToken.class))).thenReturn(token);
+        doNothing().when(mailService).send(any(AbstractEmailContext.class));
+
+        service.generateResetToken("email");
+        verify(userDAO, times(1)).findByEmail("email");
+        verify(tokenDAO, times(1)).save(any(PasswordResetToken.class));
+        verify(tokenDAO, times(1)).getByUser(any(User.class));
+        verify(tokenDAO, times(0)).delete(anyLong());
         verify(mailService, times(1)).send(any(AbstractEmailContext.class));
     }
 }

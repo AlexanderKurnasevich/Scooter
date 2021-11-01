@@ -1,11 +1,8 @@
 package by.scooter.service;
 
-import by.scooter.api.dao.ClientDAO;
 import by.scooter.api.dao.RentPointDAO;
-import by.scooter.api.dao.RoleDAO;
 import by.scooter.api.sevice.AddressService;
 import by.scooter.api.sevice.RentPointService;
-import by.scooter.api.sevice.UserService;
 import by.scooter.api.sevice.UtilService;
 import by.scooter.dto.location.AddressDTO;
 import by.scooter.dto.location.RentPointDTO;
@@ -17,13 +14,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class RentPointServiceImplTest {
@@ -78,18 +73,18 @@ class RentPointServiceImplTest {
     @Test
     void updateRentPoint() {
         RentPointDTO actual = new RentPointDTO();
-        RentPoint mapped = new RentPoint();
-        mapped.setId(1L);
-        RentPoint given = new RentPoint();
+        AddressDTO addressDTO = new AddressDTO();
+        addressDTO.setId(1L);
 
-        when(mapper.map(actual, RentPoint.class)).thenReturn(mapped);
-        when(rentPointDAO.getById(1L)).thenReturn(given);
-        doNothing().when(rentPointDAO).update(given);
+        RentPoint expected = new RentPoint();
+
+        when(addressService.saveRentPointAddress(actual)).thenReturn(addressDTO);
+        when(rentPointDAO.getById(1L)).thenReturn(expected);
+        doNothing().when(rentPointDAO).update(expected);
 
         rentPointService.updateRentPoint(1L, new RentPointDTO());
-        verify(mapper, times(1)).map(actual, RentPoint.class);
         verify(rentPointDAO, times(1)).getById(1L);
-        verify(rentPointDAO, times(1)).update(given);
+        verify(rentPointDAO, times(1)).update(expected);
     }
 
     @Test

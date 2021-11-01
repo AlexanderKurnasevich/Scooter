@@ -7,6 +7,7 @@ import by.scooter.api.sevice.UtilService;
 import by.scooter.dto.location.RentPointDTO;
 import by.scooter.dto.location.RentPointFilterDTO;
 import by.scooter.dto.vehicle.ScooterDTO;
+import by.scooter.entity.location.Address;
 import by.scooter.entity.location.RentPoint;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -51,9 +52,10 @@ public class RentPointServiceImpl implements RentPointService {
         if (update.getAddressId() == null) {
             update.setAddressId(addressService.saveRentPointAddress(update).getId());
         }
+        Address address = new Address();
+        address.setId(update.getId());
         RentPoint updated = rentPointDAO.getById(updatedId);
-        RentPoint src = mapper.map(update, RentPoint.class);
-        Optional.ofNullable(src.getAddress()).ifPresent(updated::setAddress);
+        updated.setAddress(address);
         rentPointDAO.update(updated);
     }
 

@@ -23,7 +23,6 @@ public class OrderServiceImpl implements OrderService {
     private final ModelMapper mapper;
     private final UtilService utilService;
     private final ScooterService scooterService;
-    private final RentPointDAO rentPointDAO;
     private final ClientService clientService;
     private final PricingService pricingService;
     private final SubscriptionService subscriptionService;

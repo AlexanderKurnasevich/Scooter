@@ -29,7 +29,6 @@ class OrderServiceImplTest {
     private ModelMapper mapper;
     private UtilService utilService;
     private ScooterService scooterService;
-    private RentPointDAO rentPointDAO;
     private ClientService clientService;
     private PricingService pricingService;
     private SubscriptionService subscriptionService;
@@ -40,13 +39,12 @@ class OrderServiceImplTest {
         mapper = Mockito.mock(ModelMapper.class);
         utilService = Mockito.mock(UtilService.class);
         scooterService = Mockito.mock(ScooterService.class);
-        rentPointDAO = Mockito.mock(RentPointDAO.class);
         clientService = Mockito.mock(ClientService.class);
         pricingService = Mockito.mock(PricingService.class);
         subscriptionService = Mockito.mock(SubscriptionService.class);
         orderService =
                 new OrderServiceImpl(orderDAO, mapper, utilService,
-                scooterService, rentPointDAO, clientService, pricingService, subscriptionService);
+                scooterService, clientService, pricingService, subscriptionService);
     }
 
     @Test
@@ -123,7 +121,12 @@ class OrderServiceImplTest {
 
     @Test
     void updateOrder() {
-        when(orderDAO.getById(1L)).thenReturn(new Order());
+        Order order = new Order();
+        Scooter scooter = new Scooter();
+        scooter.setId(1L);
+        order.setScooter(scooter);
+
+        when(orderDAO.getById(1L)).thenReturn(order);
 
         orderService.updateOrder(1L, new OrderDTO());
         verify(orderDAO, times(1)).getById(1L);
@@ -165,13 +168,18 @@ class OrderServiceImplTest {
 
     @Test
     void handleOrder() {
+        Order order = new Order();
+        Scooter scooter = new Scooter();
+        scooter.setId(1L);
+        order.setScooter(scooter);
+
         OrderDTO givenOrder = new OrderDTO();
         Long givenRentPointId = 1L;
         givenOrder.setId(1L);
         givenOrder.setScooterId(1L);
         givenOrder.setMileage(1);
 
-        when(orderDAO.getById(1L)).thenReturn(new Order());
+        when(orderDAO.getById(1L)).thenReturn(order);
 
         orderService.handleOrder(givenOrder, givenRentPointId);
         verify(orderDAO, times(1)).getById(1L);

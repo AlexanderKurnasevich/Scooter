@@ -7,11 +7,13 @@ import by.scooter.api.sevice.UserService;
 import by.scooter.api.sevice.UtilService;
 import by.scooter.dto.user.ClientInfoDTO;
 import by.scooter.dto.user.ClientUserDTO;
+import by.scooter.dto.user.UserInfoDTO;
 import by.scooter.entity.enumerator.RoleValue;
 import by.scooter.entity.user.Client;
 import by.scooter.entity.user.Role;
 import by.scooter.entity.user.User;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +24,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class ClientServiceImpl implements ClientService {
 
     private final ClientDAO clientDAO;
@@ -77,7 +80,9 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Client checkOwner(Long id) throws AccessDeniedException {
         Client checked = clientDAO.getById(id);
-        if (!Objects.equals(userService.getAuthorizedUser().getId(), checked.getUser().getId())) {
+        UserInfoDTO auth = userService.getAuthorizedUser();
+        if (!Objects.equals(auth.getId(), checked.getUser().getId())) {
+            log.info("Unauthorized access attempt to user id={} by id={}", id, auth.getId());
             throw new AccessDeniedException("Client isn't an owner");
         }
         return checked;

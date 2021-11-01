@@ -1,8 +1,6 @@
 package by.scooter.config;
 
-import by.scooter.exception.DAOException;
-import by.scooter.exception.DataConsistencyException;
-import by.scooter.exception.ValidationException;
+import by.scooter.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -14,6 +12,16 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(WrongPasswordException.class)
+    public ResponseEntity<Map<String, String>> handleWrongPasswordException(ValidationException ex) {
+        return new ResponseEntity<>(ex.getFieldMessageMap(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(SubscriptionException.class)
+    public ResponseEntity<String> handleSubscriptionException(SubscriptionException ex) {
+        return new ResponseEntity<>(ex.getLocalizedMessage(), HttpStatus.NOT_ACCEPTABLE);
+    }
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<Map<String, String>> handleValidationException(ValidationException ex) {
@@ -49,4 +57,5 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleException(Exception ex) {
         return new ResponseEntity<>(ex.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
 }
