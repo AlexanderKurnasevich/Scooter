@@ -5,11 +5,12 @@ import by.scooter.api.dao.RoleDAO;
 import by.scooter.api.dao.UserDAO;
 import by.scooter.api.sevice.UserService;
 import by.scooter.api.sevice.UtilService;
+import by.scooter.dto.user.ResetPasswordDTO;
 import by.scooter.dto.user.RoleDTO;
 import by.scooter.dto.user.UserDTO;
 import by.scooter.dto.user.UserInfoDTO;
+import by.scooter.entity.enumerator.RoleValue;
 import by.scooter.entity.user.PasswordResetToken;
-import by.scooter.dto.user.ResetPasswordDTO;
 import by.scooter.entity.user.Role;
 import by.scooter.entity.user.User;
 import by.scooter.exception.WrongPasswordException;
@@ -17,14 +18,20 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionCallbackWithoutResult;
+import org.springframework.transaction.support.TransactionTemplate;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -41,11 +48,35 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper mapper;
     private final UtilService utilService;
     private final PasswordResetTokenDAO resetTokenDAO;
+    private final PlatformTransactionManager txManager;
     private PasswordEncoder passwordEncoder;
+
+    @Value("${database.admin.password}")
+    private String password;
+    @Value("${database.admin.email}")
+    private String email;
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+    }
+
+    @PostConstruct
+    protected void adminInit() {
+        TransactionTemplate tmpl = new TransactionTemplate(txManager);
+        tmpl.execute(new TransactionCallbackWithoutResult() {
+            @Override
+            protected void doInTransactionWithoutResult(TransactionStatus status) {
+                try {
+                    userDAO.findByLogin("admin");
+                } catch (UsernameNotFoundException ignore) {
+                    Role role = roleDAO.getByRole(RoleValue.ROLE_ADMIN);
+                    String pass = passwordEncoder.encode(password);
+                    User admin = new User("admin", pass, email, new HashSet<>(List.of(role)));
+                    userDAO.save(admin);
+                }
+            }
+        });
     }
 
     @Override

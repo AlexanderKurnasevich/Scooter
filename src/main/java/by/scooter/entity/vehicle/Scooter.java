@@ -29,7 +29,7 @@ public class Scooter extends AbstractEntity {
 
     @Column(nullable = false, columnDefinition = "integer default 0")
     @PositiveOrZero
-    private Integer odometer; //in meters
+    private Integer odometer = 0; //in meters
 
     @Override
     public boolean equals(Object o) {

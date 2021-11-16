@@ -21,15 +21,15 @@ values ('6', 'Minsk', '1');
 insert into addresses (id, number, street, city_id)
 values ('1', '2', 'pl. Sovetskaya', '4');
 
-insert into users (email, password, username)
-VALUES ('admin@scooter.by', '$2a$10$EUyj.zyrqfam2RfLaTDx3.SpguKcCqmS63tPqB9wudglOR0WL6GAm', 'admin');
-insert into users_roles (users_id, roles_id) VALUES (1, 1);
+# insert into users (email, password, username)
+# VALUES ('admin@scooter.by', '$2a$10$EUyj.zyrqfam2RfLaTDx3.SpguKcCqmS63tPqB9wudglOR0WL6GAm', 'admin');
+# insert into users_roles (users_id, roles_id) VALUES (1, 1);
 
-insert into users (email, password, username)
-VALUES ('17alex17@tut.by', '$2a$10$eFT/tEfymFUt1HPOC5iLEuSh7asr80EgBIbhoPQ5pj9vMpOhUiHmG', 'test');
-insert into clients (id, firstName, lastName, user_id)
-VALUES ('1', 'name', 'fam', '2');
-insert into users_roles (users_id, roles_id) VALUES (2, 2);
+# insert into users (email, password, username)
+# VALUES ('17alex17@tut.by', '$2a$10$eFT/tEfymFUt1HPOC5iLEuSh7asr80EgBIbhoPQ5pj9vMpOhUiHmG', 'test');
+# insert into clients (id, firstName, lastName, user_id)
+# VALUES ('1', 'name', 'fam', '2');
+# insert into users_roles (users_id, roles_id) VALUES (2, 2);
 
 insert into discounts (id, discountFactor, expireDate, promoCode)
 VALUES ('1', '0.9', '2222-12-12', 'PROMO');
