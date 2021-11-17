@@ -10,7 +10,6 @@
     <include file="03-changeset-clients-table.xml" relativeToChangelogFile="true"/>
     <include file="04-changeset-countries-table.xml" relativeToChangelogFile="true"/>
     <include file="05-changeset-discounts-table.xml" relativeToChangelogFile="true"/>
-    <include file="06-changeset-maintenaces-table.xml" relativeToChangelogFile="true"/>
     <include file="07-changeset-orders-table.xml" relativeToChangelogFile="true"/>
     <include file="08-changeset-password_reset_tokens-table.xml" relativeToChangelogFile="true"/>
     <include file="09-changeset-rent_points-table.xml" relativeToChangelogFile="true"/>

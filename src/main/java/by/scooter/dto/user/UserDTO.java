@@ -32,6 +32,7 @@ public class UserDTO {
     private String password;
 
     @Email
+    @NotNull
     private String email;
     private Set<RoleDTO> roles;
 }

@@ -10,6 +10,7 @@ import by.scooter.entity.event.Order;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -79,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED)
     public void handleOrder(OrderDTO order, Long rentPointId) {
         updateOrder(order.getId(), order);
         scooterService.addMileage(order.getScooterId(), order.getMileage());

@@ -24,12 +24,6 @@ public class UsersController {
     private final UserService userService;
     private final PasswordResetService resetService;
 
-    @GetMapping("/login")
-    public ResponseEntity<UserInfoDTO> logIn(@RequestParam String login,
-                                             @RequestParam CharSequence password) {
-        return ResponseEntity.ok(userService.logIn(login, password));
-    }
-
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/adduser")
     public ResponseEntity<Void> addUser(@RequestBody @Valid UserDTO user, BindingResult result) {
@@ -94,5 +88,11 @@ public class UsersController {
     public ResponseEntity<Void> remove(@RequestParam Long id) {
         userService.remove(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<UserInfoDTO> logIn(@RequestParam String login,
+                                             @RequestParam CharSequence password) {
+        return ResponseEntity.ok(userService.logIn(login, password));
     }
 }

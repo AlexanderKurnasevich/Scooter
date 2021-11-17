@@ -46,15 +46,15 @@ alter table clients
         foreign key (user_id)
             references users (id) ;
 
-alter table maintenances
-    add constraint maintenances_scooter_id_fk
-        foreign key (scooter_id)
-            references scooters (id) ;
-
-alter table maintenances
-    add constraint maintenances_user_id_fk
-        foreign key (user_id)
-            references users (id) ;
+# alter table maintenances
+#     add constraint maintenances_scooter_id_fk
+#         foreign key (scooter_id)
+#             references scooters (id) ;
+#
+# alter table maintenances
+#     add constraint maintenances_user_id_fk
+#         foreign key (user_id)
+#             references users (id) ;
 
 alter table orders
     add constraint orders_scooter_id_fk

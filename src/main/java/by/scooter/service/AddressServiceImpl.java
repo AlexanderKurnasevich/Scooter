@@ -61,4 +61,9 @@ public class AddressServiceImpl implements AddressService {
             return cityDAO.save(city);
         }
     }
+
+    @Override
+    public Address getById(Long addressId) {
+        return addressDAO.getById(addressId);
+    }
 }

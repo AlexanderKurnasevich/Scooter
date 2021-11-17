@@ -52,8 +52,7 @@ public class RentPointServiceImpl implements RentPointService {
         if (update.getAddressId() == null) {
             update.setAddressId(addressService.saveRentPointAddress(update).getId());
         }
-        Address address = new Address();
-        address.setId(update.getId());
+        Address address = addressService.getById(update.getAddressId());
         RentPoint updated = rentPointDAO.getById(updatedId);
         updated.setAddress(address);
         rentPointDAO.update(updated);

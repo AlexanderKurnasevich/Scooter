@@ -20,11 +20,11 @@ import java.util.Objects;
 @Table(name = "scooters")
 public class Scooter extends AbstractEntity {
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(nullable = false)
     private ScooterModel model;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private RentPoint currentPoint;
 
     @Column(nullable = false, columnDefinition = "integer default 0")
