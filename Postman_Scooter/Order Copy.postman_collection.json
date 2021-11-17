@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "322b2720-42e2-4ea5-bc31-2d7bd3714e3a",
-		"name": "Order",
+		"_postman_id": "1a7b8611-34eb-4df6-8fc1-61f74320c8e6",
+		"name": "Order Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -29,14 +29,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/orders",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/orders",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
+								"Scooter-1.0-SNAPSHOT",
 								"orders"
 							]
 						}
@@ -64,14 +64,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/orders/1",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/orders/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
+								"Scooter-1.0-SNAPSHOT",
 								"orders",
 								"1"
 							]
@@ -85,14 +85,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/orders/scooter/1",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/orders/scooter/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
+								"Scooter-1.0-SNAPSHOT",
 								"orders",
 								"scooter",
 								"1"
@@ -128,7 +128,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"eventStart\": [\r\n        2000,\r\n        11,\r\n        10,\r\n        0,\r\n        0\r\n    ],\r\n    \"eventEnd\": [\r\n        2000,\r\n        12,\r\n        20,\r\n        0,\r\n        0\r\n    ],\r\n    \"scooterModelId\": 1,\r\n    \"rentPointId\": 1\r\n}",
+							"raw": "{\r\n        \"eventStart\": [\r\n        2021,\r\n        11,\r\n        24,\r\n        0,\r\n        0\r\n    ],\r\n    \"eventEnd\": [\r\n        2021,\r\n        11,\r\n        25,\r\n        0,\r\n        0\r\n    ],\r\n    \"scooterModelId\": 1,\r\n    \"rentPointId\": 1,\r\n    \"subscriptionId\":1 \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -136,14 +136,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/orders",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/orders",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
+								"Scooter-1.0-SNAPSHOT",
 								"orders"
 							]
 						}
@@ -156,7 +156,63 @@
 			"name": "PUT",
 			"item": [
 				{
-					"name": "update",
+					"name": "finish order",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "test",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"mileage\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/orders/finish?rentPointId=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Scooter-1.0-SNAPSHOT",
+								"orders",
+								"finish"
+							],
+							"query": [
+								{
+									"key": "rentPointId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "removeById",
 					"request": {
 						"auth": {
 							"type": "basic",
@@ -173,57 +229,23 @@
 								}
 							]
 						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"scooters\": [\r\n        {\r\n            \"id\": 1\r\n        },\r\n        {\r\n            \"id\": 2\r\n        }\r\n    ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/none",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"Scooter_war_exploded",
-								"none"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "DELETE",
-			"item": [
-				{
-					"name": "removeById",
-					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/orders?id=X",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/orders?id=2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
+								"Scooter-1.0-SNAPSHOT",
 								"orders"
 							],
 							"query": [
 								{
 									"key": "id",
-									"value": "X"
+									"value": "2"
 								}
 							]
 						}

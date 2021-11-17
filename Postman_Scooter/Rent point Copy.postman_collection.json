@@ -1,33 +1,13 @@
 {
 	"info": {
-		"_postman_id": "5cdd473e-50bf-41d3-bf5c-4e131ad32ba4",
-		"name": "User",
+		"_postman_id": "f0b48a16-b8b5-4b73-bd05-cfa8cb46c5bf",
+		"name": "Rent point Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "GET",
 			"item": [
-				{
-					"name": "getAll",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/users",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"Scooter_war_exploded",
-								"users"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "getById",
 					"request": {
@@ -36,7 +16,7 @@
 							"basic": [
 								{
 									"key": "username",
-									"value": "test",
+									"value": "admin",
 									"type": "string"
 								},
 								{
@@ -49,46 +29,51 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/users/8",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/points/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
-								"users",
-								"8"
+								"Scooter-1.0-SNAPSHOT",
+								"points",
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "login",
+					"name": "getAll",
 					"request": {
-						"method": "GET",
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/login?login=user&password=1234",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/points",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
-								"login"
-							],
-							"query": [
-								{
-									"key": "login",
-									"value": "user"
-								},
-								{
-									"key": "password",
-									"value": "1234"
-								}
+								"Scooter-1.0-SNAPSHOT",
+								"points"
 							]
 						}
 					},
@@ -100,13 +85,28 @@
 			"name": "POST",
 			"item": [
 				{
-					"name": "add",
+					"name": "add with new address",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"1234\",\r\n    \"roles\": [\r\n        {\r\n            \"value\": \"ROLE_ADMIN\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"country\": \"France\",\r\n    \"city\": \"Paris\",\r\n    \"street\": \"st. Street\",\r\n    \"number\": 12\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -114,15 +114,60 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/adduser",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/points/add",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
-								"adduser"
+								"Scooter-1.0-SNAPSHOT",
+								"points",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/points",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Scooter-1.0-SNAPSHOT",
+								"points"
 							]
 						}
 					},
@@ -141,7 +186,7 @@
 							"basic": [
 								{
 									"key": "username",
-									"value": "user3",
+									"value": "admin",
 									"type": "string"
 								},
 								{
@@ -155,7 +200,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 7,\r\n    \"username\": \"user3\",\r\n    \"password\": \"4444\",\r\n    \"roles\": [\r\n        {\r\n            \"value\": \"ROLE_USER\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"addressId\": 3\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -163,16 +208,16 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/users/7",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/points/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
-								"users",
-								"7"
+								"Scooter-1.0-SNAPSHOT",
+								"points",
+								"1"
 							]
 						}
 					},
@@ -186,25 +231,10 @@
 				{
 					"name": "removeById",
 					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "test",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "1234",
-									"type": "string"
-								}
-							]
-						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/users?id=X",
+							"raw": "http://localhost:8080/Scooter_war_exploded/points?id=26",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -212,12 +242,12 @@
 							"port": "8080",
 							"path": [
 								"Scooter_war_exploded",
-								"users"
+								"points"
 							],
 							"query": [
 								{
 									"key": "id",
-									"value": "X"
+									"value": "26"
 								}
 							]
 						}

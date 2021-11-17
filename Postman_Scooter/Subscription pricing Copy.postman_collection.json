@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "1a68acd2-7902-402e-b6a1-23fd8eaf7173",
-		"name": "Scooter model",
+		"_postman_id": "4037a869-6e6a-4ebf-9f21-a04fa5e370cd",
+		"name": "Subscription pricing Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -11,51 +11,71 @@
 				{
 					"name": "getAll",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/scooters/models?page=1&size=3",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/pricing/subscription",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
-								"scooters",
-								"models"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "size",
-									"value": "3"
-								}
+								"Scooter-1.0-SNAPSHOT",
+								"pricing",
+								"subscription"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "getById",
+					"name": "getByUnit",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/scooters/models/1",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/pricing/subscription/days",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
-								"scooters",
-								"models",
-								"1"
+								"Scooter-1.0-SNAPSHOT",
+								"pricing",
+								"subscription",
+								"days"
 							]
 						}
 					},
@@ -88,7 +108,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"vehicleType\": \"SCOOTER\",\r\n    \"maker\": \"DTOtest\",\r\n    \"model\": \"t\",\r\n    \"chargingTime\": 5.0,\r\n    \"maxRange\": 30,\r\n    \"maxSpeed\": 25,\r\n    \"passengerCapacity\": 1,\r\n    \"maxLoad\": 100\r\n}",
+							"raw": "{\r\n    \"unit\": \"HOURS\",\r\n    \"price\": 100.0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -96,16 +116,16 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/scooters/models",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/pricing/subscription",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
-								"scooters",
-								"models"
+								"Scooter-1.0-SNAPSHOT",
+								"pricing",
+								"subscription"
 							]
 						}
 					},
@@ -119,11 +139,26 @@
 				{
 					"name": "update",
 					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"vehicleType\": \"SCOOTER\",\r\n    \"maker\": \"DTOtest\",\r\n    \"model\": \"2\",\r\n    \"chargingTime\": 5.0,\r\n    \"maxRange\": 30,\r\n    \"maxSpeed\": 25,\r\n    \"passengerCapacity\": 1,\r\n    \"maxLoad\": 100\r\n}",
+							"raw": "{\r\n    \"unit\": \"DAYS\",\r\n    \"price\": 1000.1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -131,17 +166,17 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/scooters/models/6",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/pricing/subscription/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
-								"scooters",
-								"models",
-								"6"
+								"Scooter-1.0-SNAPSHOT",
+								"pricing",
+								"subscription",
+								"1"
 							]
 						}
 					},
@@ -158,7 +193,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/scooters/models?id=5",
+							"raw": "http://localhost:8080/Scooter_war_exploded/pricing/subscription?id=X",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -166,13 +201,13 @@
 							"port": "8080",
 							"path": [
 								"Scooter_war_exploded",
-								"scooters",
-								"models"
+								"pricing",
+								"subscription"
 							],
 							"query": [
 								{
 									"key": "id",
-									"value": "5"
+									"value": "X"
 								}
 							]
 						}

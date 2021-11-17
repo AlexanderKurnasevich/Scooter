@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "eb9edb44-f190-4422-b754-7dbc360559b7",
-		"name": "Scooter",
+		"_postman_id": "25583bbc-7ef8-48e7-bee7-72b4df8218a2",
+		"name": "Scooter Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -14,14 +14,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/scooters",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/scooters",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
+								"Scooter-1.0-SNAPSHOT",
 								"scooters"
 							]
 						}
@@ -34,14 +34,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/scooters/1",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/scooters/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
+								"Scooter-1.0-SNAPSHOT",
 								"scooters",
 								"1"
 							]
@@ -61,7 +61,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"modelId\": 1,\r\n    \"currentPointId\": 1,\r\n    \"odometer\": 0\r\n}",
+							"raw": "{\r\n    \"modelId\": 1,\r\n    \"currentPointId\": 2,\r\n    \"odometer\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -69,14 +69,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/scooters",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/scooters",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
+								"Scooter-1.0-SNAPSHOT",
 								"scooters"
 							]
 						}
@@ -95,7 +95,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"modelId\": 2,\r\n    \"homePointId\": null,\r\n    \"chargePercent\": 22.0,\r\n    \"odometer\": 0\r\n}",
+							"raw": "{\r\n    \"modelId\": 1,\r\n    \"currentPointId\": 2,\r\n    \"odometer\": 10\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -103,16 +103,16 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/scooters/6",
+							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/scooters/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter_war_exploded",
+								"Scooter-1.0-SNAPSHOT",
 								"scooters",
-								"6"
+								"5"
 							]
 						}
 					},
@@ -129,7 +129,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter_war_exploded/scooters?id=X",
+							"raw": "http://localhost:8080/Scooter_war_exploded/scooters?id=4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -142,7 +142,7 @@
 							"query": [
 								{
 									"key": "id",
-									"value": "X"
+									"value": "4"
 								}
 							]
 						}
