@@ -3,6 +3,7 @@ package by.scooter.entity.event;
 import by.scooter.entity.user.User;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.util.Objects;
@@ -11,7 +12,7 @@ import java.util.Objects;
 @Table(name = "maintenances")
 public class Maintenance extends Event {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     @Override

@@ -20,11 +20,12 @@ import java.util.Objects;
 @Table(name = "scooters")
 public class Scooter extends AbstractEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false)
     private ScooterModel model;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(nullable = false, name = "current_point_id")
     private RentPoint currentPoint;
 
     @Column(nullable = false, columnDefinition = "integer default 0")

@@ -30,7 +30,7 @@ public class Subscription extends AbstractEntity {
     @Positive
     private Integer quantity;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "expiry_day")
     @NotNull
     private LocalDate expiryDay;
 

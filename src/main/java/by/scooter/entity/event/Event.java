@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
@@ -16,13 +17,13 @@ import java.util.Objects;
 @MappedSuperclass
 public abstract class Event extends AbstractEntity {
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "event_start")
     protected LocalDateTime eventStart;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "event_end")
     protected LocalDateTime eventEnd;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     protected Scooter scooter;
 
     @Override

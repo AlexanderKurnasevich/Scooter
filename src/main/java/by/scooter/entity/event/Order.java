@@ -4,10 +4,7 @@ import by.scooter.entity.user.Client;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Objects;
 
@@ -17,7 +14,7 @@ import java.util.Objects;
 @Table(name = "orders")
 public class Order extends Event {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Client client;
 
     @Column(nullable = false, columnDefinition = "float default 0.0")

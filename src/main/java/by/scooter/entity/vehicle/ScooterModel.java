@@ -24,7 +24,7 @@ import java.util.Objects;
 )
 public class ScooterModel extends AbstractEntity {
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "vehicle_type")
     @Enumerated(EnumType.STRING)
     private VehicleType vehicleType;
 
@@ -34,23 +34,24 @@ public class ScooterModel extends AbstractEntity {
     @Column(nullable = false)
     private String model;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "charging_time")
     @Positive
     private Float chargingTime; //in hours
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "max_range")
     @PositiveOrZero
     private Short maxRange; //in km
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "max_speed")
     @Positive
     private Short maxSpeed; //in km/h
 
-    @Column(nullable = false, columnDefinition = "integer default 1")
+    @Column(nullable = false, columnDefinition = "integer default 1", name = "passenger_capacity")
     @Positive
     private Integer passengerCapacity;
 
     @Positive
+    @Column(nullable = false, name = "max_load")
     private Integer maxLoad; //in kg
 
     @Override

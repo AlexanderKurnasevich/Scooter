@@ -1,7 +1,7 @@
 package by.scooter.config;
 
 import liquibase.integration.spring.SpringLiquibase;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -10,10 +10,10 @@ import javax.sql.DataSource;
 
 @ComponentScan("by.scooter")
 @EnableTransactionManagement
-@RequiredArgsConstructor
 public class ContextConfiguration {
 
-    private final DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
     @Bean
     public SpringLiquibase liquibase() {

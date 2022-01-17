@@ -5,13 +5,13 @@ alter table addresses
 #     add constraint str_unq unique (street) ;
 
 alter table cities
-    add constraint cty_unq unique (cityName, country_id) ;
+    add constraint cty_unq unique (city_name, country_id) ;
 
 alter table countries
-    add constraint cntry_unq unique (countryName) ;
+    add constraint cntry_unq unique (country_name) ;
 
 alter table discounts
-    add constraint dscnt_unq unique (promoCode) ;
+    add constraint dscnt_unq unique (promo_code) ;
 
 alter table password_reset_tokens
     add constraint token_user_id unique (user_id) ;
@@ -78,12 +78,12 @@ alter table rent_points
 
 alter table scooter_model_pricing
     add constraint scooter_model_pricing_scooterModel_id_fk
-        foreign key (scooterModel_id)
+        foreign key (scooter_model_id)
             references scooter_models (id) ;
 
 alter table scooters
     add constraint scooters_currentPoint_id_fk
-        foreign key (currentPoint_id)
+        foreign key (current_point_id)
             references rent_points (id) ;
 
 alter table scooters

@@ -14,15 +14,16 @@ import java.util.Objects;
 @Table(
         name = "cities",
         uniqueConstraints =
-        @UniqueConstraint(columnNames = {"cityName", "country_id"})
+        @UniqueConstraint(columnNames = {"city_name", "country_id"})
 )
 public class City extends AbstractEntity {
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "city_name")
     @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Только буквы")
     private String cityName;
 
     @ManyToOne
+    @JoinColumn(name = "country_id")
     private Country country;
 
     @Override

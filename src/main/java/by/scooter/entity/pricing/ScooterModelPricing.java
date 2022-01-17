@@ -17,7 +17,7 @@ import java.util.Objects;
 public class ScooterModelPricing extends PricingStrategy {
 
     @OneToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, name = "scooter_model_id")
     private ScooterModel scooterModel;
 
     @Override

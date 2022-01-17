@@ -20,11 +20,13 @@ public class Client extends AbstractEntity {
     @Size(min = 1, max = 30, message = "Name must be at least 2 and no longer than 30 characters")
     @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Letters only")
     @NotNull
+    @Column(nullable = false, name = "first_name")
     private String firstName;
 
     @Size(min = 1, max = 40, message = "Surname must be at least 2 and no longer than 30 characters")
     @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Letters only")
     @NotNull
+    @Column(nullable = false, name = "last_name")
     private String lastName;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

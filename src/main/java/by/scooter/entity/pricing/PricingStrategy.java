@@ -13,13 +13,13 @@ import java.util.Objects;
 @MappedSuperclass
 public abstract class PricingStrategy extends AbstractEntity {
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "minute_price")
     protected Float minutePrice;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "hour_price")
     protected Float hourPrice;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "day_price")
     protected Float dayPrice;
 
     @Override

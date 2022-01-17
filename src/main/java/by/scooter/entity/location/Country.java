@@ -16,7 +16,7 @@ import java.util.Objects;
 @Table(name = "countries")
 public class Country extends AbstractEntity {
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, name = "country_name")
     @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Только буквы")
     private String countryName;
 

@@ -18,14 +18,14 @@ import java.util.Objects;
 @Table(name = "discounts")
 public class Discount extends AbstractEntity {
 
-    @Column(nullable = false, columnDefinition = "float default 1.0")
+    @Column(nullable = false, columnDefinition = "float default 1.0", name = "discount_factor")
     @Positive
     private Float discountFactor;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false, unique = true, name = "promo_code")
     private String promoCode;
 
-    @Column
+    @Column(name = "expire_date")
     private LocalDate expireDate;
 
     @Override

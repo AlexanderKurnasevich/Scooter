@@ -22,6 +22,6 @@ public class PasswordResetToken extends AbstractEntity {
     @JoinColumn(nullable = false, unique = true)
     private User user;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "expiry_date")
     private LocalDateTime expiryDate = LocalDateTime.now().plusHours(12);
 }
