@@ -1,28 +1,32 @@
 package by.scooter.service;
 
 import by.scooter.api.dao.ScooterDAO;
-import by.scooter.api.dao.ScooterModelDAO;
 import by.scooter.api.sevice.ScooterService;
 import by.scooter.api.sevice.UtilService;
 import by.scooter.dto.vehicle.ScooterDTO;
 import by.scooter.dto.vehicle.ScooterFilterDTO;
+import by.scooter.entity.location.RentPoint;
 import by.scooter.entity.vehicle.Scooter;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ScooterServiceImpl implements ScooterService {
 
     private final ScooterDAO scooterDAO;
-    private final ScooterModelDAO scooterModelDAO;
     private final ModelMapper mapper;
     private final UtilService utilService;
+
+    @Autowired
+    public ScooterServiceImpl(ScooterDAO scooterDAO, ModelMapper mapper, UtilService utilService) {
+        this.scooterDAO = scooterDAO;
+        this.mapper = mapper;
+        this.utilService = utilService;
+    }
 
     @Override
     public ScooterDTO getById(Long id) {
@@ -59,16 +63,8 @@ public class ScooterServiceImpl implements ScooterService {
     @Override
     @Transactional
     public void updateScooter(Long updatedId, ScooterDTO update) {
-        Scooter updated = scooterDAO.getById(updatedId);
-        Scooter src = mapper.map(update, Scooter.class);
-        if (update.getOdometer() != 0) {
-            updated.setOdometer(update.getOdometer());
-        }
-        Optional.ofNullable(src.getCurrentPoint()).ifPresent(updated::setCurrentPoint);
-        if (src.getModel() != null) {
-            updated.setModel(scooterModelDAO.getById(src.getModel().getId()));
-        }
-        scooterDAO.update(updated);
+        update.setId(updatedId);
+        scooterDAO.update(mapper.map(update, Scooter.class));
     }
 
     @Override
@@ -82,8 +78,10 @@ public class ScooterServiceImpl implements ScooterService {
     @Override
     @Transactional
     public void moveScooter(Long scooterId, Long rentPointId) {
-        ScooterDTO scooterDTO = new ScooterDTO();
-        scooterDTO.setCurrentPointId(rentPointId);
-        updateScooter(scooterId, scooterDTO);
+        Scooter updated = scooterDAO.getById(scooterId);
+        RentPoint rentPoint = new RentPoint();
+        rentPoint.setId(rentPointId);
+        updated.setCurrentPoint(rentPoint);
+        scooterDAO.update(updated);
     }
 }

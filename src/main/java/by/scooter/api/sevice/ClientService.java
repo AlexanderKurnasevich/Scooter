@@ -18,7 +18,7 @@ public interface ClientService {
 
     void removeClient(Long id);
 
-    void updateClient(Long updatedId, ClientInfoDTO update);
+    void updateClient(Long updatedId, ClientUserDTO update);
 
     Client checkOwner(Long id) throws AccessDeniedException;
 }

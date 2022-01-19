@@ -20,7 +20,8 @@ public class ClientDAOImpl extends AbstractDAO<Client> implements ClientDAO {
         Root<Client> entityRoot = criteriaQuery.from(getClazz());
         criteriaQuery.select(entityRoot)
                 .where(builder.equal(entityRoot.get(Client_.USER).get(User_.USERNAME), username));
-        return entityManager.createQuery(criteriaQuery).getSingleResult();
+        Client singleResult = entityManager.createQuery(criteriaQuery).getSingleResult();
+        return singleResult;
     }
 
     @Override

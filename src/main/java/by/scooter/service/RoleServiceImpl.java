@@ -4,17 +4,19 @@ import by.scooter.api.dao.RoleDAO;
 import by.scooter.api.sevice.RoleService;
 import by.scooter.entity.enumerator.RoleValue;
 import by.scooter.entity.user.Role;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
-@RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
 
     private final RoleDAO roleDAO;
+
+    @Autowired
+    public RoleServiceImpl(RoleDAO roleDAO) {
+        this.roleDAO = roleDAO;
+    }
 
     @Override
     public Role getById(Long id) {
@@ -41,8 +43,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional
     public void updateRole(Long updatedId, Role update) {
-        Role updated = roleDAO.getById(updatedId);
-        Optional.ofNullable(update.getValue()).ifPresent(updated::setValue);
-        roleDAO.update(updated);
+        update.setId(updatedId);
+        roleDAO.update(update);
     }
 }

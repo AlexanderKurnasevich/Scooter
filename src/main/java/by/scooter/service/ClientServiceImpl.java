@@ -12,9 +12,9 @@ import by.scooter.entity.enumerator.RoleValue;
 import by.scooter.entity.user.Client;
 import by.scooter.entity.user.Role;
 import by.scooter.entity.user.User;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
-@RequiredArgsConstructor
 @Log4j2
 public class ClientServiceImpl implements ClientService {
 
@@ -33,6 +32,17 @@ public class ClientServiceImpl implements ClientService {
     private final PasswordEncoder encoder;
     private final UtilService utilService;
     private final UserService userService;
+
+    @Autowired
+    public ClientServiceImpl(ClientDAO clientDAO, RoleDAO roleDAO, ModelMapper mapper, PasswordEncoder encoder,
+                             UtilService utilService, UserService userService) {
+        this.clientDAO = clientDAO;
+        this.roleDAO = roleDAO;
+        this.mapper = mapper;
+        this.encoder = encoder;
+        this.utilService = utilService;
+        this.userService = userService;
+    }
 
     @Override
     public ClientInfoDTO getById(Long id) {
@@ -68,12 +78,15 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     @Transactional
-    public void updateClient(Long updatedId, ClientInfoDTO update) {
+    public void updateClient(Long updatedId, ClientUserDTO update) {
         Client updated = checkOwner(updatedId);
         User user = updated.getUser();
         Optional.ofNullable(update.getEmail()).ifPresent(user::setEmail);
         Optional.ofNullable(update.getFirstName()).ifPresent(updated::setFirstName);
         Optional.ofNullable(update.getLastName()).ifPresent(updated::setLastName);
+        if(update.getPassword() != null) {
+            user.setPassword(encoder.encode(update.getPassword()));
+        }
         clientDAO.update(updated);
     }
 

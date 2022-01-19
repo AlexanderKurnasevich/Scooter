@@ -29,7 +29,7 @@ public class Client extends AbstractEntity {
     @Column(nullable = false, name = "last_name")
     private String lastName;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private User user;
 

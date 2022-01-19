@@ -5,21 +5,26 @@ import by.scooter.api.sevice.ScooterModelService;
 import by.scooter.api.sevice.UtilService;
 import by.scooter.dto.vehicle.ScooterModelDTO;
 import by.scooter.entity.vehicle.ScooterModel;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ScooterModelServiceImpl implements ScooterModelService {
 
     private final ScooterModelDAO scooterModelDAO;
     private final ModelMapper mapper;
     private final UtilService utilService;
+
+    @Autowired
+    public ScooterModelServiceImpl(ScooterModelDAO scooterModelDAO, ModelMapper mapper, UtilService utilService) {
+        this.scooterModelDAO = scooterModelDAO;
+        this.mapper = mapper;
+        this.utilService = utilService;
+    }
 
     @Override
     public ScooterModelDTO getById(Long id) {
@@ -41,17 +46,8 @@ public class ScooterModelServiceImpl implements ScooterModelService {
     @Override
     @Transactional
     public void updateScooterModel(Long updatedId, ScooterModelDTO update) {
-        ScooterModel updated = scooterModelDAO.getById(updatedId);
-        ScooterModel scr = mapper.map(update, ScooterModel.class);
-        Optional.ofNullable(scr.getModel()).ifPresent(updated::setModel);
-        Optional.ofNullable(scr.getMaker()).ifPresent(updated::setMaker);
-        Optional.ofNullable(scr.getChargingTime()).ifPresent(updated::setChargingTime);
-        Optional.ofNullable(scr.getMaxLoad()).ifPresent(updated::setMaxLoad);
-        Optional.ofNullable(scr.getMaxRange()).ifPresent(updated::setMaxRange);
-        Optional.ofNullable(scr.getMaxSpeed()).ifPresent(updated::setMaxSpeed);
-        Optional.ofNullable(scr.getPassengerCapacity()).ifPresent(updated::setPassengerCapacity);
-        Optional.ofNullable(scr.getVehicleType()).ifPresent(updated::setVehicleType);
-        scooterModelDAO.update(updated);
+        update.setId(updatedId);
+        scooterModelDAO.update(mapper.map(update, ScooterModel.class));
     }
 
     @Override

@@ -58,11 +58,8 @@ public class PricingServiceImpl implements PricingService {
     @Override
     @Transactional
     public void updateScooterModelPricing(Long updatedId, ScooterModelPricingDTO update) {
-        ScooterModelPricing updated = modelPricingDAO.getById(updatedId);
-        Optional.ofNullable(update.getMinutePrice()).ifPresent(updated::setMinutePrice);
-        Optional.ofNullable(update.getHourPrice()).ifPresent(updated::setHourPrice);
-        Optional.ofNullable(update.getDayPrice()).ifPresent(updated::setDayPrice);
-        modelPricingDAO.update(updated);
+        update.setId(updatedId);
+        modelPricingDAO.update(mapper.map(update, ScooterModelPricing.class));
     }
 
     @Override

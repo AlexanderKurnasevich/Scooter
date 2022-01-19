@@ -54,8 +54,8 @@ public class RentPointController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping
-    public ResponseEntity<Void> remove(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> remove(@PathVariable Long id) {
         rentPointService.removeRentPoint(id);
         return ResponseEntity.noContent().build();
     }

@@ -79,7 +79,8 @@ public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
             query.setFirstResult((page - 1) * size);
             query.setMaxResults(size);
         }
-        return query.getResultList();
+        List<T> list = query.getResultList();
+        return list;
     }
 
     @Override

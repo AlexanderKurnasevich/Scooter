@@ -54,8 +54,8 @@ public class SubscriptionController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/subscription")
-    public ResponseEntity<Void> remove(@RequestParam Long id) {
+    @DeleteMapping("/subscription/{id}")
+    public ResponseEntity<Void> remove(@PathVariable Long id) {
         subscriptionService.removeSubscription(id);
         return ResponseEntity.noContent().build();
     }

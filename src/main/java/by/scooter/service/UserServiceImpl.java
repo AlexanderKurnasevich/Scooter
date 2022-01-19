@@ -14,7 +14,6 @@ import by.scooter.entity.user.PasswordResetToken;
 import by.scooter.entity.user.Role;
 import by.scooter.entity.user.User;
 import by.scooter.exception.WrongPasswordException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,6 @@ import java.util.Objects;
 import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
 @Log4j2
 public class UserServiceImpl implements UserService {
 
@@ -55,6 +53,17 @@ public class UserServiceImpl implements UserService {
     private String password;
     @Value("${database.admin.email}")
     private String email;
+
+    @Autowired
+    public UserServiceImpl(UserDAO userDAO, RoleDAO roleDAO, ModelMapper mapper, UtilService utilService,
+                           PasswordResetTokenDAO resetTokenDAO, PlatformTransactionManager txManager) {
+        this.userDAO = userDAO;
+        this.roleDAO = roleDAO;
+        this.mapper = mapper;
+        this.utilService = utilService;
+        this.resetTokenDAO = resetTokenDAO;
+        this.txManager = txManager;
+    }
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -134,6 +143,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         return userDAO.findByLogin(login);
     }

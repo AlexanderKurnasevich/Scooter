@@ -15,10 +15,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class RentPointServiceImpl implements RentPointService {
 
     private final RentPointDAO rentPointDAO;
@@ -32,7 +32,6 @@ public class RentPointServiceImpl implements RentPointService {
     }
 
     @Override
-    @Transactional
     public RentPointDTO addRentPoint(RentPointDTO rentPoint) {
         if (rentPoint.getAddressId() == null) {
             rentPoint.setAddressId(addressService.saveRentPointAddress(rentPoint).getId());
@@ -41,21 +40,13 @@ public class RentPointServiceImpl implements RentPointService {
     }
 
     @Override
-    @Transactional
     public void removeRentPoint(Long id) {
         rentPointDAO.delete(id);
     }
 
     @Override
-    @Transactional
     public void updateRentPoint(Long updatedId, RentPointDTO update) {
-        if (update.getAddressId() == null) {
-            update.setAddressId(addressService.saveRentPointAddress(update).getId());
-        }
-        Address address = addressService.getById(update.getAddressId());
-        RentPoint updated = rentPointDAO.getById(updatedId);
-        updated.setAddress(address);
-        rentPointDAO.update(updated);
+        addressService.updateAddress(update.getAddressId(), update);
     }
 
     @Override

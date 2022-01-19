@@ -21,7 +21,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String ADMIN = RoleValue.ROLE_ADMIN.getTitle();
-    private static final String CLIENT = RoleValue.ROLE_CLIENT.getTitle();
     private UserService userService;
 
     @Autowired
@@ -41,9 +40,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login", "/signup").not().fullyAuthenticated()
+                .antMatchers("/login").not().fullyAuthenticated()
                 .antMatchers("/discounts").hasRole(ADMIN)
-                .antMatchers("/").permitAll()
+                .antMatchers("/", "/signup").permitAll()
                 .and()
                 .logout().permitAll()
                 .logoutSuccessUrl("/")

@@ -40,7 +40,7 @@ public class User extends AbstractEntity implements UserDetails {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinColumn(nullable = false)
     private Set<Role> roles;
 

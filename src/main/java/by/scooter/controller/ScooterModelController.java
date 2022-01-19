@@ -3,7 +3,7 @@ package by.scooter.controller;
 import by.scooter.api.sevice.ScooterModelService;
 import by.scooter.dto.vehicle.ScooterModelDTO;
 import by.scooter.exception.ValidationException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -13,10 +13,11 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/scooters/models")
 public class ScooterModelController {
-    private final ScooterModelService scooterModelService;
+
+    @Autowired
+    private ScooterModelService scooterModelService;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
     @GetMapping("/{id}")
@@ -46,8 +47,8 @@ public class ScooterModelController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping
-    public ResponseEntity<Void> remove(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> remove(@PathVariable Long id) {
         scooterModelService.removeScooterModel(id);
         return ResponseEntity.noContent().build();
     }

@@ -9,4 +9,6 @@ public interface AddressService {
     AddressDTO saveRentPointAddress(RentPointDTO dto);
 
     Address getById(Long addressId);
+
+    void updateAddress(Long updatedId, RentPointDTO update);
 }

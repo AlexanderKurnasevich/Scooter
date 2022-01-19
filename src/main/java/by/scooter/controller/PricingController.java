@@ -47,15 +47,16 @@ public class PricingController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping
-    public ResponseEntity<Void> delete(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         pricingService.removeScooterModelPricing(id);
         return ResponseEntity.noContent().build();
     }
 
 
     @PostMapping("/calculate")
-    public ResponseEntity<OrderCreateDTO> calculatePrice(@RequestBody @Valid OrderCreateDTO order, BindingResult result) {
+    public ResponseEntity<OrderCreateDTO> calculatePrice(@RequestBody @Valid OrderCreateDTO order,
+                                                         BindingResult result) {
         if (result.hasErrors()) {
             throw new ValidationException(result);
         }

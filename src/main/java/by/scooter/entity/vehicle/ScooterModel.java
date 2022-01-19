@@ -51,7 +51,7 @@ public class ScooterModel extends AbstractEntity {
     private Integer passengerCapacity;
 
     @Positive
-    @Column(nullable = false, name = "max_load")
+    @Column(name = "max_load")
     private Integer maxLoad; //in kg
 
     @Override

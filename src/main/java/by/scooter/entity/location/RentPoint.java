@@ -18,7 +18,7 @@ public class RentPoint extends AbstractEntity {
     @OneToOne(fetch = FetchType.EAGER)
     private Address address;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "currentPoint")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "currentPoint")
     private Set<Scooter> scooters;
 
     @Override

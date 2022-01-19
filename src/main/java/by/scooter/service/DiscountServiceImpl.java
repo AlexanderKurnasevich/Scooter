@@ -5,21 +5,26 @@ import by.scooter.api.sevice.DiscountService;
 import by.scooter.api.sevice.UtilService;
 import by.scooter.dto.pricing.DiscountDTO;
 import by.scooter.entity.pricing.Discount;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class DiscountServiceImpl implements DiscountService {
 
     private final DiscountDAO discountDAO;
     private final ModelMapper mapper;
     private final UtilService utilService;
+
+    @Autowired
+    public DiscountServiceImpl(DiscountDAO discountDAO, ModelMapper mapper, UtilService utilService) {
+        this.discountDAO = discountDAO;
+        this.mapper = mapper;
+        this.utilService = utilService;
+    }
 
     @Override
     public DiscountDTO getById(Long id) {
@@ -46,10 +51,7 @@ public class DiscountServiceImpl implements DiscountService {
     @Override
     @Transactional
     public void update(Long updatedId, DiscountDTO update) {
-        Discount updated = discountDAO.getById(updatedId);
-        Optional.ofNullable(update.getDiscountFactor()).ifPresent(updated::setDiscountFactor);
-        Optional.ofNullable(update.getExpireDate()).ifPresent(updated::setExpireDate);
-        Optional.ofNullable(update.getPromoCode()).ifPresent(updated::setPromoCode);
-        discountDAO.update(updated);
+        update.setId(updatedId);
+        discountDAO.update(mapper.map(update, Discount.class));
     }
 }

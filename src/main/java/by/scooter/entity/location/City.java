@@ -22,7 +22,7 @@ public class City extends AbstractEntity {
     @Pattern(regexp = "^[A-Za-zА-Яа-я]*$", message = "Только буквы")
     private String cityName;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "country_id")
     private Country country;
 

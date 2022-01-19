@@ -15,18 +15,18 @@ import java.util.List;
 public class ScooterDAOImpl extends AbstractDAO<Scooter> implements ScooterDAO {
 
     private static final String VACANT_SCOOTERS = """
-            SELECT id, odometer, currentPoint_id, model_id
+            SELECT id, odometer, current_point_id, model_id
             FROM scooters
             	LEFT JOIN (SELECT scooter_id
             			   FROM orders
-                           WHERE (:evStart BETWEEN eventStart AND eventEnd
-            				   OR :evEnd BETWEEN eventStart AND eventEnd
-            				   OR eventStart BETWEEN :evStart AND :evEnd
-            				   OR eventEnd BETWEEN :evStart AND :evEnd ))
+                           WHERE (:evStart BETWEEN event_start AND event_end
+            				   OR :evEnd BETWEEN event_start AND event_end
+            				   OR event_start BETWEEN :evStart AND :evEnd
+            				   OR event_end BETWEEN :evStart AND :evEnd ))
             			   AS intersecting_orders
             	ON scooter_id = scooters.id
             	WHERE scooter_id is null
-            	AND currentPoint_id = :point
+            	AND current_point_id = :point
                 AND model_id = :model
                 ORDER BY :sort""";
 

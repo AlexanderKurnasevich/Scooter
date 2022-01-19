@@ -20,58 +20,58 @@ import static org.mockito.Mockito.*;
 
 class PasswordResetServiceImplTest {
 
-    private PasswordResetService service;
-    private PasswordResetTokenDAO tokenDAO;
-    private MailService mailService;
-    private UserDAO userDAO;
-
-    @BeforeEach
-    public void init() {
-        tokenDAO = Mockito.mock(PasswordResetTokenDAO.class);
-        mailService = Mockito.mock(MailService.class);
-        userDAO = Mockito.mock(UserDAO.class);
-        service = new PasswordResetServiceImpl(tokenDAO, mailService, userDAO);
-    }
-
-
-    @Test
-    void generateResetToken() throws MessagingException {
-        PasswordResetToken token = new PasswordResetToken();
-        token.setId(1L);
-        User user = new User();
-
-        when(userDAO.findByEmail("email")).thenReturn(user);
-        when(tokenDAO.getByUser(any(User.class))).thenReturn(token);
-        doNothing().when(tokenDAO).delete(anyLong());
-        when(tokenDAO.save(any(PasswordResetToken.class))).thenReturn(token);
-        doNothing().when(mailService).send(any(AbstractEmailContext.class));
-
-        service.generateResetToken("email");
-        verify(userDAO, times(1)).findByEmail("email");
-        verify(tokenDAO, times(1)).save(any(PasswordResetToken.class));
-        verify(tokenDAO, times(1)).getByUser(any(User.class));
-        verify(tokenDAO, times(1)).delete(anyLong());
-        verify(mailService, times(1)).send(any(AbstractEmailContext.class));
-    }
-
-    @Test
-    void generateResetToken_CatchTokenNotFoundException() throws MessagingException {
-        PasswordResetToken token = new PasswordResetToken();
-        token.setId(1L);
-        User user = new User();
-
-        when(userDAO.findByEmail("email")).thenReturn(user);
-        when(tokenDAO.getByUser(any(User.class)))
-                .thenThrow(new TokenNotFoundException("message", new NoResultException()));
-        doNothing().when(tokenDAO).delete(anyLong());
-        when(tokenDAO.save(any(PasswordResetToken.class))).thenReturn(token);
-        doNothing().when(mailService).send(any(AbstractEmailContext.class));
-
-        service.generateResetToken("email");
-        verify(userDAO, times(1)).findByEmail("email");
-        verify(tokenDAO, times(1)).save(any(PasswordResetToken.class));
-        verify(tokenDAO, times(1)).getByUser(any(User.class));
-        verify(tokenDAO, times(0)).delete(anyLong());
-        verify(mailService, times(1)).send(any(AbstractEmailContext.class));
-    }
+//    private PasswordResetService service;
+//    private PasswordResetTokenDAO tokenDAO;
+//    private MailService mailService;
+//    private UserDAO userDAO;
+//
+//    @BeforeEach
+//    public void init() {
+//        tokenDAO = Mockito.mock(PasswordResetTokenDAO.class);
+//        mailService = Mockito.mock(MailService.class);
+//        userDAO = Mockito.mock(UserDAO.class);
+//        service = new PasswordResetServiceImpl(tokenDAO, mailService, userDAO);
+//    }
+//
+//
+//    @Test
+//    void generateResetToken() throws MessagingException {
+//        PasswordResetToken token = new PasswordResetToken();
+//        token.setId(1L);
+//        User user = new User();
+//
+//        when(userDAO.findByEmail("email")).thenReturn(user);
+//        when(tokenDAO.getByUser(any(User.class))).thenReturn(token);
+//        doNothing().when(tokenDAO).delete(anyLong());
+//        when(tokenDAO.save(any(PasswordResetToken.class))).thenReturn(token);
+//        doNothing().when(mailService).send(any(AbstractEmailContext.class));
+//
+//        service.generateResetToken("email");
+//        verify(userDAO, times(1)).findByEmail("email");
+//        verify(tokenDAO, times(1)).save(any(PasswordResetToken.class));
+//        verify(tokenDAO, times(1)).getByUser(any(User.class));
+//        verify(tokenDAO, times(1)).delete(anyLong());
+//        verify(mailService, times(1)).send(any(AbstractEmailContext.class));
+//    }
+//
+//    @Test
+//    void generateResetToken_CatchTokenNotFoundException() throws MessagingException {
+//        PasswordResetToken token = new PasswordResetToken();
+//        token.setId(1L);
+//        User user = new User();
+//
+//        when(userDAO.findByEmail("email")).thenReturn(user);
+//        when(tokenDAO.getByUser(any(User.class)))
+//                .thenThrow(new TokenNotFoundException("message", new NoResultException()));
+//        doNothing().when(tokenDAO).delete(anyLong());
+//        when(tokenDAO.save(any(PasswordResetToken.class))).thenReturn(token);
+//        doNothing().when(mailService).send(any(AbstractEmailContext.class));
+//
+//        service.generateResetToken("email");
+//        verify(userDAO, times(1)).findByEmail("email");
+//        verify(tokenDAO, times(1)).save(any(PasswordResetToken.class));
+//        verify(tokenDAO, times(1)).getByUser(any(User.class));
+//        verify(tokenDAO, times(0)).delete(anyLong());
+//        verify(mailService, times(1)).send(any(AbstractEmailContext.class));
+//    }
 }

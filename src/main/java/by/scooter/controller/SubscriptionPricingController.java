@@ -18,8 +18,8 @@ public class SubscriptionPricingController {
 
     private final SubscriptionPricingService service;
 
-    @GetMapping("/{unit}")
-    public ResponseEntity<SubscriptionPricingDTO> getByUnit(@PathVariable String unit) {
+    @GetMapping("/unit")
+    public ResponseEntity<SubscriptionPricingDTO> getByUnit(@RequestParam String unit) {
         return ResponseEntity.ok(service.getByUnit(unit));
     }
 
@@ -50,8 +50,8 @@ public class SubscriptionPricingController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> delete(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.removeSubscriptionPricing(id);
         return ResponseEntity.noContent().build();
     }

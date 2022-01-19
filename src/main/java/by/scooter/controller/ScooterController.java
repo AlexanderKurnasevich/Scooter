@@ -42,8 +42,8 @@ public class ScooterController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> removeScooter(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> removeScooter(@PathVariable Long id) {
         scooterService.removeScooter(id);
         return ResponseEntity.noContent().build();
     }

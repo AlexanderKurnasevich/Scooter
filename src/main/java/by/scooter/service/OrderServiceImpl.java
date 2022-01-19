@@ -58,10 +58,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public void updateOrder(Long updatedId, OrderDTO update) {
-        Order updated = orderDAO.getById(updatedId);
-        update.setScooterId(updated.getScooter().getId());
-        Optional.ofNullable(update.getMileage()).ifPresent(updated::setMileage);
-        orderDAO.update(updated);
+        update.setId(updatedId);
+        orderDAO.update(mapper.map(update, Order.class));
     }
 
     @Override
@@ -80,9 +78,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Transactional(isolation = Isolation.READ_UNCOMMITTED)
+    @Transactional
     public void handleOrder(OrderDTO order, Long rentPointId) {
-        updateOrder(order.getId(), order);
         scooterService.addMileage(order.getScooterId(), order.getMileage());
         scooterService.moveScooter(order.getScooterId(), rentPointId);
     }

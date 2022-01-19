@@ -76,10 +76,16 @@ alter table rent_points
         foreign key (address_id)
             references addresses (id) ;
 
+alter table rent_points
+    add constraint rp_adrs_unq unique (address_id) ;
+
 alter table scooter_model_pricing
     add constraint scooter_model_pricing_scooterModel_id_fk
         foreign key (scooter_model_id)
             references scooter_models (id) ;
+
+alter table scooter_model_pricing
+    add constraint mdl_prc_unq unique (scooter_model_id) ;
 
 alter table scooters
     add constraint scooters_currentPoint_id_fk

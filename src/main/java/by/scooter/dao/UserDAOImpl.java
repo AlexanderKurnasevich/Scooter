@@ -7,7 +7,9 @@ import by.scooter.exception.UserNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.FetchType;
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -22,9 +24,11 @@ public class UserDAOImpl extends AbstractDAO<User> implements UserDAO {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
         Root<User> entityRoot = criteriaQuery.from(getClazz());
+        entityRoot.fetch(User_.ROLES);
         criteriaQuery.select(entityRoot).where(builder.equal(entityRoot.get(User_.USERNAME), login));
         try {
-            return entityManager.createQuery(criteriaQuery).getSingleResult();
+            User result = entityManager.createQuery(criteriaQuery).getSingleResult();
+            return result;
         } catch (NoResultException ex) {
             log.info("User with username: {} not found", login);
             throw new UsernameNotFoundException("User not found", ex);

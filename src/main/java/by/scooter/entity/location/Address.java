@@ -26,7 +26,7 @@ public class Address extends AbstractEntity {
     @Column
     private String postfix;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private City city;
 
     @Override

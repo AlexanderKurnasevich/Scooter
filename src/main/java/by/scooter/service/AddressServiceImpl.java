@@ -28,9 +28,27 @@ public class AddressServiceImpl implements AddressService {
     private final ModelMapper mapper;
 
     @Override
+    public Address getById(Long addressId) {
+        return addressDAO.getById(addressId);
+    }
+
+    @Override
     @Transactional
     public AddressDTO saveRentPointAddress(RentPointDTO dto) {
         Address address = new Address();
+        handleAddress(dto, address);
+        return mapper.map(addressDAO.save(address), AddressDTO.class);
+    }
+
+    @Override
+    @Transactional
+    public void updateAddress(Long updatedId, RentPointDTO update) {
+        Address updated = addressDAO.getById(updatedId);
+        handleAddress(update, updated);
+        addressDAO.update(updated);
+    }
+
+    private void handleAddress(RentPointDTO dto, Address address) {
         Country country = getByCountryNameOrSave(dto.getCountry());
         City city = getByCityNameAndCountryOrSave(dto.getCity(), country);
 
@@ -38,8 +56,6 @@ public class AddressServiceImpl implements AddressService {
         address.setStreet(dto.getStreet());
         Optional.ofNullable(dto.getPostfix()).ifPresent(address::setPostfix);
         address.setCity(city);
-
-        return mapper.map(addressDAO.save(address), AddressDTO.class);
     }
 
     private Country getByCountryNameOrSave(String name) {
@@ -61,10 +77,5 @@ public class AddressServiceImpl implements AddressService {
             city.setCountry(country);
             return cityDAO.save(city);
         }
-    }
-
-    @Override
-    public Address getById(Long addressId) {
-        return addressDAO.getById(addressId);
     }
 }

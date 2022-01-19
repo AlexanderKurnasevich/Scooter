@@ -7,7 +7,7 @@ import by.scooter.dto.user.ClientInfoDTO;
 import by.scooter.dto.user.ClientUserDTO;
 import by.scooter.entity.OnUpdate;
 import by.scooter.exception.ValidationException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -20,10 +20,16 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 public class ClientController {
+
     private final ClientService clientService;
     private final OrderService orderService;
+
+    @Autowired
+    public ClientController(ClientService clientService, OrderService orderService) {
+        this.clientService = clientService;
+        this.orderService = orderService;
+    }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
     @GetMapping("/clients/{id}")
@@ -64,7 +70,7 @@ public class ClientController {
     @PreAuthorize("hasRole('ROLE_CLIENT')")
     @PutMapping("/clients/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id,
-                                       @RequestBody @Valid ClientInfoDTO client, BindingResult result) {
+                                       @RequestBody @Valid ClientUserDTO client, BindingResult result) {
         if (result.hasErrors()) {
             throw new ValidationException(result);
         }

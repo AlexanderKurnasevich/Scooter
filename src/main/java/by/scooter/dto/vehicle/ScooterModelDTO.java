@@ -3,6 +3,7 @@ package by.scooter.dto.vehicle;
 import by.scooter.entity.enumerator.VehicleType;
 import lombok.Data;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
@@ -32,6 +33,9 @@ public class ScooterModelDTO {
     @Positive
     private Short maxSpeed;                 //in km/h
 
+    @Min(1)
     private Integer passengerCapacity = 1;
+
+    @Positive
     private Integer maxLoad;                //in kg
 }
