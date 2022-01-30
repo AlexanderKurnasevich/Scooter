@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ScooterModelDAOImpl extends AbstractDAO<ScooterModel> implements ScooterModelDAO {
+
     @Override
     protected Class<ScooterModel> getClazz() {
         return ScooterModel.class;

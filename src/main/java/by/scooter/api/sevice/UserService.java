@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
+
     void save(UserDTO user);
 
     void update(UserDTO user);
@@ -19,7 +20,7 @@ public interface UserService extends UserDetailsService {
 
     UserInfoDTO getById(Long id);
 
-    UserInfoDTO logIn(String login, CharSequence password);
+    UserInfoDTO logIn(UserDTO userDTO);
 
     UserInfoDTO getAuthorizedUser() throws UsernameNotFoundException;
 

@@ -1,48 +1,13 @@
 {
 	"info": {
-		"_postman_id": "1a7b8611-34eb-4df6-8fc1-61f74320c8e6",
-		"name": "Order Copy",
+		"_postman_id": "96da564a-8731-47ec-9ecb-a8c0d48035d3",
+		"name": "Rent point",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "GET",
 			"item": [
-				{
-					"name": "getAll",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "admin",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "1234",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/orders",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"Scooter-1.0-SNAPSHOT",
-								"orders"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "getById",
 					"request": {
@@ -64,15 +29,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/orders/1",
+							"raw": "http://localhost:8080/Scooter_war_exploded/points/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter-1.0-SNAPSHOT",
-								"orders",
+								"Scooter_war_exploded",
+								"points",
 								"1"
 							]
 						}
@@ -80,22 +45,35 @@
 					"response": []
 				},
 				{
-					"name": "getByScooterId",
+					"name": "getAll",
 					"request": {
-						"method": "GET",
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/orders/scooter/1",
+							"raw": "http://localhost:8080/Scooter_war_exploded/points",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter-1.0-SNAPSHOT",
-								"orders",
-								"scooter",
-								"1"
+								"Scooter_war_exploded",
+								"points"
 							]
 						}
 					},
@@ -114,7 +92,7 @@
 							"basic": [
 								{
 									"key": "username",
-									"value": "test",
+									"value": "admin",
 									"type": "string"
 								},
 								{
@@ -128,7 +106,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"eventStart\": [\r\n        2021,\r\n        11,\r\n        24,\r\n        0,\r\n        0\r\n    ],\r\n    \"eventEnd\": [\r\n        2021,\r\n        11,\r\n        25,\r\n        0,\r\n        0\r\n    ],\r\n    \"scooterModelId\": 1,\r\n    \"rentPointId\": 1,\r\n    \"subscriptionId\":1 \r\n}",
+							"raw": "{\r\n    \"addressId\": 2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -136,83 +114,23 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/orders",
+							"raw": "http://localhost:8080/Scooter_war_exploded/points/add",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter-1.0-SNAPSHOT",
-								"orders"
+								"Scooter_war_exploded",
+								"points",
+								"add"
 							]
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "PUT",
-			"item": [
+				},
 				{
-					"name": "finish order",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "test",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "1234",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1,\r\n    \"mileage\": 10\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/orders/finish?rentPointId=2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"Scooter-1.0-SNAPSHOT",
-								"orders",
-								"finish"
-							],
-							"query": [
-								{
-									"key": "rentPointId",
-									"value": "2"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "DELETE",
-			"item": [
-				{
-					"name": "removeById",
+					"name": "add with new address",
 					"request": {
 						"auth": {
 							"type": "basic",
@@ -229,24 +147,148 @@
 								}
 							]
 						},
-						"method": "DELETE",
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"country\": \"France\",\r\n    \"city\": \"Paris\",\r\n    \"street\": \"st. Street\",\r\n    \"number\": 12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/orders?id=2",
+							"raw": "http://localhost:8080/Scooter_war_exploded/points/add",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter-1.0-SNAPSHOT",
-								"orders"
-							],
-							"query": [
+								"Scooter_war_exploded",
+								"points",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
 								{
-									"key": "id",
-									"value": "2"
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
 								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"country\":\"France\",\r\n    \"city\":\"Paris\",\r\n    \"sortedColumn\":\"address\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/Scooter_war_exploded/points",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Scooter_war_exploded",
+								"points"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PUT",
+			"item": [
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"addressId\": 4,\r\n    \"country\": \"France\",\r\n    \"city\": \"Brest\",\r\n    \"street\": \"st. Street\",\r\n    \"number\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/Scooter_war_exploded/points/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Scooter_war_exploded",
+								"points",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "removeById",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/Scooter_war_exploded/points/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Scooter_war_exploded",
+								"points",
+								"2"
 							]
 						}
 					},

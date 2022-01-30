@@ -9,8 +9,8 @@ import by.scooter.entity.user.PasswordResetToken;
 import by.scooter.entity.user.User;
 import by.scooter.exception.ServiceException;
 import by.scooter.exception.TokenNotFoundException;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,13 +18,19 @@ import javax.mail.MessagingException;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 @Log4j2
 public class PasswordResetServiceImpl implements PasswordResetService {
 
     private final PasswordResetTokenDAO tokenDAO;
     private final MailService mailService;
     private final UserDAO userDAO;
+
+    @Autowired
+    public PasswordResetServiceImpl(PasswordResetTokenDAO tokenDAO, MailService mailService, UserDAO userDAO) {
+        this.tokenDAO = tokenDAO;
+        this.mailService = mailService;
+        this.userDAO = userDAO;
+    }
 
     @Override
     @Transactional

@@ -6,7 +6,7 @@ import by.scooter.dto.user.ResetPasswordDTO;
 import by.scooter.dto.user.UserDTO;
 import by.scooter.dto.user.UserInfoDTO;
 import by.scooter.exception.ValidationException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -18,11 +18,16 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 public class UsersController {
 
     private final UserService userService;
     private final PasswordResetService resetService;
+
+    @Autowired
+    public UsersController(UserService userService, PasswordResetService resetService) {
+        this.userService = userService;
+        this.resetService = resetService;
+    }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/adduser")
@@ -84,15 +89,14 @@ public class UsersController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/users")
-    public ResponseEntity<Void> remove(@RequestParam Long id) {
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> remove(@PathVariable Long id) {
         userService.remove(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<UserInfoDTO> logIn(@RequestParam String login,
-                                             @RequestParam CharSequence password) {
-        return ResponseEntity.ok(userService.logIn(login, password));
+    @PostMapping("/login")
+    public ResponseEntity<UserInfoDTO> logIn(@RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userService.logIn(userDTO));
     }
 }

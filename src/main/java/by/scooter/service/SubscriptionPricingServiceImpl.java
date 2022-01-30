@@ -6,8 +6,8 @@ import by.scooter.api.sevice.UtilService;
 import by.scooter.dto.pricing.SubscriptionDTO;
 import by.scooter.dto.pricing.SubscriptionPricingDTO;
 import by.scooter.entity.pricing.SubscriptionPricing;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,12 +16,19 @@ import java.util.List;
 import java.util.Locale;
 
 @Service
-@RequiredArgsConstructor
 public class SubscriptionPricingServiceImpl implements SubscriptionPricingService {
 
     private final SubscriptionPricingDAO pricingDAO;
     private final ModelMapper mapper;
     private final UtilService utilService;
+
+    @Autowired
+    public SubscriptionPricingServiceImpl(SubscriptionPricingDAO pricingDAO, ModelMapper mapper,
+                                          UtilService utilService) {
+        this.pricingDAO = pricingDAO;
+        this.mapper = mapper;
+        this.utilService = utilService;
+    }
 
     @Override
     public Float calculatePrice(SubscriptionDTO dto) {

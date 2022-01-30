@@ -5,6 +5,7 @@ import by.scooter.dto.pricing.DiscountDTO;
 import java.util.List;
 
 public interface DiscountService {
+
     DiscountDTO getById(Long id);
 
     List<DiscountDTO> getAll(Integer page, Integer size);

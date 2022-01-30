@@ -4,7 +4,7 @@ import by.scooter.api.sevice.ClientService;
 import by.scooter.api.sevice.SubscriptionService;
 import by.scooter.dto.pricing.SubscriptionDTO;
 import by.scooter.exception.ValidationException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -16,11 +16,16 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 public class SubscriptionController {
 
     private final SubscriptionService subscriptionService;
     private final ClientService clientService;
+
+    @Autowired
+    public SubscriptionController(SubscriptionService subscriptionService, ClientService clientService) {
+        this.subscriptionService = subscriptionService;
+        this.clientService = clientService;
+    }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
     @GetMapping("/subscription/{id}")

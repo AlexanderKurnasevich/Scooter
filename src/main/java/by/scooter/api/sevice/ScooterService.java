@@ -6,6 +6,7 @@ import by.scooter.dto.vehicle.ScooterFilterDTO;
 import java.util.List;
 
 public interface ScooterService {
+
     ScooterDTO getById(Long id);
 
     List<ScooterDTO> getAll();

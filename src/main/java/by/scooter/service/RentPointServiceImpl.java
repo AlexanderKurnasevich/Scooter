@@ -7,17 +7,15 @@ import by.scooter.api.sevice.UtilService;
 import by.scooter.dto.location.RentPointDTO;
 import by.scooter.dto.location.RentPointFilterDTO;
 import by.scooter.dto.vehicle.ScooterDTO;
-import by.scooter.entity.location.Address;
 import by.scooter.entity.location.RentPoint;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
 public class RentPointServiceImpl implements RentPointService {
 
@@ -25,6 +23,15 @@ public class RentPointServiceImpl implements RentPointService {
     private final AddressService addressService;
     private final ModelMapper mapper;
     private final UtilService utilService;
+
+    @Autowired
+    public RentPointServiceImpl(RentPointDAO rentPointDAO, AddressService addressService, ModelMapper mapper,
+                                UtilService utilService) {
+        this.rentPointDAO = rentPointDAO;
+        this.addressService = addressService;
+        this.mapper = mapper;
+        this.utilService = utilService;
+    }
 
     @Override
     public RentPointDTO getById(Long id) {

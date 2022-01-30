@@ -4,10 +4,7 @@ import by.scooter.entity.vehicle.ScooterModel;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Getter
@@ -16,7 +13,7 @@ import java.util.Objects;
 @Entity
 public class ScooterModelPricing extends PricingStrategy {
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "scooter_model_id", unique = true)
     private ScooterModel scooterModel;
 

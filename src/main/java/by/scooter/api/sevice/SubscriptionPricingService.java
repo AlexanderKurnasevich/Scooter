@@ -6,6 +6,7 @@ import by.scooter.dto.pricing.SubscriptionPricingDTO;
 import java.util.List;
 
 public interface SubscriptionPricingService {
+
     Float calculatePrice(SubscriptionDTO dto);
 
     SubscriptionPricingDTO getByUnit(String unit);

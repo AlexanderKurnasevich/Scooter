@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "078241ab-1f32-4750-8cce-7dfa748708bf",
-		"name": "User Copy",
+		"_postman_id": "5cdd473e-50bf-41d3-bf5c-4e131ad32ba4",
+		"name": "User",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -29,14 +29,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/users",
+							"raw": "http://localhost:8080/Scooter_war_exploded/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter-1.0-SNAPSHOT",
+								"Scooter_war_exploded",
 								"users"
 							]
 						}
@@ -64,16 +64,46 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/users/2",
+							"raw": "http://localhost:8080/Scooter_war_exploded/users/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter-1.0-SNAPSHOT",
+								"Scooter_war_exploded",
 								"users",
 								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/Scooter_war_exploded/login?login=test&password=1234",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Scooter_war_exploded",
+								"login"
+							],
+							"query": [
+								{
+									"key": "login",
+									"value": "test"
+								},
+								{
+									"key": "password",
+									"value": "1234"
+								}
 							]
 						}
 					},
@@ -99,14 +129,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/reset_request?email=17alex17@tut.by",
+							"raw": "http://localhost:8080/Scooter_war_exploded/reset_request?email=17alex17@tut.by",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter-1.0-SNAPSHOT",
+								"Scooter_war_exploded",
 								"reset_request"
 							],
 							"query": [
@@ -149,14 +179,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/adduser",
+							"raw": "http://localhost:8080/Scooter_war_exploded/adduser",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter-1.0-SNAPSHOT",
+								"Scooter_war_exploded",
 								"adduser"
 							]
 						}
@@ -257,14 +287,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/reset_request?email=17alex17@tut.by",
+							"raw": "http://localhost:8080/Scooter_war_exploded/reset_request?email=17alex17@tut.by",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter-1.0-SNAPSHOT",
+								"Scooter_war_exploded",
 								"reset_request"
 							],
 							"query": [

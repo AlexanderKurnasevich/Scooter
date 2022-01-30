@@ -3,6 +3,7 @@ package by.scooter.service;
 import by.scooter.api.sevice.MailService;
 import by.scooter.dto.mail.AbstractEmailContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,7 +17,6 @@ import javax.mail.internet.MimeMessage;
 import java.nio.charset.StandardCharsets;
 
 @Service
-@RequiredArgsConstructor
 @PropertySource("classpath:application.properties")
 public class MailServiceImpl implements MailService {
 
@@ -25,6 +25,12 @@ public class MailServiceImpl implements MailService {
 
     @Value("${mail.from}")
     private String from;
+
+    @Autowired
+    public MailServiceImpl(JavaMailSender emailSender, ITemplateEngine templateEngine) {
+        this.emailSender = emailSender;
+        this.templateEngine = templateEngine;
+    }
 
     @Override
     public void send(AbstractEmailContext email) throws MessagingException {

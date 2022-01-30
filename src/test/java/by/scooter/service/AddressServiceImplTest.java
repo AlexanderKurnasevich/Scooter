@@ -16,85 +16,86 @@ import org.modelmapper.ModelMapper;
 
 import javax.persistence.NoResultException;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 
 class AddressServiceImplTest {
 
-//    private AddressService addressService;
-//    private AddressDAO addressDAO;
-//    private CityDAO cityDAO;
-//    private CountryDAO countryDAO;
-//    private ModelMapper mapper;
-//
-//    @BeforeEach
-//    public void init() {
-//        addressDAO = Mockito.mock(AddressDAO.class);
-//        cityDAO = Mockito.mock(CityDAO.class);
-//        countryDAO = Mockito.mock(CountryDAO.class);
-//        mapper = Mockito.mock(ModelMapper.class);
-//        addressService = new AddressServiceImpl(addressDAO, cityDAO, countryDAO, mapper);
-//    }
-//
-//    @Test
-//    void saveRentPointAddress() {
-//        Country expectedCountry = new Country();
-//        expectedCountry.setCountryName("Country");
-//        expectedCountry.setId(1L);
-//
-//        City expectedCity = new City();
-//        expectedCity.setCountry(expectedCountry);
-//        expectedCity.setCityName("City");
-//        expectedCity.setId(1L);
-//
-//        Address expectedAddress = new Address();
-//        expectedAddress.setCity(expectedCity);
-//        expectedAddress.setStreet("st. Street");
-//        expectedAddress.setNumber((short) 1);
-//        expectedAddress.setId(1L);
-//
-//        RentPointDTO dto = RentPointDTO.builder()
-//                .country("Country").city("City").street("st. Street").number((short) 1).build();
-//        AddressDTO expected = AddressDTO.builder()
-//                .id(1L).country("Country").city("City").street("st. Street").number((short) 1).build();
-//
-//        when(countryDAO.getByCountryName("Country")).thenReturn(expectedCountry);
-//        when(cityDAO.getByCityNameAndCountry("City", expectedCountry)).thenReturn(expectedCity);
-//        when(addressDAO.save(any(Address.class))).thenReturn(expectedAddress);
-//        when(mapper.map(expectedAddress, AddressDTO.class)).thenReturn(expected);
-//
-//        assertEquals(expected, addressService.saveRentPointAddress(dto));
-//    }
-//
-//    @Test
-//    void saveRentPointAddress_NoResultExceptionHandling() {
-//        Country expectedCountry = new Country();
-//        expectedCountry.setCountryName("Country");
-//        expectedCountry.setId(1L);
-//
-//        City expectedCity = new City();
-//        expectedCity.setCountry(expectedCountry);
-//        expectedCity.setCityName("City");
-//        expectedCity.setId(1L);
-//
-//        Address expectedAddress = new Address();
-//        expectedAddress.setCity(expectedCity);
-//        expectedAddress.setStreet("st. Street");
-//        expectedAddress.setNumber((short) 1);
-//        expectedAddress.setId(1L);
-//
-//        RentPointDTO dto = RentPointDTO.builder()
-//                .country("Country").city("City").street("st. Street").number((short) 1).build();
-//        AddressDTO expected = AddressDTO.builder()
-//                .id(1L).country("Country").city("City").street("st. Street").number((short) 1).build();
-//
-//        when(countryDAO.getByCountryName("Country")).thenThrow(new NoResultException());
-//        when(countryDAO.save(any(Country.class))).thenReturn(expectedCountry);
-//        when(cityDAO.getByCityNameAndCountry("City", expectedCountry)).thenThrow(new NoResultException());
-//        when(cityDAO.save(any(City.class))).thenReturn(expectedCity);
-//        when(addressDAO.save(any(Address.class))).thenReturn(expectedAddress);
-//        when(mapper.map(expectedAddress, AddressDTO.class)).thenReturn(expected);
-//
-//        assertEquals(expected, addressService.saveRentPointAddress(dto));
-//    }
+    private AddressService addressService;
+    private AddressDAO addressDAO;
+    private CityDAO cityDAO;
+    private CountryDAO countryDAO;
+    private ModelMapper mapper;
+
+    @BeforeEach
+    public void init() {
+        addressDAO = Mockito.mock(AddressDAO.class);
+        cityDAO = Mockito.mock(CityDAO.class);
+        countryDAO = Mockito.mock(CountryDAO.class);
+        mapper = Mockito.mock(ModelMapper.class);
+        addressService = new AddressServiceImpl(addressDAO, cityDAO, countryDAO, mapper);
+    }
+
+    @Test
+    void saveRentPointAddress() {
+        Country expectedCountry = new Country();
+        expectedCountry.setCountryName("Country");
+        expectedCountry.setId(1L);
+
+        City expectedCity = new City();
+        expectedCity.setCountry(expectedCountry);
+        expectedCity.setCityName("City");
+        expectedCity.setId(1L);
+
+        Address expectedAddress = new Address();
+        expectedAddress.setCity(expectedCity);
+        expectedAddress.setStreet("st. Street");
+        expectedAddress.setNumber((short) 1);
+        expectedAddress.setId(1L);
+
+        RentPointDTO dto = RentPointDTO.builder()
+                .country("Country").city("City").street("st. Street").number((short) 1).build();
+        AddressDTO expected = AddressDTO.builder()
+                .id(1L).country("Country").city("City").street("st. Street").number((short) 1).build();
+
+        when(countryDAO.getByCountryName("Country")).thenReturn(expectedCountry);
+        when(cityDAO.getByCityNameAndCountry("City", expectedCountry)).thenReturn(expectedCity);
+        when(addressDAO.save(any(Address.class))).thenReturn(expectedAddress);
+        when(mapper.map(expectedAddress, AddressDTO.class)).thenReturn(expected);
+
+        assertEquals(expected, addressService.saveRentPointAddress(dto));
+    }
+
+    @Test
+    void saveRentPointAddress_NoResultExceptionHandling() {
+        Country expectedCountry = new Country();
+        expectedCountry.setCountryName("Country");
+        expectedCountry.setId(1L);
+
+        City expectedCity = new City();
+        expectedCity.setCountry(expectedCountry);
+        expectedCity.setCityName("City");
+        expectedCity.setId(1L);
+
+        Address expectedAddress = new Address();
+        expectedAddress.setCity(expectedCity);
+        expectedAddress.setStreet("st. Street");
+        expectedAddress.setNumber((short) 1);
+        expectedAddress.setId(1L);
+
+        RentPointDTO dto = RentPointDTO.builder()
+                .country("Country").city("City").street("st. Street").number((short) 1).build();
+        AddressDTO expected = AddressDTO.builder()
+                .id(1L).country("Country").city("City").street("st. Street").number((short) 1).build();
+
+        when(countryDAO.getByCountryName("Country")).thenThrow(new NoResultException());
+        when(countryDAO.save(any(Country.class))).thenReturn(expectedCountry);
+        when(cityDAO.getByCityNameAndCountry("City", expectedCountry)).thenThrow(new NoResultException());
+        when(cityDAO.save(any(City.class))).thenReturn(expectedCity);
+        when(addressDAO.save(any(Address.class))).thenReturn(expectedAddress);
+        when(mapper.map(expectedAddress, AddressDTO.class)).thenReturn(expected);
+
+        assertEquals(expected, addressService.saveRentPointAddress(dto));
+    }
 }

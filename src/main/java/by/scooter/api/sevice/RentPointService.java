@@ -7,6 +7,7 @@ import by.scooter.dto.vehicle.ScooterDTO;
 import java.util.List;
 
 public interface RentPointService {
+
     RentPointDTO getById(Long id);
 
     RentPointDTO addRentPoint(RentPointDTO rentPoint);

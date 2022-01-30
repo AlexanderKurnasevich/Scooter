@@ -16,8 +16,12 @@ import java.util.List;
 @RequestMapping("/scooters/models")
 public class ScooterModelController {
 
+    private final ScooterModelService scooterModelService;
+
     @Autowired
-    private ScooterModelService scooterModelService;
+    public ScooterModelController(ScooterModelService scooterModelService) {
+        this.scooterModelService = scooterModelService;
+    }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
     @GetMapping("/{id}")

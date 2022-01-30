@@ -1,23 +1,19 @@
 package by.scooter.service;
 
 import by.scooter.api.dao.OrderDAO;
-import by.scooter.api.dao.RentPointDAO;
 import by.scooter.api.sevice.*;
 import by.scooter.dto.event.OrderCreateDTO;
 import by.scooter.dto.event.OrderDTO;
 import by.scooter.dto.vehicle.ScooterFilterDTO;
 import by.scooter.entity.event.Order;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final OrderDAO orderDAO;
@@ -27,6 +23,19 @@ public class OrderServiceImpl implements OrderService {
     private final ClientService clientService;
     private final PricingService pricingService;
     private final SubscriptionService subscriptionService;
+
+    @Autowired
+    public OrderServiceImpl(OrderDAO orderDAO, ModelMapper mapper, UtilService utilService,
+                            ScooterService scooterService, ClientService clientService, PricingService pricingService,
+                            SubscriptionService subscriptionService) {
+        this.orderDAO = orderDAO;
+        this.mapper = mapper;
+        this.utilService = utilService;
+        this.scooterService = scooterService;
+        this.clientService = clientService;
+        this.pricingService = pricingService;
+        this.subscriptionService = subscriptionService;
+    }
 
     @Override
     public OrderDTO getById(Long id) {

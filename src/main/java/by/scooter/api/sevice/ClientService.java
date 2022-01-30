@@ -8,6 +8,7 @@ import org.springframework.security.access.AccessDeniedException;
 import java.util.List;
 
 public interface ClientService {
+
     ClientInfoDTO getById(Long id);
 
     ClientInfoDTO getAuthorizedClient();

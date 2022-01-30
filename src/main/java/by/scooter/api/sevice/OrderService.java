@@ -6,6 +6,7 @@ import by.scooter.dto.event.OrderDTO;
 import java.util.List;
 
 public interface OrderService {
+
     OrderDTO getById(Long id);
 
     OrderDTO addOrder(OrderCreateDTO order);

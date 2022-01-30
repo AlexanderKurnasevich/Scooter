@@ -21,7 +21,7 @@ public class Role extends AbstractEntity implements GrantedAuthority {
     @Column(unique = true)
     private RoleValue value;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Set<User> users;
 
     public Role(RoleValue value) {

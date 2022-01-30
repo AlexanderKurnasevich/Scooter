@@ -19,38 +19,38 @@ import static org.mockito.Mockito.*;
 
 class MailServiceImplTest {
 
-//    private MailService mailService;
-//    private JavaMailSender emailSender;
-//    private ITemplateEngine templateEngine;
-//
-//    @BeforeEach
-//    public void init() {
-//        emailSender = Mockito.mock(JavaMailSender.class);
-//        templateEngine = Mockito.mock(ITemplateEngine.class);
-//        mailService = new MailServiceImpl(emailSender, templateEngine);
-//    }
-//
-//    @Test
-//    void send() throws MessagingException {
-//        ReflectionTestUtils.setField(mailService, "from", "any@from.com");
-//        AbstractEmailContext email = new AbstractEmailContext() {
-//            @Override
-//            public <T> void init(T context) {
-//                setTo("to");
-//                setSubject("sub");
-//                setTemplateLocation("template");
-//            }
-//        };
-//        email.init(null);
-//
-//        MimeMessage message = new MimeMessage((Session) null);
-//        Context context = new Context();
-//        context.setVariables(email.getContext());
-//
-//        when(templateEngine.process(eq("template"), any(IContext.class))).thenReturn("message");
-//        when(emailSender.createMimeMessage()).thenReturn(message);
-//
-//        mailService.send(email);
-//        verify(emailSender, times(1)).send(any(MimeMessage.class));
-//    }
+    private MailService mailService;
+    private JavaMailSender emailSender;
+    private ITemplateEngine templateEngine;
+
+    @BeforeEach
+    public void init() {
+        emailSender = Mockito.mock(JavaMailSender.class);
+        templateEngine = Mockito.mock(ITemplateEngine.class);
+        mailService = new MailServiceImpl(emailSender, templateEngine);
+    }
+
+    @Test
+    void send() throws MessagingException {
+        ReflectionTestUtils.setField(mailService, "from", "any@from.com");
+        AbstractEmailContext email = new AbstractEmailContext() {
+            @Override
+            public <T> void init(T context) {
+                setTo("to");
+                setSubject("sub");
+                setTemplateLocation("template");
+            }
+        };
+        email.init(null);
+
+        MimeMessage message = new MimeMessage((Session) null);
+        Context context = new Context();
+        context.setVariables(email.getContext());
+
+        when(templateEngine.process(eq("template"), any(IContext.class))).thenReturn("message");
+        when(emailSender.createMimeMessage()).thenReturn(message);
+
+        mailService.send(email);
+        verify(emailSender, times(1)).send(any(MimeMessage.class));
+    }
 }

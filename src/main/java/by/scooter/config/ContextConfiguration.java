@@ -12,8 +12,12 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class ContextConfiguration {
 
+    private final DataSource dataSource;
+
     @Autowired
-    private DataSource dataSource;
+    public ContextConfiguration(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Bean
     public SpringLiquibase liquibase() {

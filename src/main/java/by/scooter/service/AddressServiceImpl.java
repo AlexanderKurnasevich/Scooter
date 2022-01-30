@@ -9,23 +9,29 @@ import by.scooter.dto.location.RentPointDTO;
 import by.scooter.entity.location.Address;
 import by.scooter.entity.location.City;
 import by.scooter.entity.location.Country;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class AddressServiceImpl implements AddressService {
 
     private final AddressDAO addressDAO;
     private final CityDAO cityDAO;
     private final CountryDAO countryDAO;
     private final ModelMapper mapper;
+
+    @Autowired
+    public AddressServiceImpl(AddressDAO addressDAO, CityDAO cityDAO, CountryDAO countryDAO, ModelMapper mapper) {
+        this.addressDAO = addressDAO;
+        this.cityDAO = cityDAO;
+        this.countryDAO = countryDAO;
+        this.mapper = mapper;
+    }
 
     @Override
     public Address getById(Long addressId) {

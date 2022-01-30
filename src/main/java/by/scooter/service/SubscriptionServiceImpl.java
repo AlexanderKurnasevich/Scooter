@@ -10,8 +10,8 @@ import by.scooter.entity.pricing.Subscription;
 import by.scooter.exception.DataConsistencyException;
 import by.scooter.exception.SubscriptionException;
 import by.scooter.exception.SubscriptionExpiryException;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +20,21 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class SubscriptionServiceImpl implements SubscriptionService {
 
     private final SubscriptionDAO subscriptionDAO;
     private final SubscriptionPricingService pricingService;
     private final ModelMapper mapper;
     private final UtilService utilService;
+
+    @Autowired
+    public SubscriptionServiceImpl(SubscriptionDAO subscriptionDAO, SubscriptionPricingService pricingService,
+                                   ModelMapper mapper, UtilService utilService) {
+        this.subscriptionDAO = subscriptionDAO;
+        this.pricingService = pricingService;
+        this.mapper = mapper;
+        this.utilService = utilService;
+    }
 
     @Override
     @Transactional

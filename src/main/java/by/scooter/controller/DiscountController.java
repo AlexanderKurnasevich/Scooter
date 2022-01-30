@@ -4,7 +4,7 @@ import by.scooter.api.sevice.DiscountService;
 import by.scooter.dto.pricing.DiscountDTO;
 import by.scooter.entity.OnUpdate;
 import by.scooter.exception.ValidationException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -15,9 +15,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/discounts")
-@RequiredArgsConstructor
 public class DiscountController {
+
     private final DiscountService discountService;
+
+    @Autowired
+    public DiscountController(DiscountService discountService) {
+        this.discountService = discountService;
+    }
 
     @GetMapping
     public ResponseEntity<List<DiscountDTO>> getAll(@RequestParam(required = false) Integer page,
@@ -52,8 +57,8 @@ public class DiscountController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> remove(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> remove(@PathVariable Long id) {
         discountService.remove(id);
         return ResponseEntity.noContent().build();
     }

@@ -5,7 +5,7 @@ import by.scooter.dto.location.RentPointDTO;
 import by.scooter.dto.location.RentPointFilterDTO;
 import by.scooter.dto.vehicle.ScooterDTO;
 import by.scooter.exception.ValidationException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -15,10 +15,15 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/points")
 public class RentPointController {
+
     private final RentPointService rentPointService;
+
+    @Autowired
+    public RentPointController(RentPointService rentPointService) {
+        this.rentPointService = rentPointService;
+    }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
     @GetMapping("/{id}")

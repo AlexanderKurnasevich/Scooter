@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum RoleValue {
+
     ROLE_USER("USER"),
     ROLE_CLIENT("CLIENT"),
     ROLE_ADMIN("ADMIN");

@@ -12,6 +12,7 @@ import javax.persistence.criteria.Root;
 
 @Repository
 public class RoleDAOImpl extends AbstractDAO<Role> implements RoleDAO {
+
     @Override
     public Role getByRole(RoleValue value) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();

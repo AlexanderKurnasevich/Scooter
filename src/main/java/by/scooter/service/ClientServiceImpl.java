@@ -84,7 +84,7 @@ public class ClientServiceImpl implements ClientService {
         Optional.ofNullable(update.getEmail()).ifPresent(user::setEmail);
         Optional.ofNullable(update.getFirstName()).ifPresent(updated::setFirstName);
         Optional.ofNullable(update.getLastName()).ifPresent(updated::setLastName);
-        if(update.getPassword() != null) {
+        if (update.getPassword() != null) {
             user.setPassword(encoder.encode(update.getPassword()));
         }
         clientDAO.update(updated);

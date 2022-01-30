@@ -123,12 +123,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserInfoDTO logIn(String login, CharSequence password) {
-        UserDTO userDTO = mapper.map(userDAO.findByLogin(login), UserDTO.class);
+    public UserInfoDTO logIn(UserDTO userDTO) {
+        userDTO = mapper.map(userDAO.findByLogin(userDTO.getUsername()), UserDTO.class);
         if (passwordEncoder.matches(password, userDTO.getPassword())) {
             return mapper.map(userDTO, UserInfoDTO.class);
         }
-        log.info("Wrong password for: {}", login);
+        log.info("Wrong password for: {}", userDTO.getUsername());
         throw new WrongPasswordException("Passwords don't match");
     }
 

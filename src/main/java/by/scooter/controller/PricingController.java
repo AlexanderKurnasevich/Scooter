@@ -4,7 +4,7 @@ import by.scooter.api.sevice.PricingService;
 import by.scooter.dto.event.OrderCreateDTO;
 import by.scooter.dto.pricing.ScooterModelPricingDTO;
 import by.scooter.exception.ValidationException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -16,10 +16,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pricing")
-@RequiredArgsConstructor
 @Validated
 public class PricingController {
+
     private final PricingService pricingService;
+
+    @Autowired
+    public PricingController(PricingService pricingService) {
+        this.pricingService = pricingService;
+    }
 
     @GetMapping
     public ResponseEntity<List<ScooterModelPricingDTO>> getAll(@RequestParam(required = false) Integer page,

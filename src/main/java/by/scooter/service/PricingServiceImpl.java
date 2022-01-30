@@ -7,8 +7,8 @@ import by.scooter.api.sevice.UtilService;
 import by.scooter.dto.event.OrderCreateDTO;
 import by.scooter.dto.pricing.ScooterModelPricingDTO;
 import by.scooter.entity.pricing.ScooterModelPricing;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,16 +16,22 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class PricingServiceImpl implements PricingService {
 
     private final ScooterModelPricingDAO modelPricingDAO;
     private final DiscountDAO discountDAO;
     private final ModelMapper mapper;
     private final UtilService utilService;
+
+    @Autowired
+    public PricingServiceImpl(ScooterModelPricingDAO modelPricingDAO, DiscountDAO discountDAO, ModelMapper mapper, UtilService utilService) {
+        this.modelPricingDAO = modelPricingDAO;
+        this.discountDAO = discountDAO;
+        this.mapper = mapper;
+        this.utilService = utilService;
+    }
 
     @Override
     public ScooterModelPricingDTO getByModelId(Long modelId) {

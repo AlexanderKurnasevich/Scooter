@@ -17,6 +17,7 @@ import java.util.List;
 
 @Log4j2
 public abstract class AbstractDAO<T extends AbstractEntity> implements DAO<T> {
+
     @PersistenceContext
     protected EntityManager entityManager;
 

@@ -3,7 +3,7 @@ package by.scooter.controller;
 import by.scooter.api.sevice.ScooterService;
 import by.scooter.dto.vehicle.ScooterDTO;
 import by.scooter.exception.ValidationException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +13,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/scooters")
-@RequiredArgsConstructor
 public class ScooterController {
 
     private final ScooterService scooterService;
+
+    @Autowired
+    public ScooterController(ScooterService scooterService) {
+        this.scooterService = scooterService;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ScooterDTO> getScooterById(@PathVariable Long id) {

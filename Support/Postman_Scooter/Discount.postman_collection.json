@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "ad659f4f-a957-4059-b56b-afa4ba58cac8",
-		"name": "Client Copy",
+		"_postman_id": "e4feb785-93e8-4efb-9798-f5e4c0e3c892",
+		"name": "Discount",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -29,15 +29,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/clients",
+							"raw": "http://localhost:8080/Scooter_war_exploded/discounts",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter-1.0-SNAPSHOT",
-								"clients"
+								"Scooter_war_exploded",
+								"discounts"
 							]
 						}
 					},
@@ -51,7 +51,7 @@
 							"basic": [
 								{
 									"key": "username",
-									"value": "test",
+									"value": "admin",
 									"type": "string"
 								},
 								{
@@ -64,53 +64,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/clients/1",
+							"raw": "http://localhost:8080/Scooter_war_exploded/discounts/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter-1.0-SNAPSHOT",
-								"clients",
+								"Scooter_war_exploded",
+								"discounts",
 								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "orders history",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "test",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "1234",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/clients/1/history",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"Scooter-1.0-SNAPSHOT",
-								"clients",
-								"1",
-								"history"
 							]
 						}
 					},
@@ -122,16 +85,28 @@
 			"name": "POST",
 			"item": [
 				{
-					"name": "signup",
+					"name": "add",
 					"request": {
 						"auth": {
-							"type": "noauth"
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"test\",\r\n    \"password\": \"1234\",\r\n    \"firstName\": \"name\",\r\n    \"lastName\": \"fam\",\r\n    \"email\": \"17alex17@tut.by\"\r\n}",
+							"raw": "{\r\n    \"discountFactor\": 1.0,\r\n    \"promoCode\": \"PROMO2\",\r\n    \"expireDate\": [\r\n        2222,\r\n        11,\r\n        11\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -139,15 +114,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/signup",
+							"raw": "http://localhost:8080/Scooter_war_exploded/discounts",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter-1.0-SNAPSHOT",
-								"signup"
+								"Scooter_war_exploded",
+								"discounts"
 							]
 						}
 					},
@@ -166,7 +141,7 @@
 							"basic": [
 								{
 									"key": "username",
-									"value": "test",
+									"value": "admin",
 									"type": "string"
 								},
 								{
@@ -180,7 +155,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"any\",\r\n    \"password\": \"1111\",\r\n    \"firstName\": \"test\",\r\n    \"lastName\": \"test\",\r\n    \"email\": \"tes2t@email.com\"\r\n}",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"discountFactor\": 0.9,\r\n    \"promoCode\": \"PROMO\",\r\n    \"expireDate\": [\r\n        2222,\r\n        12,\r\n        12\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -188,16 +163,62 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/Scooter-1.0-SNAPSHOT/clients/1",
+							"raw": "http://localhost:8080/Scooter_war_exploded/discounts/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"Scooter-1.0-SNAPSHOT",
-								"clients",
+								"Scooter_war_exploded",
+								"discounts",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DELETE",
+			"item": [
+				{
+					"name": "removeById",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/Scooter_war_exploded/discounts?id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"Scooter_war_exploded",
+								"discounts"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
 							]
 						}
 					},

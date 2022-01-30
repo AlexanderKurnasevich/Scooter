@@ -19,7 +19,7 @@ import java.util.Objects;
 @Table(name = "subscriptions")
 public class Subscription extends AbstractEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Client owner;
 
     @Enumerated(EnumType.STRING)

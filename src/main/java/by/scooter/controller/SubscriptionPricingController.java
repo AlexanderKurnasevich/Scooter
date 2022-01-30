@@ -3,7 +3,7 @@ package by.scooter.controller;
 import by.scooter.api.sevice.SubscriptionPricingService;
 import by.scooter.dto.pricing.SubscriptionPricingDTO;
 import by.scooter.exception.ValidationException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +13,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pricing/subscription")
-@RequiredArgsConstructor
 public class SubscriptionPricingController {
 
     private final SubscriptionPricingService service;
+
+    @Autowired
+    public SubscriptionPricingController(SubscriptionPricingService service) {
+        this.service = service;
+    }
 
     @GetMapping("/unit")
     public ResponseEntity<SubscriptionPricingDTO> getByUnit(@RequestParam String unit) {
