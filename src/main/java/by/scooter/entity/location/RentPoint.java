@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name = "rent_points")
 public class RentPoint extends AbstractEntity {
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     private Address address;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "currentPoint")
