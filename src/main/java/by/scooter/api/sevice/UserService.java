@@ -20,8 +20,6 @@ public interface UserService extends UserDetailsService {
 
     UserInfoDTO getById(Long id);
 
-    UserInfoDTO logIn(UserDTO userDTO);
-
     UserInfoDTO getAuthorizedUser() throws UsernameNotFoundException;
 
     List<UserInfoDTO> getAll();

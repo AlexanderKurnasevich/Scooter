@@ -94,9 +94,4 @@ public class UsersController {
         userService.remove(id);
         return ResponseEntity.noContent().build();
     }
-
-    @PostMapping("/login")
-    public ResponseEntity<UserInfoDTO> logIn(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userService.logIn(userDTO));
-    }
 }
